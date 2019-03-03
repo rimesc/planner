@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Goal.
+    -->
+    <changeSet id="20190303200127-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="owner_id"
+                                 baseTableName="goal"
+                                 constraintName="fk_goal_owner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="goal_id"
+                                 baseTableName="goal_tag"
+                                 constraintName="fk_goal_tag_goal_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="goal"/>
+        <addForeignKeyConstraint baseColumnNames="tag_id"
+                                 baseTableName="goal_tag"
+                                 constraintName="fk_goal_tag_tag_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tag"/>
+        
+        <addForeignKeyConstraint baseColumnNames="theme_id"
+                                 baseTableName="goal"
+                                 constraintName="fk_goal_theme_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="theme"/>
+
+    </changeSet>
+</databaseChangeLog>

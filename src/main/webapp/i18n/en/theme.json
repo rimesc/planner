@@ -1,0 +1,29 @@
+{
+    "plannerApp": {
+        "theme": {
+            "home": {
+                "title": "Themes",
+                "createLabel": "Create a new Theme",
+                "createOrEditLabel": "Create or edit a Theme"
+            },
+            "created": "A new Theme is created with identifier {{ param }}",
+            "updated": "A Theme is updated with identifier {{ param }}",
+            "deleted": "A Theme is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Theme {{ id }}?"
+            },
+            "detail": {
+                "title": "Theme"
+            },
+            "name": "Name",
+            "description": "Description",
+            "shortName": "Short Name",
+            "avatar": "Avatar",
+            "created": "Created",
+            "visibility": "Visibility",
+            "tag": "Tag",
+            "goal": "Goal",
+            "owner": "Owner"
+        }
+    }
+}

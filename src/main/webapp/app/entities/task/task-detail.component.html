@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="task">
+            <h2><span jhiTranslate="plannerApp.task.detail.title">Task</span> {{task.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="plannerApp.task.summary">Summary</span></dt>
+                <dd>
+                    <span>{{task.summary}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.task.created">Created</span></dt>
+                <dd>
+                    <span>{{task.created}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.task.completed">Completed</span></dt>
+                <dd>
+                    <span>{{task.completed}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.task.owner">Owner</span></dt>
+                <dd>
+                    {{task.ownerId}}
+                </dd>
+                <dt><span jhiTranslate="plannerApp.task.goal">Goal</span></dt>
+                <dd>
+                    <div *ngIf="task.goalId">
+                        <a [routerLink]="['/goal', task.goalId, 'view']">{{task.goalId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/task', task.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

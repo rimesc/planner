@@ -1,0 +1,85 @@
+{
+    "name": "Goal",
+    "fields": [
+        {
+            "fieldName": "summary",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 128
+        },
+        {
+            "fieldName": "created",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "completed",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "order",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "visibility",
+            "fieldType": "Visibility",
+            "fieldValues": "PUBLIC,PRIVATE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "task",
+            "otherEntityRelationshipName": "goal",
+            "relationshipName": "task"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "note",
+            "otherEntityRelationshipName": "goal",
+            "relationshipName": "note"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "goal",
+            "relationshipName": "owner",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "tag",
+            "otherEntityRelationshipName": "goal",
+            "relationshipName": "tag",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "theme",
+            "otherEntityRelationshipName": "goal",
+            "relationshipName": "theme",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190303200127",
+    "entityTableName": "goal",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
