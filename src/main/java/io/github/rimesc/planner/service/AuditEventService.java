@@ -1,5 +1,8 @@
 package io.github.rimesc.planner.service;
 
+import java.time.Instant;
+import java.util.Optional;
+
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,9 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.github.rimesc.planner.config.audit.AuditEventConverter;
 import io.github.rimesc.planner.repository.PersistenceAuditEventRepository;
-
-import java.time.Instant;
-import java.util.Optional;
 
 /**
  * Service for managing audit events.

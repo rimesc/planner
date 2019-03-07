@@ -3,15 +3,11 @@ package io.github.rimesc.planner.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-import io.github.jhipster.service.filter.BooleanFilter;
-import io.github.jhipster.service.filter.DoubleFilter;
 import io.github.jhipster.service.filter.Filter;
-import io.github.jhipster.service.filter.FloatFilter;
-import io.github.jhipster.service.filter.IntegerFilter;
+import io.github.jhipster.service.filter.InstantFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
 import io.github.rimesc.planner.domain.enumeration.Visibility;
-import io.github.jhipster.service.filter.InstantFilter;
 
 /**
  * Criteria class for the Goal entity. This class is used in GoalResource to

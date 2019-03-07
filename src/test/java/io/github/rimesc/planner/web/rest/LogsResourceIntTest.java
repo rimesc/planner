@@ -1,10 +1,10 @@
 package io.github.rimesc.planner.web.rest;
 
-import ch.qos.logback.classic.AsyncAppender;
-import ch.qos.logback.classic.LoggerContext;
-import io.github.rimesc.planner.PlannerApp;
-import io.github.rimesc.planner.web.rest.LogsResource;
-import io.github.rimesc.planner.web.rest.vm.LoggerVM;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,11 +16,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import io.github.rimesc.planner.PlannerApp;
+import io.github.rimesc.planner.web.rest.vm.LoggerVM;
+
+import ch.qos.logback.classic.AsyncAppender;
+import ch.qos.logback.classic.LoggerContext;
 
 /**
  * Test class for the LogsResource REST controller.

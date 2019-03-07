@@ -1,21 +1,21 @@
 package io.github.rimesc.planner.web.rest;
-import io.github.jhipster.web.util.ResponseUtil;
-import io.github.rimesc.planner.service.TagService;
-import io.github.rimesc.planner.service.dto.TagDTO;
-import io.github.rimesc.planner.web.rest.errors.BadRequestAlertException;
-import io.github.rimesc.planner.web.rest.util.HeaderUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
+import io.github.rimesc.planner.service.TagService;
+import io.github.rimesc.planner.service.dto.TagDTO;
+import io.github.rimesc.planner.web.rest.errors.BadRequestAlertException;
+import io.github.rimesc.planner.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing Tag.

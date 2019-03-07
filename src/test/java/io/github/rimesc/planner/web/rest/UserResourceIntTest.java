@@ -1,5 +1,24 @@
 package io.github.rimesc.planner.web.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,19 +42,8 @@ import io.github.rimesc.planner.service.MailService;
 import io.github.rimesc.planner.service.UserService;
 import io.github.rimesc.planner.service.dto.UserDTO;
 import io.github.rimesc.planner.service.mapper.UserMapper;
-import io.github.rimesc.planner.web.rest.UserResource;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
 import io.github.rimesc.planner.web.rest.vm.ManagedUserVM;
-
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.util.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the UserResource REST controller.

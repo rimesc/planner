@@ -1,5 +1,14 @@
 package io.github.rimesc.planner.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,18 +27,8 @@ import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.config.Constants;
 import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.repository.UserRepository;
-import io.github.rimesc.planner.service.UserService;
 import io.github.rimesc.planner.service.dto.UserDTO;
 import io.github.rimesc.planner.service.util.RandomUtil;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 /**
  * Test class for the UserResource REST controller.

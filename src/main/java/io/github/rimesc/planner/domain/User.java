@@ -1,23 +1,24 @@
 package io.github.rimesc.planner.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import io.github.rimesc.planner.config.Constants;
-
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.BatchSize;
-import javax.validation.constraints.Email;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
-import java.time.Instant;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.BatchSize;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.github.rimesc.planner.config.Constants;
 
 /**
  * A user.

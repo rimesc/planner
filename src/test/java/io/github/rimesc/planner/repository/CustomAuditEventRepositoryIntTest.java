@@ -1,5 +1,15 @@
 package io.github.rimesc.planner.repository;
 
+import static io.github.rimesc.planner.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,17 +26,6 @@ import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.config.Constants;
 import io.github.rimesc.planner.config.audit.AuditEventConverter;
 import io.github.rimesc.planner.domain.PersistentAuditEvent;
-import io.github.rimesc.planner.repository.CustomAuditEventRepository;
-import io.github.rimesc.planner.repository.PersistenceAuditEventRepository;
-
-import javax.servlet.http.HttpSession;
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static io.github.rimesc.planner.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for the CustomAuditEventRepository class.

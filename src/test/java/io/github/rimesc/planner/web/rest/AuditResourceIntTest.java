@@ -1,5 +1,15 @@
 package io.github.rimesc.planner.web.rest;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,14 +30,6 @@ import io.github.rimesc.planner.config.audit.AuditEventConverter;
 import io.github.rimesc.planner.domain.PersistentAuditEvent;
 import io.github.rimesc.planner.repository.PersistenceAuditEventRepository;
 import io.github.rimesc.planner.service.AuditEventService;
-import io.github.rimesc.planner.web.rest.AuditResource;
-
-import java.time.Instant;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the AuditResource REST controller.

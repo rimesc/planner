@@ -1,5 +1,20 @@
 package io.github.rimesc.planner.web.rest;
 
+import static io.github.rimesc.planner.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,17 +36,7 @@ import io.github.rimesc.planner.repository.TagRepository;
 import io.github.rimesc.planner.service.TagService;
 import io.github.rimesc.planner.service.dto.TagDTO;
 import io.github.rimesc.planner.service.mapper.TagMapper;
-import io.github.rimesc.planner.web.rest.TagResource;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
-
-import javax.persistence.EntityManager;
-import java.util.List;
-
-import static io.github.rimesc.planner.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the TagResource REST controller.

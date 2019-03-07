@@ -1,12 +1,17 @@
 package io.github.rimesc.planner.config.audit;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import io.github.rimesc.planner.domain.PersistentAuditEvent;
-
-import java.util.*;
 
 @Component
 public class AuditEventConverter {

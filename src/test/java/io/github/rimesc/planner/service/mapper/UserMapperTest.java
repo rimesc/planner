@@ -1,6 +1,13 @@
 package io.github.rimesc.planner.service.mapper;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,14 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.service.dto.UserDTO;
-import io.github.rimesc.planner.service.mapper.UserMapper;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for the UserMapper.

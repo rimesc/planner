@@ -1,5 +1,13 @@
 package io.github.rimesc.planner.web.rest;
 
+import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,17 +24,8 @@ import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.repository.UserRepository;
 import io.github.rimesc.planner.security.jwt.TokenProvider;
-import io.github.rimesc.planner.web.rest.UserJWTController;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
 import io.github.rimesc.planner.web.rest.vm.LoginVM;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.isEmptyString;
-import static org.hamcrest.Matchers.not;
 
 /**
  * Test class for the UserJWTController REST controller.

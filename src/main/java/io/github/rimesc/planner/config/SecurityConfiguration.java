@@ -1,5 +1,7 @@
 package io.github.rimesc.planner.config;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-import io.github.rimesc.planner.security.*;
-import io.github.rimesc.planner.security.jwt.*;
-
-import javax.annotation.PostConstruct;
+import io.github.rimesc.planner.security.AuthoritiesConstants;
+import io.github.rimesc.planner.security.jwt.JWTConfigurer;
+import io.github.rimesc.planner.security.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity

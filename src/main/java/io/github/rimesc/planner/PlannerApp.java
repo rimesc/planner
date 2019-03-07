@@ -1,8 +1,11 @@
 package io.github.rimesc.planner;
 
-import io.github.jhipster.config.JHipsterConstants;
-import io.github.rimesc.planner.config.ApplicationProperties;
-import io.github.rimesc.planner.config.DefaultProfileUtil;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Collection;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -13,11 +16,9 @@ import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
 
-import javax.annotation.PostConstruct;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.Collection;
+import io.github.jhipster.config.JHipsterConstants;
+import io.github.rimesc.planner.config.ApplicationProperties;
+import io.github.rimesc.planner.config.DefaultProfileUtil;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})

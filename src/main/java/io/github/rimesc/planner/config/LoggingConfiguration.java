@@ -3,6 +3,11 @@ package io.github.rimesc.planner.config;
 import java.net.InetSocketAddress;
 import java.util.Iterator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
 import io.github.jhipster.config.JHipsterProperties;
 
 import ch.qos.logback.classic.AsyncAppender;
@@ -18,10 +23,6 @@ import ch.qos.logback.core.spi.FilterReply;
 import net.logstash.logback.appender.LogstashTcpSocketAppender;
 import net.logstash.logback.encoder.LogstashEncoder;
 import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class LoggingConfiguration {

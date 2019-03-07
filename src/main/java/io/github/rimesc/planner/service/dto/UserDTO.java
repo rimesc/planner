@@ -1,16 +1,17 @@
 package io.github.rimesc.planner.service.dto;
 
+import java.time.Instant;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import io.github.rimesc.planner.config.Constants;
 import io.github.rimesc.planner.domain.Authority;
 import io.github.rimesc.planner.domain.User;
-
-import javax.validation.constraints.*;
-import java.time.Instant;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * A DTO representing a user, with his authorities.

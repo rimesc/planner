@@ -1,5 +1,13 @@
 package io.github.rimesc.planner.service;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,12 +26,9 @@ import io.github.rimesc.planner.security.AuthoritiesConstants;
 import io.github.rimesc.planner.security.SecurityUtils;
 import io.github.rimesc.planner.service.dto.UserDTO;
 import io.github.rimesc.planner.service.util.RandomUtil;
-import io.github.rimesc.planner.web.rest.errors.*;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
+import io.github.rimesc.planner.web.rest.errors.EmailAlreadyUsedException;
+import io.github.rimesc.planner.web.rest.errors.InvalidPasswordException;
+import io.github.rimesc.planner.web.rest.errors.LoginAlreadyUsedException;
 
 /**
  * Service class for managing users.

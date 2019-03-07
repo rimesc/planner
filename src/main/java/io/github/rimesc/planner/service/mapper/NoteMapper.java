@@ -1,8 +1,9 @@
 package io.github.rimesc.planner.service.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import io.github.rimesc.planner.domain.*;
+import io.github.rimesc.planner.domain.Note;
 import io.github.rimesc.planner.service.dto.NoteDTO;
 
 /**

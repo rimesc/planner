@@ -1,16 +1,16 @@
 package io.github.rimesc.planner.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.github.rimesc.planner.domain.enumeration.Visibility;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.github.rimesc.planner.domain.enumeration.Visibility;
 
 /**
  * A Note.

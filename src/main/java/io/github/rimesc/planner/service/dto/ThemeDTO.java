@@ -1,12 +1,13 @@
 package io.github.rimesc.planner.service.dto;
+import java.io.Serializable;
 import java.time.Instant;
-import javax.validation.constraints.*;
+import java.util.Objects;
+
+import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import io.github.rimesc.planner.domain.enumeration.Visibility;
-
-import java.io.Serializable;
-import java.util.Objects;
-import javax.persistence.Lob;
 
 /**
  * A DTO for the Theme entity.

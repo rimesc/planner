@@ -1,11 +1,22 @@
 package io.github.rimesc.planner.web.rest;
 
 
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.repository.UserRepository;
@@ -14,13 +25,13 @@ import io.github.rimesc.planner.service.MailService;
 import io.github.rimesc.planner.service.UserService;
 import io.github.rimesc.planner.service.dto.PasswordChangeDTO;
 import io.github.rimesc.planner.service.dto.UserDTO;
-import io.github.rimesc.planner.web.rest.errors.*;
+import io.github.rimesc.planner.web.rest.errors.EmailAlreadyUsedException;
+import io.github.rimesc.planner.web.rest.errors.EmailNotFoundException;
+import io.github.rimesc.planner.web.rest.errors.InternalServerErrorException;
+import io.github.rimesc.planner.web.rest.errors.InvalidPasswordException;
+import io.github.rimesc.planner.web.rest.errors.LoginAlreadyUsedException;
 import io.github.rimesc.planner.web.rest.vm.KeyAndPasswordVM;
 import io.github.rimesc.planner.web.rest.vm.ManagedUserVM;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.*;
 
 /**
  * REST controller for managing the current user's account.
