@@ -16,7 +16,7 @@
 logging:
     level:
         ROOT: INFO
-        uk.co.zoneofavoidance.planner: INFO
+        io.github.rimesc.planner: INFO
         io.github.jhipster: INFO
 
 spring:

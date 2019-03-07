@@ -17,7 +17,7 @@ logging:
     level:
         ROOT: DEBUG
         io.github.jhipster: DEBUG
-        uk.co.zoneofavoidance.planner: DEBUG
+        io.github.rimesc.planner: DEBUG
 
 spring:
     profiles:
