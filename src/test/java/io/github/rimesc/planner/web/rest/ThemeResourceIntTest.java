@@ -132,6 +132,11 @@ public class ThemeResourceIntTest {
             .avatarContentType(DEFAULT_AVATAR_CONTENT_TYPE)
             .created(DEFAULT_CREATED)
             .visibility(DEFAULT_VISIBILITY);
+        // Add required entity
+        User user = UserResourceIntTest.createEntity(em);
+        em.persist(user);
+        em.flush();
+        theme.setOwner(user);
         return theme;
     }
 

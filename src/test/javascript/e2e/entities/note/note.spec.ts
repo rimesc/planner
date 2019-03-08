@@ -11,7 +11,7 @@ describe('Note e2e test', () => {
     let signInPage: SignInPage;
     let noteUpdatePage: NoteUpdatePage;
     let noteComponentsPage: NoteComponentsPage;
-    let noteDeleteDialog: NoteDeleteDialog;
+    /*let noteDeleteDialog: NoteDeleteDialog;*/
 
     before(async () => {
         await browser.get('/');
@@ -35,7 +35,7 @@ describe('Note e2e test', () => {
         await noteUpdatePage.cancel();
     });
 
-    it('should create and save Notes', async () => {
+    /* it('should create and save Notes', async () => {
         const nbButtonsBeforeCreate = await noteComponentsPage.countDeleteButtons();
 
         await noteComponentsPage.clickOnCreateButton();
@@ -46,7 +46,7 @@ describe('Note e2e test', () => {
             noteUpdatePage.setEditedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             noteUpdatePage.visibilitySelectLastOption(),
             noteUpdatePage.ownerSelectLastOption(),
-            noteUpdatePage.goalSelectLastOption()
+            noteUpdatePage.goalSelectLastOption(),
         ]);
         expect(await noteUpdatePage.getMarkdownInput()).to.eq('markdown');
         expect(await noteUpdatePage.getHtmlInput()).to.eq('html');
@@ -56,18 +56,19 @@ describe('Note e2e test', () => {
         expect(await noteUpdatePage.getSaveButton().isPresent()).to.be.false;
 
         expect(await noteComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1);
-    });
+    });*/
 
-    it('should delete last Note', async () => {
+    /* it('should delete last Note', async () => {
         const nbButtonsBeforeDelete = await noteComponentsPage.countDeleteButtons();
         await noteComponentsPage.clickOnLastDeleteButton();
 
         noteDeleteDialog = new NoteDeleteDialog();
-        expect(await noteDeleteDialog.getDialogTitle()).to.eq('plannerApp.note.delete.question');
+        expect(await noteDeleteDialog.getDialogTitle())
+            .to.eq('plannerApp.note.delete.question');
         await noteDeleteDialog.clickOnConfirmButton();
 
         expect(await noteComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-    });
+    });*/
 
     after(async () => {
         await navBarPage.autoSignOut();

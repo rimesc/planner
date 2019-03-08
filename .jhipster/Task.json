@@ -27,6 +27,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "task",
+            "relationshipValidateRules": "required",
             "relationshipName": "owner",
             "otherEntityField": "id"
         },
@@ -34,6 +35,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "goal",
             "otherEntityRelationshipName": "task",
+            "relationshipValidateRules": "required",
             "relationshipName": "goal",
             "otherEntityField": "id"
         }

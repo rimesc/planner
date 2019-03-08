@@ -24,8 +24,8 @@
             "fieldType": "String",
             "fieldValidateRules": [
                 "required",
-                "maxlength",
-                "unique"
+                "unique",
+                "maxlength"
             ],
             "fieldValidateRulesMaxlength": 32
         },
@@ -71,6 +71,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "theme",
+            "relationshipValidateRules": "required",
             "relationshipName": "owner",
             "otherEntityField": "id"
         }

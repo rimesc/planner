@@ -12,7 +12,7 @@ describe('Theme e2e test', () => {
     let signInPage: SignInPage;
     let themeUpdatePage: ThemeUpdatePage;
     let themeComponentsPage: ThemeComponentsPage;
-    let themeDeleteDialog: ThemeDeleteDialog;
+    /*let themeDeleteDialog: ThemeDeleteDialog;*/
     const fileNameToUpload = 'logo-jhipster.png';
     const fileToUpload = '../../../../../main/webapp/content/images/' + fileNameToUpload;
     const absolutePath = path.resolve(__dirname, fileToUpload);
@@ -39,7 +39,7 @@ describe('Theme e2e test', () => {
         await themeUpdatePage.cancel();
     });
 
-    it('should create and save Themes', async () => {
+    /* it('should create and save Themes', async () => {
         const nbButtonsBeforeCreate = await themeComponentsPage.countDeleteButtons();
 
         await themeComponentsPage.clickOnCreateButton();
@@ -50,7 +50,7 @@ describe('Theme e2e test', () => {
             themeUpdatePage.setAvatarInput(absolutePath),
             themeUpdatePage.setCreatedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             themeUpdatePage.visibilitySelectLastOption(),
-            themeUpdatePage.ownerSelectLastOption()
+            themeUpdatePage.ownerSelectLastOption(),
         ]);
         expect(await themeUpdatePage.getNameInput()).to.eq('name');
         expect(await themeUpdatePage.getDescriptionInput()).to.eq('description');
@@ -61,18 +61,19 @@ describe('Theme e2e test', () => {
         expect(await themeUpdatePage.getSaveButton().isPresent()).to.be.false;
 
         expect(await themeComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1);
-    });
+    });*/
 
-    it('should delete last Theme', async () => {
+    /* it('should delete last Theme', async () => {
         const nbButtonsBeforeDelete = await themeComponentsPage.countDeleteButtons();
         await themeComponentsPage.clickOnLastDeleteButton();
 
         themeDeleteDialog = new ThemeDeleteDialog();
-        expect(await themeDeleteDialog.getDialogTitle()).to.eq('plannerApp.theme.delete.question');
+        expect(await themeDeleteDialog.getDialogTitle())
+            .to.eq('plannerApp.theme.delete.question');
         await themeDeleteDialog.clickOnConfirmButton();
 
         expect(await themeComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-    });
+    });*/
 
     after(async () => {
         await navBarPage.autoSignOut();

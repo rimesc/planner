@@ -64,7 +64,8 @@ public class Theme implements Serializable {
     private Set<Tag> tags = new HashSet<>();
     @OneToMany(mappedBy = "theme")
     private Set<Goal> goals = new HashSet<>();
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("themes")
     private User owner;
 

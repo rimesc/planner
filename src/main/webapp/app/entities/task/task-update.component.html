@@ -51,17 +51,29 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.task.owner" for="field_owner">Owner</label>
-                    <select class="form-control" id="field_owner" name="owner" [(ngModel)]="task.ownerId" >
-                        <option [ngValue]="null"></option>
+                    <select class="form-control" id="field_owner" name="owner" [(ngModel)]="task.ownerId"  required>
+                        <option *ngIf="!editForm.value.owner" [ngValue]="null" selected></option>
                         <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
                     </select>
                 </div>
+                <div [hidden]="!(editForm.controls.owner?.dirty && editForm.controls.owner?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.owner?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.task.goal" for="field_goal">Goal</label>
-                    <select class="form-control" id="field_goal" name="goal" [(ngModel)]="task.goalId" >
-                        <option [ngValue]="null"></option>
+                    <select class="form-control" id="field_goal" name="goal" [(ngModel)]="task.goalId"  required>
+                        <option *ngIf="!editForm.value.goal" [ngValue]="null" selected></option>
                         <option [ngValue]="goalOption.id" *ngFor="let goalOption of goals; trackBy: trackGoalById">{{goalOption.id}}</option>
                     </select>
+                </div>
+                <div [hidden]="!(editForm.controls.goal?.dirty && editForm.controls.goal?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.goal?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
                 </div>
             </div>
             <div>

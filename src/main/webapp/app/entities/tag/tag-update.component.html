@@ -38,10 +38,16 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.tag.theme" for="field_theme">Theme</label>
-                    <select class="form-control" id="field_theme" name="theme" [(ngModel)]="tag.themeId" >
-                        <option [ngValue]="null"></option>
+                    <select class="form-control" id="field_theme" name="theme" [(ngModel)]="tag.themeId"  required>
+                        <option *ngIf="!editForm.value.theme" [ngValue]="null" selected></option>
                         <option [ngValue]="themeOption.id" *ngFor="let themeOption of themes; trackBy: trackThemeById">{{themeOption.id}}</option>
                     </select>
+                </div>
+                <div [hidden]="!(editForm.controls.theme?.dirty && editForm.controls.theme?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.theme?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
                 </div>
             </div>
             <div>

@@ -32,6 +32,7 @@ import org.springframework.validation.Validator;
 
 import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.domain.Tag;
+import io.github.rimesc.planner.domain.Theme;
 import io.github.rimesc.planner.repository.TagRepository;
 import io.github.rimesc.planner.service.TagService;
 import io.github.rimesc.planner.service.dto.TagDTO;
@@ -103,6 +104,11 @@ public class TagResourceIntTest {
         Tag tag = new Tag()
             .name(DEFAULT_NAME)
             .icon(DEFAULT_ICON);
+        // Add required entity
+        Theme theme = ThemeResourceIntTest.createEntity(em);
+        em.persist(theme);
+        em.flush();
+        tag.setTheme(theme);
         return tag;
     }
 

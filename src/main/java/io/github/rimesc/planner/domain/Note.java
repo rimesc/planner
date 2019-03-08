@@ -47,11 +47,13 @@ public class Note implements Serializable {
     @Column(name = "visibility", nullable = false)
     private Visibility visibility;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("notes")
     private User owner;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("notes")
     private Goal goal;
 

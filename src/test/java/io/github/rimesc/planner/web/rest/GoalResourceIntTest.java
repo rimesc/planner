@@ -139,6 +139,16 @@ public class GoalResourceIntTest {
             .completed(DEFAULT_COMPLETED)
             .order(DEFAULT_ORDER)
             .visibility(DEFAULT_VISIBILITY);
+        // Add required entity
+        User user = UserResourceIntTest.createEntity(em);
+        em.persist(user);
+        em.flush();
+        goal.setOwner(user);
+        // Add required entity
+        Theme theme = ThemeResourceIntTest.createEntity(em);
+        em.persist(theme);
+        em.flush();
+        goal.setTheme(theme);
         return goal;
     }
 
