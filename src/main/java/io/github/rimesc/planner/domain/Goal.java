@@ -1,6 +1,5 @@
 package io.github.rimesc.planner.domain;
 
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -23,7 +22,7 @@ import io.github.rimesc.planner.domain.enumeration.Visibility;
 public class Goal implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,6 +1,5 @@
 package io.github.rimesc.planner.domain;
 
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -25,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Task implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

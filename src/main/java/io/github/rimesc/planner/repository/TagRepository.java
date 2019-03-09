@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import io.github.rimesc.planner.domain.Tag;
 
-
 /**
  * Spring Data  repository for the Tag entity.
  */

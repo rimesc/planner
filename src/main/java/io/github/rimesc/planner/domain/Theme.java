@@ -1,6 +1,5 @@
 package io.github.rimesc.planner.domain;
 
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -23,7 +22,7 @@ import io.github.rimesc.planner.domain.enumeration.Visibility;
 public class Theme implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +37,6 @@ public class Theme implements Serializable {
     @Column(name = "description", length = 512, nullable = false)
     private String description;
 
-    
     @Lob
     @Column(name = "avatar")
     private byte[] avatar;

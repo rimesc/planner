@@ -21,7 +21,7 @@ import io.github.rimesc.planner.config.ApplicationProperties;
 import io.github.rimesc.planner.config.DefaultProfileUtil;
 
 @SpringBootApplication
-@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
+@EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
 public class PlannerApp {
 
     private static final Logger log = LoggerFactory.getLogger(PlannerApp.class);
@@ -42,11 +42,13 @@ public class PlannerApp {
     @PostConstruct
     public void initApplication() {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
+        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
+            && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
             log.error("You have misconfigured your application! It should not run " +
                 "with both the 'dev' and 'prod' profiles at the same time.");
         }
-        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_CLOUD)) {
+        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
+            && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_CLOUD)) {
             log.error("You have misconfigured your application! It should not " +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
@@ -81,10 +83,10 @@ public class PlannerApp {
             log.warn("The host name could not be determined, using `localhost` as fallback");
         }
         log.info("\n----------------------------------------------------------\n\t" +
-                "Application '{}' is running! Access URLs:\n\t" +
-                "Local: \t\t{}://localhost:{}{}\n\t" +
-                "External: \t{}://{}:{}{}\n\t" +
-                "Profile(s): \t{}\n----------------------------------------------------------",
+            "Application '{}' is running! Access URLs:\n\t" +
+            "Local: \t\t{}://localhost:{}{}\n\t" +
+            "External: \t{}://{}:{}{}\n\t" +
+            "Profile(s): \t{}\n----------------------------------------------------------",
             env.getProperty("spring.application.name"),
             protocol,
             serverPort,

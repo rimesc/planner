@@ -45,6 +45,7 @@ import io.github.rimesc.planner.service.ThemeService;
 import io.github.rimesc.planner.service.dto.ThemeDTO;
 import io.github.rimesc.planner.service.mapper.ThemeMapper;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
+
 /**
  * Test class for the ThemeResource REST controller.
  *
@@ -279,7 +280,7 @@ public class ThemeResourceIntTest {
             .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
             .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getTheme() throws Exception {
@@ -473,7 +474,6 @@ public class ThemeResourceIntTest {
         defaultThemeShouldNotBeFound("tagId.equals=" + (tagId + 1));
     }
 
-
     @Test
     @Transactional
     public void getAllThemesByGoalIsEqualToSomething() throws Exception {
@@ -491,7 +491,6 @@ public class ThemeResourceIntTest {
         // Get all the themeList where goal equals to goalId + 1
         defaultThemeShouldNotBeFound("goalId.equals=" + (goalId + 1));
     }
-
 
     @Test
     @Transactional
@@ -549,7 +548,6 @@ public class ThemeResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional

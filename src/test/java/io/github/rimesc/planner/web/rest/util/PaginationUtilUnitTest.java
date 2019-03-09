@@ -32,9 +32,9 @@ public class PaginationUtilUnitTest {
         String headerData = strHeaders.get(0);
         assertTrue(headerData.split(",").length == 4);
         String expectedData = "</api/_search/example?page=7&size=50>; rel=\"next\","
-                + "</api/_search/example?page=5&size=50>; rel=\"prev\","
-                + "</api/_search/example?page=7&size=50>; rel=\"last\","
-                + "</api/_search/example?page=0&size=50>; rel=\"first\"";
+            + "</api/_search/example?page=5&size=50>; rel=\"prev\","
+            + "</api/_search/example?page=7&size=50>; rel=\"last\","
+            + "</api/_search/example?page=0&size=50>; rel=\"first\"";
         assertEquals(expectedData, headerData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertTrue(xTotalCountHeaders.size() == 1);

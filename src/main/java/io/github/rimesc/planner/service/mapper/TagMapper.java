@@ -9,12 +9,14 @@ import io.github.rimesc.planner.service.dto.TagDTO;
 /**
  * Mapper for the entity Tag and its DTO TagDTO.
  */
-@Mapper(componentModel = "spring", uses = {ThemeMapper.class})
+@Mapper(componentModel = "spring", uses = { ThemeMapper.class })
 public interface TagMapper extends EntityMapper<TagDTO, Tag> {
 
+    @Override
     @Mapping(source = "theme.id", target = "themeId")
     TagDTO toDto(Tag tag);
 
+    @Override
     @Mapping(source = "themeId", target = "theme")
     @Mapping(target = "goals", ignore = true)
     Tag toEntity(TagDTO tagDTO);

@@ -42,7 +42,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService, TokenProvider tokenProvider, CorsFilter corsFilter, SecurityProblemSupport problemSupport) {
+    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder,
+                                 UserDetailsService userDetailsService,
+                                 TokenProvider tokenProvider,
+                                 CorsFilter corsFilter,
+                                 SecurityProblemSupport problemSupport) {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.userDetailsService = userDetailsService;
         this.tokenProvider = tokenProvider;
@@ -92,14 +96,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .exceptionHandling()
             .authenticationEntryPoint(problemSupport)
             .accessDeniedHandler(problemSupport)
-        .and()
+            .and()
             .headers()
             .frameOptions()
             .disable()
-        .and()
+            .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
+            .and()
             .authorizeRequests()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
@@ -110,7 +114,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-        .and()
+            .and()
             .apply(securityConfigurerAdapter());
 
     }

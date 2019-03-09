@@ -106,7 +106,6 @@ public class ThemeCriteria implements Serializable {
         this.ownerId = ownerId;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -116,8 +115,7 @@ public class ThemeCriteria implements Serializable {
             return false;
         }
         final ThemeCriteria that = (ThemeCriteria) o;
-        return
-            Objects.equals(id, that.id) &&
+        return Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(description, that.description) &&
             Objects.equals(created, that.created) &&
@@ -130,28 +128,27 @@ public class ThemeCriteria implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(
-        id,
-        name,
-        description,
-        created,
-        visibility,
-        tagId,
-        goalId,
-        ownerId
-        );
+            id,
+            name,
+            description,
+            created,
+            visibility,
+            tagId,
+            goalId,
+            ownerId);
     }
 
     @Override
     public String toString() {
         return "ThemeCriteria{" +
-                (id != null ? "id=" + id + ", " : "") +
-                (name != null ? "name=" + name + ", " : "") +
-                (description != null ? "description=" + description + ", " : "") +
-                (created != null ? "created=" + created + ", " : "") +
-                (visibility != null ? "visibility=" + visibility + ", " : "") +
-                (tagId != null ? "tagId=" + tagId + ", " : "") +
-                (goalId != null ? "goalId=" + goalId + ", " : "") +
-                (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
+            (id != null ? "id=" + id + ", " : "") +
+            (name != null ? "name=" + name + ", " : "") +
+            (description != null ? "description=" + description + ", " : "") +
+            (created != null ? "created=" + created + ", " : "") +
+            (visibility != null ? "visibility=" + visibility + ", " : "") +
+            (tagId != null ? "tagId=" + tagId + ", " : "") +
+            (goalId != null ? "goalId=" + goalId + ", " : "") +
+            (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
             "}";
     }
 

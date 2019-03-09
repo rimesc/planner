@@ -190,7 +190,7 @@ public class TagResourceIntTest {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].icon").value(hasItem(DEFAULT_ICON.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getTag() throws Exception {

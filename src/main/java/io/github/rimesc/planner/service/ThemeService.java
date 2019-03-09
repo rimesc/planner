@@ -58,7 +58,6 @@ public class ThemeService {
             .map(themeMapper::toDto);
     }
 
-
     /**
      * Get one theme by id.
      *

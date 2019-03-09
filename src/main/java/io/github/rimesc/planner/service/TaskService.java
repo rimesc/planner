@@ -59,7 +59,6 @@ public class TaskService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
     /**
      * Get one task by id.
      *

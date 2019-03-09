@@ -23,14 +23,14 @@ public class LiquibaseConfiguration {
 
     private final Environment env;
 
-
     public LiquibaseConfiguration(Environment env) {
         this.env = env;
     }
 
     @Bean
     public SpringLiquibase liquibase(@Qualifier("taskExecutor") TaskExecutor taskExecutor,
-            DataSource dataSource, LiquibaseProperties liquibaseProperties) {
+                                     DataSource dataSource,
+                                     LiquibaseProperties liquibaseProperties) {
 
         // Use liquibase.integration.spring.SpringLiquibase if you don't want Liquibase to start asynchronously
         SpringLiquibase liquibase = new AsyncSpringLiquibase(taskExecutor, env);

@@ -1,4 +1,5 @@
 package io.github.rimesc.planner.service.dto;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -21,7 +22,6 @@ public class TaskDTO implements Serializable {
     private Instant created;
 
     private Instant completed;
-
 
     private Long ownerId;
 

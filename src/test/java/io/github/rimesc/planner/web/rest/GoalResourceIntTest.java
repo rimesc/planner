@@ -53,6 +53,7 @@ import io.github.rimesc.planner.service.GoalService;
 import io.github.rimesc.planner.service.dto.GoalDTO;
 import io.github.rimesc.planner.service.mapper.GoalMapper;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
+
 /**
  * Test class for the GoalResource REST controller.
  *
@@ -293,8 +294,8 @@ public class GoalResourceIntTest {
             .andExpect(jsonPath("$.[*].order").value(hasItem(DEFAULT_ORDER.intValue())))
             .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
     }
-    
-    @SuppressWarnings({"unchecked"})
+
+    @SuppressWarnings({ "unchecked" })
     public void getAllGoalsWithEagerRelationshipsIsEnabled() throws Exception {
         GoalResource goalResource = new GoalResource(goalServiceMock, goalQueryService);
         when(goalServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
@@ -306,25 +307,25 @@ public class GoalResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
 
         restGoalMockMvc.perform(get("/api/goals?eagerload=true"))
-        .andExpect(status().isOk());
+            .andExpect(status().isOk());
 
         verify(goalServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({ "unchecked" })
     public void getAllGoalsWithEagerRelationshipsIsNotEnabled() throws Exception {
         GoalResource goalResource = new GoalResource(goalServiceMock, goalQueryService);
-            when(goalServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restGoalMockMvc = MockMvcBuilders.standaloneSetup(goalResource)
+        when(goalServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        MockMvc restGoalMockMvc = MockMvcBuilders.standaloneSetup(goalResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
 
         restGoalMockMvc.perform(get("/api/goals?eagerload=true"))
-        .andExpect(status().isOk());
+            .andExpect(status().isOk());
 
-            verify(goalServiceMock, times(1)).findAllWithEagerRelationships(any());
+        verify(goalServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -527,7 +528,6 @@ public class GoalResourceIntTest {
         defaultGoalShouldBeFound("order.lessThan=" + UPDATED_ORDER);
     }
 
-
     @Test
     @Transactional
     public void getAllGoalsByVisibilityIsEqualToSomething() throws Exception {
@@ -585,7 +585,6 @@ public class GoalResourceIntTest {
         defaultGoalShouldNotBeFound("taskId.equals=" + (taskId + 1));
     }
 
-
     @Test
     @Transactional
     public void getAllGoalsByNoteIsEqualToSomething() throws Exception {
@@ -603,7 +602,6 @@ public class GoalResourceIntTest {
         // Get all the goalList where note equals to noteId + 1
         defaultGoalShouldNotBeFound("noteId.equals=" + (noteId + 1));
     }
-
 
     @Test
     @Transactional
@@ -623,7 +621,6 @@ public class GoalResourceIntTest {
         defaultGoalShouldNotBeFound("ownerId.equals=" + (ownerId + 1));
     }
 
-
     @Test
     @Transactional
     public void getAllGoalsByTagIsEqualToSomething() throws Exception {
@@ -641,7 +638,6 @@ public class GoalResourceIntTest {
         // Get all the goalList where tag equals to tagId + 1
         defaultGoalShouldNotBeFound("tagId.equals=" + (tagId + 1));
     }
-
 
     @Test
     @Transactional
@@ -698,7 +694,6 @@ public class GoalResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(content().string("0"));
     }
-
 
     @Test
     @Transactional

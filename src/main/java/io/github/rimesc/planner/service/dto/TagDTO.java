@@ -1,4 +1,5 @@
 package io.github.rimesc.planner.service.dto;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -18,7 +19,6 @@ public class TagDTO implements Serializable {
 
     @Size(max = 16)
     private String icon;
-
 
     private Long themeId;
 

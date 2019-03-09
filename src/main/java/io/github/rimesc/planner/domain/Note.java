@@ -1,6 +1,5 @@
 package io.github.rimesc.planner.domain;
 
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -20,17 +19,15 @@ import io.github.rimesc.planner.domain.enumeration.Visibility;
 public class Note implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    
     @Lob
     @Column(name = "markdown", nullable = false)
     private String markdown;
 
-    
     @Lob
     @Column(name = "html", nullable = false)
     private String html;

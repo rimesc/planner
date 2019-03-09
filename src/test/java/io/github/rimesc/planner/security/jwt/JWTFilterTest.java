@@ -44,8 +44,7 @@ public class JWTFilterTest {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
             "test-user",
             "test-password",
-            Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
-        );
+            Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER)));
         String jwt = tokenProvider.createToken(authentication, false);
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
@@ -99,8 +98,7 @@ public class JWTFilterTest {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
             "test-user",
             "test-password",
-            Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
-        );
+            Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER)));
         String jwt = tokenProvider.createToken(authentication, false);
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader(JWTFilter.AUTHORIZATION_HEADER, "Basic " + jwt);

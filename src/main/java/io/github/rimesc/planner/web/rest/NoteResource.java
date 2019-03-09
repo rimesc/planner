@@ -1,4 +1,5 @@
 package io.github.rimesc.planner.web.rest;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;

@@ -9,12 +9,14 @@ import io.github.rimesc.planner.service.dto.ThemeDTO;
 /**
  * Mapper for the entity Theme and its DTO ThemeDTO.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class})
+@Mapper(componentModel = "spring", uses = { UserMapper.class })
 public interface ThemeMapper extends EntityMapper<ThemeDTO, Theme> {
 
+    @Override
     @Mapping(source = "owner.id", target = "ownerId")
     ThemeDTO toDto(Theme theme);
 
+    @Override
     @Mapping(target = "tags", ignore = true)
     @Mapping(target = "goals", ignore = true)
     @Mapping(source = "ownerId", target = "owner")

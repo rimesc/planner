@@ -223,7 +223,7 @@ public class TaskResourceIntTest {
             .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
             .andExpect(jsonPath("$.[*].completed").value(hasItem(DEFAULT_COMPLETED.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getTask() throws Exception {

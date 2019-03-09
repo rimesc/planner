@@ -1,6 +1,5 @@
 package io.github.rimesc.planner.service.mapper;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void usersToUserDTOsShouldMapOnlyNonNullUsers(){
+    public void usersToUserDTOsShouldMapOnlyNonNullUsers() {
         List<User> users = new ArrayList<>();
         users.add(user);
         users.add(null);
@@ -67,7 +66,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOsToUsersShouldMapOnlyNonNullUsers(){
+    public void userDTOsToUsersShouldMapOnlyNonNullUsers() {
         List<UserDTO> usersDto = new ArrayList<>();
         usersDto.add(userDto);
         usersDto.add(null);
@@ -79,7 +78,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOsToUsersWithAuthoritiesStringShouldMapToUsersWithAuthoritiesDomain(){
+    public void userDTOsToUsersWithAuthoritiesStringShouldMapToUsersWithAuthoritiesDomain() {
         Set<String> authoritiesAsString = new HashSet<>();
         authoritiesAsString.add("ADMIN");
         userDto.setAuthorities(authoritiesAsString);
@@ -97,7 +96,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOsToUsersMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities(){
+    public void userDTOsToUsersMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
         userDto.setAuthorities(null);
 
         List<UserDTO> usersDto = new ArrayList<>();
@@ -112,7 +111,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOToUserMapWithAuthoritiesStringShouldReturnUserWithAuthorities(){
+    public void userDTOToUserMapWithAuthoritiesStringShouldReturnUserWithAuthorities() {
         Set<String> authoritiesAsString = new HashSet<>();
         authoritiesAsString.add("ADMIN");
         userDto.setAuthorities(authoritiesAsString);
@@ -128,7 +127,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOToUserMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities(){
+    public void userDTOToUserMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
         userDto.setAuthorities(null);
 
         User user = userMapper.userDTOToUser(userDto);
@@ -139,7 +138,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOToUserMapWithNullUserShouldReturnNull(){
+    public void userDTOToUserMapWithNullUserShouldReturnNull() {
         assertThat(userMapper.userDTOToUser(null)).isNull();
     }
 

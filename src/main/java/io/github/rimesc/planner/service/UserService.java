@@ -120,9 +120,9 @@ public class UserService {
         return newUser;
     }
 
-    private boolean removeNonActivatedUser(User existingUser){
+    private boolean removeNonActivatedUser(User existingUser) {
         if (existingUser.getActivated()) {
-             return false;
+            return false;
         }
         userRepository.delete(existingUser);
         userRepository.flush();

@@ -25,7 +25,6 @@ public class ThemeDTO implements Serializable {
     @Size(max = 512)
     private String description;
 
-    
     @Lob
     private byte[] avatar;
 
@@ -35,7 +34,6 @@ public class ThemeDTO implements Serializable {
 
     @NotNull
     private Visibility visibility;
-
 
     private Long ownerId;
 
