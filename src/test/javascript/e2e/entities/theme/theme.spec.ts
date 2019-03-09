@@ -46,7 +46,6 @@ describe('Theme e2e test', () => {
         await promise.all([
             themeUpdatePage.setNameInput('name'),
             themeUpdatePage.setDescriptionInput('description'),
-            themeUpdatePage.setShortNameInput('shortName'),
             themeUpdatePage.setAvatarInput(absolutePath),
             themeUpdatePage.setCreatedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             themeUpdatePage.visibilitySelectLastOption(),
@@ -54,7 +53,6 @@ describe('Theme e2e test', () => {
         ]);
         expect(await themeUpdatePage.getNameInput()).to.eq('name');
         expect(await themeUpdatePage.getDescriptionInput()).to.eq('description');
-        expect(await themeUpdatePage.getShortNameInput()).to.eq('shortName');
         expect(await themeUpdatePage.getAvatarInput()).to.endsWith(fileNameToUpload);
         expect(await themeUpdatePage.getCreatedInput()).to.contain('2001-01-01T02:30');
         await themeUpdatePage.save();

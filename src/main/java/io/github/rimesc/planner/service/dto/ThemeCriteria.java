@@ -32,8 +32,6 @@ public class ThemeCriteria implements Serializable {
 
     private StringFilter description;
 
-    private StringFilter shortName;
-
     private InstantFilter created;
 
     private VisibilityFilter visibility;
@@ -66,14 +64,6 @@ public class ThemeCriteria implements Serializable {
 
     public void setDescription(StringFilter description) {
         this.description = description;
-    }
-
-    public StringFilter getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(StringFilter shortName) {
-        this.shortName = shortName;
     }
 
     public InstantFilter getCreated() {
@@ -130,7 +120,6 @@ public class ThemeCriteria implements Serializable {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(shortName, that.shortName) &&
             Objects.equals(created, that.created) &&
             Objects.equals(visibility, that.visibility) &&
             Objects.equals(tagId, that.tagId) &&
@@ -144,7 +133,6 @@ public class ThemeCriteria implements Serializable {
         id,
         name,
         description,
-        shortName,
         created,
         visibility,
         tagId,
@@ -159,7 +147,6 @@ public class ThemeCriteria implements Serializable {
                 (id != null ? "id=" + id + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
                 (description != null ? "description=" + description + ", " : "") +
-                (shortName != null ? "shortName=" + shortName + ", " : "") +
                 (created != null ? "created=" + created + ", " : "") +
                 (visibility != null ? "visibility=" + visibility + ", " : "") +
                 (tagId != null ? "tagId=" + tagId + ", " : "") +

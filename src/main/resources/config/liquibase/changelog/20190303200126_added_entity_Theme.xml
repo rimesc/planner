@@ -30,10 +30,6 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="short_name" type="varchar(32)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_theme_short_name" />
-            </column>
-
             <column name="avatar" type="longblob">
                 <constraints nullable="true" />
             </column>

@@ -20,16 +20,6 @@
             "fieldValidateRulesMaxlength": 512
         },
         {
-            "fieldName": "shortName",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "unique",
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 32
-        },
-        {
             "fieldName": "avatar",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "image",

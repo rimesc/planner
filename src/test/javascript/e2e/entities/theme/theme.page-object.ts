@@ -28,7 +28,6 @@ export class ThemeUpdatePage {
     cancelButton = element(by.id('cancel-save'));
     nameInput = element(by.id('field_name'));
     descriptionInput = element(by.id('field_description'));
-    shortNameInput = element(by.id('field_shortName'));
     avatarInput = element(by.id('file_avatar'));
     createdInput = element(by.id('field_created'));
     visibilitySelect = element(by.id('field_visibility'));
@@ -52,14 +51,6 @@ export class ThemeUpdatePage {
 
     async getDescriptionInput() {
         return this.descriptionInput.getAttribute('value');
-    }
-
-    async setShortNameInput(shortName) {
-        await this.shortNameInput.sendKeys(shortName);
-    }
-
-    async getShortNameInput() {
-        return this.shortNameInput.getAttribute('value');
     }
 
     async setAvatarInput(avatar) {
