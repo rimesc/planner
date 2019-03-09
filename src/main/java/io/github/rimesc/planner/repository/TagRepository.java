@@ -1,6 +1,7 @@
 package io.github.rimesc.planner.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import io.github.rimesc.planner.domain.Tag;
@@ -10,6 +11,6 @@ import io.github.rimesc.planner.domain.Tag;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface TagRepository extends JpaRepository<Tag, Long> {
+public interface TagRepository extends JpaRepository<Tag, Long>, JpaSpecificationExecutor<Tag> {
 
 }

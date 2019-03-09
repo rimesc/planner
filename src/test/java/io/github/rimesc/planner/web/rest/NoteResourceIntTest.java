@@ -38,6 +38,7 @@ import io.github.rimesc.planner.domain.Note;
 import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.domain.enumeration.Visibility;
 import io.github.rimesc.planner.repository.NoteRepository;
+import io.github.rimesc.planner.service.NoteQueryService;
 import io.github.rimesc.planner.service.NoteService;
 import io.github.rimesc.planner.service.dto.NoteDTO;
 import io.github.rimesc.planner.service.mapper.NoteMapper;
@@ -77,6 +78,9 @@ public class NoteResourceIntTest {
     private NoteService noteService;
 
     @Autowired
+    private NoteQueryService noteQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -98,7 +102,7 @@ public class NoteResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final NoteResource noteResource = new NoteResource(noteService);
+        final NoteResource noteResource = new NoteResource(noteService, noteQueryService);
         this.restNoteMockMvc = MockMvcBuilders.standaloneSetup(noteResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -253,6 +257,197 @@ public class NoteResourceIntTest {
             .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
             .andExpect(jsonPath("$.edited").value(DEFAULT_EDITED.toString()))
             .andExpect(jsonPath("$.visibility").value(DEFAULT_VISIBILITY.toString()));
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByCreatedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where created equals to DEFAULT_CREATED
+        defaultNoteShouldBeFound("created.equals=" + DEFAULT_CREATED);
+
+        // Get all the noteList where created equals to UPDATED_CREATED
+        defaultNoteShouldNotBeFound("created.equals=" + UPDATED_CREATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByCreatedIsInShouldWork() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where created in DEFAULT_CREATED or UPDATED_CREATED
+        defaultNoteShouldBeFound("created.in=" + DEFAULT_CREATED + "," + UPDATED_CREATED);
+
+        // Get all the noteList where created equals to UPDATED_CREATED
+        defaultNoteShouldNotBeFound("created.in=" + UPDATED_CREATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByCreatedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where created is not null
+        defaultNoteShouldBeFound("created.specified=true");
+
+        // Get all the noteList where created is null
+        defaultNoteShouldNotBeFound("created.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByEditedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where edited equals to DEFAULT_EDITED
+        defaultNoteShouldBeFound("edited.equals=" + DEFAULT_EDITED);
+
+        // Get all the noteList where edited equals to UPDATED_EDITED
+        defaultNoteShouldNotBeFound("edited.equals=" + UPDATED_EDITED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByEditedIsInShouldWork() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where edited in DEFAULT_EDITED or UPDATED_EDITED
+        defaultNoteShouldBeFound("edited.in=" + DEFAULT_EDITED + "," + UPDATED_EDITED);
+
+        // Get all the noteList where edited equals to UPDATED_EDITED
+        defaultNoteShouldNotBeFound("edited.in=" + UPDATED_EDITED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByEditedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where edited is not null
+        defaultNoteShouldBeFound("edited.specified=true");
+
+        // Get all the noteList where edited is null
+        defaultNoteShouldNotBeFound("edited.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByVisibilityIsEqualToSomething() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where visibility equals to DEFAULT_VISIBILITY
+        defaultNoteShouldBeFound("visibility.equals=" + DEFAULT_VISIBILITY);
+
+        // Get all the noteList where visibility equals to UPDATED_VISIBILITY
+        defaultNoteShouldNotBeFound("visibility.equals=" + UPDATED_VISIBILITY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByVisibilityIsInShouldWork() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where visibility in DEFAULT_VISIBILITY or UPDATED_VISIBILITY
+        defaultNoteShouldBeFound("visibility.in=" + DEFAULT_VISIBILITY + "," + UPDATED_VISIBILITY);
+
+        // Get all the noteList where visibility equals to UPDATED_VISIBILITY
+        defaultNoteShouldNotBeFound("visibility.in=" + UPDATED_VISIBILITY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByVisibilityIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where visibility is not null
+        defaultNoteShouldBeFound("visibility.specified=true");
+
+        // Get all the noteList where visibility is null
+        defaultNoteShouldNotBeFound("visibility.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByOwnerIsEqualToSomething() throws Exception {
+        // Initialize the database
+        User owner = UserResourceIntTest.createEntity(em);
+        em.persist(owner);
+        em.flush();
+        note.setOwner(owner);
+        noteRepository.saveAndFlush(note);
+        Long ownerId = owner.getId();
+
+        // Get all the noteList where owner equals to ownerId
+        defaultNoteShouldBeFound("ownerId.equals=" + ownerId);
+
+        // Get all the noteList where owner equals to ownerId + 1
+        defaultNoteShouldNotBeFound("ownerId.equals=" + (ownerId + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByGoalIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Goal goal = GoalResourceIntTest.createEntity(em);
+        em.persist(goal);
+        em.flush();
+        note.setGoal(goal);
+        noteRepository.saveAndFlush(note);
+        Long goalId = goal.getId();
+
+        // Get all the noteList where goal equals to goalId
+        defaultNoteShouldBeFound("goalId.equals=" + goalId);
+
+        // Get all the noteList where goal equals to goalId + 1
+        defaultNoteShouldNotBeFound("goalId.equals=" + (goalId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultNoteShouldBeFound(String filter) throws Exception {
+        restNoteMockMvc.perform(get("/api/notes?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(note.getId().intValue())))
+            .andExpect(jsonPath("$.[*].markdown").value(hasItem(DEFAULT_MARKDOWN.toString())))
+            .andExpect(jsonPath("$.[*].html").value(hasItem(DEFAULT_HTML.toString())))
+            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
+            .andExpect(jsonPath("$.[*].edited").value(hasItem(DEFAULT_EDITED.toString())))
+            .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
+
+        // Check, that the count call also returns 1
+        restNoteMockMvc.perform(get("/api/notes/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultNoteShouldNotBeFound(String filter) throws Exception {
+        restNoteMockMvc.perform(get("/api/notes?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restNoteMockMvc.perform(get("/api/notes/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

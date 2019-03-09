@@ -31,9 +31,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import io.github.rimesc.planner.PlannerApp;
+import io.github.rimesc.planner.domain.Goal;
 import io.github.rimesc.planner.domain.Tag;
 import io.github.rimesc.planner.domain.Theme;
 import io.github.rimesc.planner.repository.TagRepository;
+import io.github.rimesc.planner.service.TagQueryService;
 import io.github.rimesc.planner.service.TagService;
 import io.github.rimesc.planner.service.dto.TagDTO;
 import io.github.rimesc.planner.service.mapper.TagMapper;
@@ -64,6 +66,9 @@ public class TagResourceIntTest {
     private TagService tagService;
 
     @Autowired
+    private TagQueryService tagQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -85,7 +90,7 @@ public class TagResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TagResource tagResource = new TagResource(tagService);
+        final TagResource tagResource = new TagResource(tagService, tagQueryService);
         this.restTagMockMvc = MockMvcBuilders.standaloneSetup(tagResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -204,6 +209,155 @@ public class TagResourceIntTest {
             .andExpect(jsonPath("$.id").value(tag.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.icon").value(DEFAULT_ICON.toString()));
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where name equals to DEFAULT_NAME
+        defaultTagShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the tagList where name equals to UPDATED_NAME
+        defaultTagShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultTagShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the tagList where name equals to UPDATED_NAME
+        defaultTagShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where name is not null
+        defaultTagShouldBeFound("name.specified=true");
+
+        // Get all the tagList where name is null
+        defaultTagShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByIconIsEqualToSomething() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where icon equals to DEFAULT_ICON
+        defaultTagShouldBeFound("icon.equals=" + DEFAULT_ICON);
+
+        // Get all the tagList where icon equals to UPDATED_ICON
+        defaultTagShouldNotBeFound("icon.equals=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByIconIsInShouldWork() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where icon in DEFAULT_ICON or UPDATED_ICON
+        defaultTagShouldBeFound("icon.in=" + DEFAULT_ICON + "," + UPDATED_ICON);
+
+        // Get all the tagList where icon equals to UPDATED_ICON
+        defaultTagShouldNotBeFound("icon.in=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByIconIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where icon is not null
+        defaultTagShouldBeFound("icon.specified=true");
+
+        // Get all the tagList where icon is null
+        defaultTagShouldNotBeFound("icon.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByThemeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Theme theme = ThemeResourceIntTest.createEntity(em);
+        em.persist(theme);
+        em.flush();
+        tag.setTheme(theme);
+        tagRepository.saveAndFlush(tag);
+        Long themeId = theme.getId();
+
+        // Get all the tagList where theme equals to themeId
+        defaultTagShouldBeFound("themeId.equals=" + themeId);
+
+        // Get all the tagList where theme equals to themeId + 1
+        defaultTagShouldNotBeFound("themeId.equals=" + (themeId + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByGoalIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Goal goal = GoalResourceIntTest.createEntity(em);
+        em.persist(goal);
+        em.flush();
+        tag.addGoal(goal);
+        tagRepository.saveAndFlush(tag);
+        Long goalId = goal.getId();
+
+        // Get all the tagList where goal equals to goalId
+        defaultTagShouldBeFound("goalId.equals=" + goalId);
+
+        // Get all the tagList where goal equals to goalId + 1
+        defaultTagShouldNotBeFound("goalId.equals=" + (goalId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultTagShouldBeFound(String filter) throws Exception {
+        restTagMockMvc.perform(get("/api/tags?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(tag.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].icon").value(hasItem(DEFAULT_ICON)));
+
+        // Check, that the count call also returns 1
+        restTagMockMvc.perform(get("/api/tags/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultTagShouldNotBeFound(String filter) throws Exception {
+        restTagMockMvc.perform(get("/api/tags?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restTagMockMvc.perform(get("/api/tags/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test
