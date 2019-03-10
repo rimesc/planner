@@ -55,11 +55,11 @@ public class TaskResourceIntTest {
     private static final String DEFAULT_SUMMARY = "AAAAAAAAAA";
     private static final String UPDATED_SUMMARY = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_CREATED = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Instant DEFAULT_COMPLETED = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_COMPLETED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant DEFAULT_COMPLETED_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_COMPLETED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private TaskRepository taskRepository;
@@ -113,8 +113,8 @@ public class TaskResourceIntTest {
     public static Task createEntity(EntityManager em) {
         Task task = new Task()
             .summary(DEFAULT_SUMMARY)
-            .created(DEFAULT_CREATED)
-            .completed(DEFAULT_COMPLETED);
+            .createdAt(DEFAULT_CREATED_AT)
+            .completedAt(DEFAULT_COMPLETED_AT);
         // Add required entity
         User user = UserResourceIntTest.createEntity(em);
         em.persist(user);
@@ -150,8 +150,8 @@ public class TaskResourceIntTest {
         assertThat(taskList).hasSize(databaseSizeBeforeCreate + 1);
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getSummary()).isEqualTo(DEFAULT_SUMMARY);
-        assertThat(testTask.getCreated()).isEqualTo(DEFAULT_CREATED);
-        assertThat(testTask.getCompleted()).isEqualTo(DEFAULT_COMPLETED);
+        assertThat(testTask.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testTask.getCompletedAt()).isEqualTo(DEFAULT_COMPLETED_AT);
     }
 
     @Test
@@ -195,10 +195,10 @@ public class TaskResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCreatedIsRequired() throws Exception {
+    public void checkCreatedAtIsRequired() throws Exception {
         int databaseSizeBeforeTest = taskRepository.findAll().size();
         // set the field null
-        task.setCreated(null);
+        task.setCreatedAt(null);
 
         // Create the Task, which fails.
         TaskDTO taskDTO = taskMapper.toDto(task);
@@ -224,8 +224,8 @@ public class TaskResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
             .andExpect(jsonPath("$.[*].summary").value(hasItem(DEFAULT_SUMMARY.toString())))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
-            .andExpect(jsonPath("$.[*].completed").value(hasItem(DEFAULT_COMPLETED.toString())));
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())));
     }
 
     @Test
@@ -240,8 +240,8 @@ public class TaskResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(task.getId().intValue()))
             .andExpect(jsonPath("$.summary").value(DEFAULT_SUMMARY.toString()))
-            .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
-            .andExpect(jsonPath("$.completed").value(DEFAULT_COMPLETED.toString()));
+            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
+            .andExpect(jsonPath("$.completedAt").value(DEFAULT_COMPLETED_AT.toString()));
     }
 
     @Test
@@ -285,80 +285,80 @@ public class TaskResourceIntTest {
 
     @Test
     @Transactional
-    public void getAllTasksByCreatedIsEqualToSomething() throws Exception {
+    public void getAllTasksByCreatedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where created equals to DEFAULT_CREATED
-        defaultTaskShouldBeFound("created.equals=" + DEFAULT_CREATED);
+        // Get all the taskList where createdAt equals to DEFAULT_CREATED_AT
+        defaultTaskShouldBeFound("createdAt.equals=" + DEFAULT_CREATED_AT);
 
-        // Get all the taskList where created equals to UPDATED_CREATED
-        defaultTaskShouldNotBeFound("created.equals=" + UPDATED_CREATED);
+        // Get all the taskList where createdAt equals to UPDATED_CREATED_AT
+        defaultTaskShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllTasksByCreatedIsInShouldWork() throws Exception {
+    public void getAllTasksByCreatedAtIsInShouldWork() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where created in DEFAULT_CREATED or UPDATED_CREATED
-        defaultTaskShouldBeFound("created.in=" + DEFAULT_CREATED + "," + UPDATED_CREATED);
+        // Get all the taskList where createdAt in DEFAULT_CREATED_AT or UPDATED_CREATED_AT
+        defaultTaskShouldBeFound("createdAt.in=" + DEFAULT_CREATED_AT + "," + UPDATED_CREATED_AT);
 
-        // Get all the taskList where created equals to UPDATED_CREATED
-        defaultTaskShouldNotBeFound("created.in=" + UPDATED_CREATED);
+        // Get all the taskList where createdAt equals to UPDATED_CREATED_AT
+        defaultTaskShouldNotBeFound("createdAt.in=" + UPDATED_CREATED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllTasksByCreatedIsNullOrNotNull() throws Exception {
+    public void getAllTasksByCreatedAtIsNullOrNotNull() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where created is not null
-        defaultTaskShouldBeFound("created.specified=true");
+        // Get all the taskList where createdAt is not null
+        defaultTaskShouldBeFound("createdAt.specified=true");
 
-        // Get all the taskList where created is null
-        defaultTaskShouldNotBeFound("created.specified=false");
+        // Get all the taskList where createdAt is null
+        defaultTaskShouldNotBeFound("createdAt.specified=false");
     }
 
     @Test
     @Transactional
-    public void getAllTasksByCompletedIsEqualToSomething() throws Exception {
+    public void getAllTasksByCompletedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where completed equals to DEFAULT_COMPLETED
-        defaultTaskShouldBeFound("completed.equals=" + DEFAULT_COMPLETED);
+        // Get all the taskList where completedAt equals to DEFAULT_COMPLETED_AT
+        defaultTaskShouldBeFound("completedAt.equals=" + DEFAULT_COMPLETED_AT);
 
-        // Get all the taskList where completed equals to UPDATED_COMPLETED
-        defaultTaskShouldNotBeFound("completed.equals=" + UPDATED_COMPLETED);
+        // Get all the taskList where completedAt equals to UPDATED_COMPLETED_AT
+        defaultTaskShouldNotBeFound("completedAt.equals=" + UPDATED_COMPLETED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllTasksByCompletedIsInShouldWork() throws Exception {
+    public void getAllTasksByCompletedAtIsInShouldWork() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where completed in DEFAULT_COMPLETED or UPDATED_COMPLETED
-        defaultTaskShouldBeFound("completed.in=" + DEFAULT_COMPLETED + "," + UPDATED_COMPLETED);
+        // Get all the taskList where completedAt in DEFAULT_COMPLETED_AT or UPDATED_COMPLETED_AT
+        defaultTaskShouldBeFound("completedAt.in=" + DEFAULT_COMPLETED_AT + "," + UPDATED_COMPLETED_AT);
 
-        // Get all the taskList where completed equals to UPDATED_COMPLETED
-        defaultTaskShouldNotBeFound("completed.in=" + UPDATED_COMPLETED);
+        // Get all the taskList where completedAt equals to UPDATED_COMPLETED_AT
+        defaultTaskShouldNotBeFound("completedAt.in=" + UPDATED_COMPLETED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllTasksByCompletedIsNullOrNotNull() throws Exception {
+    public void getAllTasksByCompletedAtIsNullOrNotNull() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
 
-        // Get all the taskList where completed is not null
-        defaultTaskShouldBeFound("completed.specified=true");
+        // Get all the taskList where completedAt is not null
+        defaultTaskShouldBeFound("completedAt.specified=true");
 
-        // Get all the taskList where completed is null
-        defaultTaskShouldNotBeFound("completed.specified=false");
+        // Get all the taskList where completedAt is null
+        defaultTaskShouldNotBeFound("completedAt.specified=false");
     }
 
     @Test
@@ -406,8 +406,8 @@ public class TaskResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
             .andExpect(jsonPath("$.[*].summary").value(hasItem(DEFAULT_SUMMARY)))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
-            .andExpect(jsonPath("$.[*].completed").value(hasItem(DEFAULT_COMPLETED.toString())));
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())));
 
         // Check, that the count call also returns 1
         restTaskMockMvc.perform(get("/api/tasks/count?sort=id,desc&" + filter))
@@ -455,8 +455,8 @@ public class TaskResourceIntTest {
         em.detach(updatedTask);
         updatedTask
             .summary(UPDATED_SUMMARY)
-            .created(UPDATED_CREATED)
-            .completed(UPDATED_COMPLETED);
+            .createdAt(UPDATED_CREATED_AT)
+            .completedAt(UPDATED_COMPLETED_AT);
         TaskDTO taskDTO = taskMapper.toDto(updatedTask);
 
         restTaskMockMvc.perform(put("/api/tasks")
@@ -469,8 +469,8 @@ public class TaskResourceIntTest {
         assertThat(taskList).hasSize(databaseSizeBeforeUpdate);
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getSummary()).isEqualTo(UPDATED_SUMMARY);
-        assertThat(testTask.getCreated()).isEqualTo(UPDATED_CREATED);
-        assertThat(testTask.getCompleted()).isEqualTo(UPDATED_COMPLETED);
+        assertThat(testTask.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testTask.getCompletedAt()).isEqualTo(UPDATED_COMPLETED_AT);
     }
 
     @Test

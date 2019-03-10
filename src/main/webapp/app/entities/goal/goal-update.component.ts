@@ -27,8 +27,8 @@ export class GoalUpdateComponent implements OnInit {
     tags: ITag[];
 
     themes: ITheme[];
-    created: string;
-    completed: string;
+    createdAt: string;
+    completedAt: string;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -43,8 +43,8 @@ export class GoalUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ goal }) => {
             this.goal = goal;
-            this.created = this.goal.created != null ? this.goal.created.format(DATE_TIME_FORMAT) : null;
-            this.completed = this.goal.completed != null ? this.goal.completed.format(DATE_TIME_FORMAT) : null;
+            this.createdAt = this.goal.createdAt != null ? this.goal.createdAt.format(DATE_TIME_FORMAT) : null;
+            this.completedAt = this.goal.completedAt != null ? this.goal.completedAt.format(DATE_TIME_FORMAT) : null;
         });
         this.userService
             .query()
@@ -75,8 +75,8 @@ export class GoalUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.goal.created = this.created != null ? moment(this.created, DATE_TIME_FORMAT) : null;
-        this.goal.completed = this.completed != null ? moment(this.completed, DATE_TIME_FORMAT) : null;
+        this.goal.createdAt = this.createdAt != null ? moment(this.createdAt, DATE_TIME_FORMAT) : null;
+        this.goal.completedAt = this.completedAt != null ? moment(this.completedAt, DATE_TIME_FORMAT) : null;
         if (this.goal.id !== undefined) {
             this.subscribeToSaveResponse(this.goalService.update(this.goal));
         } else {

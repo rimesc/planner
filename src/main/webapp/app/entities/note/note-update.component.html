@@ -32,26 +32,26 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="plannerApp.note.created" for="field_created">Created</label>
+                    <label class="form-control-label" jhiTranslate="plannerApp.note.createdAt" for="field_createdAt">Created At</label>
                     <div class="d-flex">
-                        <input id="field_created" type="datetime-local" class="form-control" name="created" [(ngModel)]="created" placeholder="YYYY-MM-DD HH:mm"
+                        <input id="field_createdAt" type="datetime-local" class="form-control" name="createdAt" [(ngModel)]="createdAt" placeholder="YYYY-MM-DD HH:mm"
                         required/>
                     </div>
-                    <div [hidden]="!(editForm.controls.created?.dirty && editForm.controls.created?.invalid)">
+                    <div [hidden]="!(editForm.controls.createdAt?.dirty && editForm.controls.createdAt?.invalid)">
                         <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.created?.errors?.required" jhiTranslate="entity.validation.required">
+                        [hidden]="!editForm.controls.createdAt?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                         <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.created?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            [hidden]="!editForm.controls.createdAt?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
                             This field should be a date and time.
                         </small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="plannerApp.note.edited" for="field_edited">Edited</label>
+                    <label class="form-control-label" jhiTranslate="plannerApp.note.editedAt" for="field_editedAt">Edited At</label>
                     <div class="d-flex">
-                        <input id="field_edited" type="datetime-local" class="form-control" name="edited" [(ngModel)]="edited" placeholder="YYYY-MM-DD HH:mm"
+                        <input id="field_editedAt" type="datetime-local" class="form-control" name="editedAt" [(ngModel)]="editedAt" placeholder="YYYY-MM-DD HH:mm"
                         />
                     </div>
                 </div>

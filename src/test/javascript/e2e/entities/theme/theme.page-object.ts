@@ -29,7 +29,7 @@ export class ThemeUpdatePage {
     nameInput = element(by.id('field_name'));
     descriptionInput = element(by.id('field_description'));
     avatarInput = element(by.id('file_avatar'));
-    createdInput = element(by.id('field_created'));
+    createdAtInput = element(by.id('field_createdAt'));
     visibilitySelect = element(by.id('field_visibility'));
     ownerSelect = element(by.id('field_owner'));
 
@@ -61,12 +61,12 @@ export class ThemeUpdatePage {
         return this.avatarInput.getAttribute('value');
     }
 
-    async setCreatedInput(created) {
-        await this.createdInput.sendKeys(created);
+    async setCreatedAtInput(createdAt) {
+        await this.createdAtInput.sendKeys(createdAt);
     }
 
-    async getCreatedInput() {
-        return this.createdInput.getAttribute('value');
+    async getCreatedAtInput() {
+        return this.createdAtInput.getAttribute('value');
     }
 
     async setVisibilitySelect(visibility) {

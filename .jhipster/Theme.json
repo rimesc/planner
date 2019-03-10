@@ -29,7 +29,7 @@
             "fieldValidateRulesMaxbytes": 262144
         },
         {
-            "fieldName": "created",
+            "fieldName": "createdAt",
             "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"

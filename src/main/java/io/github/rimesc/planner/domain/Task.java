@@ -35,11 +35,11 @@ public class Task implements Serializable {
     private String summary;
 
     @NotNull
-    @Column(name = "created", nullable = false)
-    private Instant created;
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 
-    @Column(name = "completed")
-    private Instant completed;
+    @Column(name = "completed_at")
+    private Instant completedAt;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -73,30 +73,30 @@ public class Task implements Serializable {
         this.summary = summary;
     }
 
-    public Instant getCreated() {
-        return created;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public Task created(Instant created) {
-        this.created = created;
+    public Task createdAt(Instant createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Instant getCompleted() {
-        return completed;
+    public Instant getCompletedAt() {
+        return completedAt;
     }
 
-    public Task completed(Instant completed) {
-        this.completed = completed;
+    public Task completedAt(Instant completedAt) {
+        this.completedAt = completedAt;
         return this;
     }
 
-    public void setCompleted(Instant completed) {
-        this.completed = completed;
+    public void setCompletedAt(Instant completedAt) {
+        this.completedAt = completedAt;
     }
 
     public User getOwner() {
@@ -151,8 +151,8 @@ public class Task implements Serializable {
         return "Task{" +
             "id=" + getId() +
             ", summary='" + getSummary() + "'" +
-            ", created='" + getCreated() + "'" +
-            ", completed='" + getCompleted() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
+            ", completedAt='" + getCompletedAt() + "'" +
             "}";
     }
 }

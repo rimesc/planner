@@ -18,7 +18,7 @@
             "name": "Name",
             "description": "Description",
             "avatar": "Avatar",
-            "created": "Created",
+            "createdAt": "Created At",
             "visibility": "Visibility",
             "tag": "Tag",
             "goal": "Goal",

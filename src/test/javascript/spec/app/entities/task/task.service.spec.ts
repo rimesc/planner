@@ -32,8 +32,8 @@ describe('Service Tests', () => {
             it('should find an element', async () => {
                 const returnedFromService = Object.assign(
                     {
-                        created: currentDate.format(DATE_TIME_FORMAT),
-                        completed: currentDate.format(DATE_TIME_FORMAT)
+                        createdAt: currentDate.format(DATE_TIME_FORMAT),
+                        completedAt: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
@@ -50,15 +50,15 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         id: 0,
-                        created: currentDate.format(DATE_TIME_FORMAT),
-                        completed: currentDate.format(DATE_TIME_FORMAT)
+                        createdAt: currentDate.format(DATE_TIME_FORMAT),
+                        completedAt: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
                 const expected = Object.assign(
                     {
-                        created: currentDate,
-                        completed: currentDate
+                        createdAt: currentDate,
+                        completedAt: currentDate
                     },
                     returnedFromService
                 );
@@ -74,16 +74,16 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         summary: 'BBBBBB',
-                        created: currentDate.format(DATE_TIME_FORMAT),
-                        completed: currentDate.format(DATE_TIME_FORMAT)
+                        createdAt: currentDate.format(DATE_TIME_FORMAT),
+                        completedAt: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
 
                 const expected = Object.assign(
                     {
-                        created: currentDate,
-                        completed: currentDate
+                        createdAt: currentDate,
+                        completedAt: currentDate
                     },
                     returnedFromService
                 );
@@ -99,15 +99,15 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         summary: 'BBBBBB',
-                        created: currentDate.format(DATE_TIME_FORMAT),
-                        completed: currentDate.format(DATE_TIME_FORMAT)
+                        createdAt: currentDate.format(DATE_TIME_FORMAT),
+                        completedAt: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
                 const expected = Object.assign(
                     {
-                        created: currentDate,
-                        completed: currentDate
+                        createdAt: currentDate,
+                        completedAt: currentDate
                     },
                     returnedFromService
                 );

@@ -32,7 +32,7 @@ public class ThemeCriteria implements Serializable {
 
     private StringFilter description;
 
-    private InstantFilter created;
+    private InstantFilter createdAt;
 
     private VisibilityFilter visibility;
 
@@ -66,12 +66,12 @@ public class ThemeCriteria implements Serializable {
         this.description = description;
     }
 
-    public InstantFilter getCreated() {
-        return created;
+    public InstantFilter getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(InstantFilter created) {
-        this.created = created;
+    public void setCreatedAt(InstantFilter createdAt) {
+        this.createdAt = createdAt;
     }
 
     public VisibilityFilter getVisibility() {
@@ -118,7 +118,7 @@ public class ThemeCriteria implements Serializable {
         return Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(created, that.created) &&
+            Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(visibility, that.visibility) &&
             Objects.equals(tagId, that.tagId) &&
             Objects.equals(goalId, that.goalId) &&
@@ -131,7 +131,7 @@ public class ThemeCriteria implements Serializable {
             id,
             name,
             description,
-            created,
+            createdAt,
             visibility,
             tagId,
             goalId,
@@ -144,7 +144,7 @@ public class ThemeCriteria implements Serializable {
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
             (description != null ? "description=" + description + ", " : "") +
-            (created != null ? "created=" + created + ", " : "") +
+            (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
             (visibility != null ? "visibility=" + visibility + ", " : "") +
             (tagId != null ? "tagId=" + tagId + ", " : "") +
             (goalId != null ? "goalId=" + goalId + ", " : "") +

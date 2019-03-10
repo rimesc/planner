@@ -17,8 +17,8 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="plannerApp.note.markdown">Markdown</span></th>
             <th><span jhiTranslate="plannerApp.note.html">Html</span></th>
-            <th><span jhiTranslate="plannerApp.note.created">Created</span></th>
-            <th><span jhiTranslate="plannerApp.note.edited">Edited</span></th>
+            <th><span jhiTranslate="plannerApp.note.createdAt">Created At</span></th>
+            <th><span jhiTranslate="plannerApp.note.editedAt">Edited At</span></th>
             <th><span jhiTranslate="plannerApp.note.visibility">Visibility</span></th>
             <th><span jhiTranslate="plannerApp.note.owner">Owner</span></th>
             <th><span jhiTranslate="plannerApp.note.goal">Goal</span></th>
@@ -30,8 +30,8 @@
                 <td><a [routerLink]="['/note', note.id, 'view' ]">{{note.id}}</a></td>
                 <td>{{note.markdown}}</td>
                 <td>{{note.html}}</td>
-                <td>{{note.created | date:'medium'}}</td>
-                <td>{{note.edited | date:'medium'}}</td>
+                <td>{{note.createdAt | date:'medium'}}</td>
+                <td>{{note.editedAt | date:'medium'}}</td>
                 <td jhiTranslate="{{'plannerApp.Visibility.' + note.visibility}}">{{note.visibility}}</td>
                 <td>
                     {{note.ownerId}}

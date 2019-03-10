@@ -41,14 +41,14 @@ describe('Task e2e test', () => {
         await taskComponentsPage.clickOnCreateButton();
         await promise.all([
             taskUpdatePage.setSummaryInput('summary'),
-            taskUpdatePage.setCreatedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-            taskUpdatePage.setCompletedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            taskUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            taskUpdatePage.setCompletedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             taskUpdatePage.ownerSelectLastOption(),
             taskUpdatePage.goalSelectLastOption(),
         ]);
         expect(await taskUpdatePage.getSummaryInput()).to.eq('summary');
-        expect(await taskUpdatePage.getCreatedInput()).to.contain('2001-01-01T02:30');
-        expect(await taskUpdatePage.getCompletedInput()).to.contain('2001-01-01T02:30');
+        expect(await taskUpdatePage.getCreatedAtInput()).to.contain('2001-01-01T02:30');
+        expect(await taskUpdatePage.getCompletedAtInput()).to.contain('2001-01-01T02:30');
         await taskUpdatePage.save();
         expect(await taskUpdatePage.getSaveButton().isPresent()).to.be.false;
 

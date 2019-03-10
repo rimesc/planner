@@ -19,7 +19,7 @@ export class ThemeUpdateComponent implements OnInit {
     isSaving: boolean;
 
     users: IUser[];
-    created: string;
+    createdAt: string;
 
     constructor(
         protected dataUtils: JhiDataUtils,
@@ -34,7 +34,7 @@ export class ThemeUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ theme }) => {
             this.theme = theme;
-            this.created = this.theme.created != null ? this.theme.created.format(DATE_TIME_FORMAT) : null;
+            this.createdAt = this.theme.createdAt != null ? this.theme.createdAt.format(DATE_TIME_FORMAT) : null;
         });
         this.userService
             .query()
@@ -67,7 +67,7 @@ export class ThemeUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.theme.created = this.created != null ? moment(this.created, DATE_TIME_FORMAT) : null;
+        this.theme.createdAt = this.createdAt != null ? moment(this.createdAt, DATE_TIME_FORMAT) : null;
         if (this.theme.id !== undefined) {
             this.subscribeToSaveResponse(this.themeService.update(this.theme));
         } else {

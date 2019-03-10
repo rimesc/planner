@@ -23,8 +23,8 @@ export class NoteUpdateComponent implements OnInit {
     users: IUser[];
 
     goals: IGoal[];
-    created: string;
-    edited: string;
+    createdAt: string;
+    editedAt: string;
 
     constructor(
         protected dataUtils: JhiDataUtils,
@@ -39,8 +39,8 @@ export class NoteUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ note }) => {
             this.note = note;
-            this.created = this.note.created != null ? this.note.created.format(DATE_TIME_FORMAT) : null;
-            this.edited = this.note.edited != null ? this.note.edited.format(DATE_TIME_FORMAT) : null;
+            this.createdAt = this.note.createdAt != null ? this.note.createdAt.format(DATE_TIME_FORMAT) : null;
+            this.editedAt = this.note.editedAt != null ? this.note.editedAt.format(DATE_TIME_FORMAT) : null;
         });
         this.userService
             .query()
@@ -76,8 +76,8 @@ export class NoteUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.note.created = this.created != null ? moment(this.created, DATE_TIME_FORMAT) : null;
-        this.note.edited = this.edited != null ? moment(this.edited, DATE_TIME_FORMAT) : null;
+        this.note.createdAt = this.createdAt != null ? moment(this.createdAt, DATE_TIME_FORMAT) : null;
+        this.note.editedAt = this.editedAt != null ? moment(this.editedAt, DATE_TIME_FORMAT) : null;
         if (this.note.id !== undefined) {
             this.subscribeToSaveResponse(this.noteService.update(this.note));
         } else {

@@ -33,11 +33,11 @@ public class Goal implements Serializable {
     private String summary;
 
     @NotNull
-    @Column(name = "created", nullable = false)
-    private Instant created;
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 
-    @Column(name = "completed")
-    private Instant completed;
+    @Column(name = "completed_at")
+    private Instant completedAt;
 
     @NotNull
     @Column(name = "jhi_order", nullable = false)
@@ -90,30 +90,30 @@ public class Goal implements Serializable {
         this.summary = summary;
     }
 
-    public Instant getCreated() {
-        return created;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public Goal created(Instant created) {
-        this.created = created;
+    public Goal createdAt(Instant createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Instant getCompleted() {
-        return completed;
+    public Instant getCompletedAt() {
+        return completedAt;
     }
 
-    public Goal completed(Instant completed) {
-        this.completed = completed;
+    public Goal completedAt(Instant completedAt) {
+        this.completedAt = completedAt;
         return this;
     }
 
-    public void setCompleted(Instant completed) {
-        this.completed = completed;
+    public void setCompletedAt(Instant completedAt) {
+        this.completedAt = completedAt;
     }
 
     public Long getOrder() {
@@ -269,8 +269,8 @@ public class Goal implements Serializable {
         return "Goal{" +
             "id=" + getId() +
             ", summary='" + getSummary() + "'" +
-            ", created='" + getCreated() + "'" +
-            ", completed='" + getCompleted() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
+            ", completedAt='" + getCompletedAt() + "'" +
             ", order=" + getOrder() +
             ", visibility='" + getVisibility() + "'" +
             "}";

@@ -23,6 +23,18 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'tag',
                 loadChildren: './tag/tag.module#PlannerTagModule'
+            },
+            {
+                path: 'goal',
+                loadChildren: './goal/goal.module#PlannerGoalModule'
+            },
+            {
+                path: 'task',
+                loadChildren: './task/task.module#PlannerTaskModule'
+            },
+            {
+                path: 'note',
+                loadChildren: './note/note.module#PlannerNoteModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

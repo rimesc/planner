@@ -41,8 +41,8 @@ describe('Goal e2e test', () => {
         await goalComponentsPage.clickOnCreateButton();
         await promise.all([
             goalUpdatePage.setSummaryInput('summary'),
-            goalUpdatePage.setCreatedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-            goalUpdatePage.setCompletedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            goalUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            goalUpdatePage.setCompletedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             goalUpdatePage.setOrderInput('5'),
             goalUpdatePage.visibilitySelectLastOption(),
             goalUpdatePage.ownerSelectLastOption(),
@@ -50,8 +50,8 @@ describe('Goal e2e test', () => {
             goalUpdatePage.themeSelectLastOption(),
         ]);
         expect(await goalUpdatePage.getSummaryInput()).to.eq('summary');
-        expect(await goalUpdatePage.getCreatedInput()).to.contain('2001-01-01T02:30');
-        expect(await goalUpdatePage.getCompletedInput()).to.contain('2001-01-01T02:30');
+        expect(await goalUpdatePage.getCreatedAtInput()).to.contain('2001-01-01T02:30');
+        expect(await goalUpdatePage.getCompletedAtInput()).to.contain('2001-01-01T02:30');
         expect(await goalUpdatePage.getOrderInput()).to.eq('5');
         await goalUpdatePage.save();
         expect(await goalUpdatePage.getSaveButton().isPresent()).to.be.false;

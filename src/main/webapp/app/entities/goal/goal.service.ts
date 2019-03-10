@@ -51,16 +51,16 @@ export class GoalService {
 
     protected convertDateFromClient(goal: IGoal): IGoal {
         const copy: IGoal = Object.assign({}, goal, {
-            created: goal.created != null && goal.created.isValid() ? goal.created.toJSON() : null,
-            completed: goal.completed != null && goal.completed.isValid() ? goal.completed.toJSON() : null
+            createdAt: goal.createdAt != null && goal.createdAt.isValid() ? goal.createdAt.toJSON() : null,
+            completedAt: goal.completedAt != null && goal.completedAt.isValid() ? goal.completedAt.toJSON() : null
         });
         return copy;
     }
 
     protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
         if (res.body) {
-            res.body.created = res.body.created != null ? moment(res.body.created) : null;
-            res.body.completed = res.body.completed != null ? moment(res.body.completed) : null;
+            res.body.createdAt = res.body.createdAt != null ? moment(res.body.createdAt) : null;
+            res.body.completedAt = res.body.completedAt != null ? moment(res.body.completedAt) : null;
         }
         return res;
     }
@@ -68,8 +68,8 @@ export class GoalService {
     protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
         if (res.body) {
             res.body.forEach((goal: IGoal) => {
-                goal.created = goal.created != null ? moment(goal.created) : null;
-                goal.completed = goal.completed != null ? moment(goal.completed) : null;
+                goal.createdAt = goal.createdAt != null ? moment(goal.createdAt) : null;
+                goal.completedAt = goal.completedAt != null ? moment(goal.completedAt) : null;
             });
         }
         return res;

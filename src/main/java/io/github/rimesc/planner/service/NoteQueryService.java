@@ -90,11 +90,11 @@ public class NoteQueryService extends QueryService<Note> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), Note_.id));
             }
-            if (criteria.getCreated() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreated(), Note_.created));
+            if (criteria.getCreatedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Note_.createdAt));
             }
-            if (criteria.getEdited() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getEdited(), Note_.edited));
+            if (criteria.getEditedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getEditedAt(), Note_.editedAt));
             }
             if (criteria.getVisibility() != null) {
                 specification = specification.and(buildSpecification(criteria.getVisibility(), Note_.visibility));

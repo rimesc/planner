@@ -51,16 +51,16 @@ export class NoteService {
 
     protected convertDateFromClient(note: INote): INote {
         const copy: INote = Object.assign({}, note, {
-            created: note.created != null && note.created.isValid() ? note.created.toJSON() : null,
-            edited: note.edited != null && note.edited.isValid() ? note.edited.toJSON() : null
+            createdAt: note.createdAt != null && note.createdAt.isValid() ? note.createdAt.toJSON() : null,
+            editedAt: note.editedAt != null && note.editedAt.isValid() ? note.editedAt.toJSON() : null
         });
         return copy;
     }
 
     protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
         if (res.body) {
-            res.body.created = res.body.created != null ? moment(res.body.created) : null;
-            res.body.edited = res.body.edited != null ? moment(res.body.edited) : null;
+            res.body.createdAt = res.body.createdAt != null ? moment(res.body.createdAt) : null;
+            res.body.editedAt = res.body.editedAt != null ? moment(res.body.editedAt) : null;
         }
         return res;
     }
@@ -68,8 +68,8 @@ export class NoteService {
     protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
         if (res.body) {
             res.body.forEach((note: INote) => {
-                note.created = note.created != null ? moment(note.created) : null;
-                note.edited = note.edited != null ? moment(note.edited) : null;
+                note.createdAt = note.createdAt != null ? moment(note.createdAt) : null;
+                note.editedAt = note.editedAt != null ? moment(note.editedAt) : null;
             });
         }
         return res;

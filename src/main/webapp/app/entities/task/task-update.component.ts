@@ -23,8 +23,8 @@ export class TaskUpdateComponent implements OnInit {
     users: IUser[];
 
     goals: IGoal[];
-    created: string;
-    completed: string;
+    createdAt: string;
+    completedAt: string;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -38,8 +38,8 @@ export class TaskUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ task }) => {
             this.task = task;
-            this.created = this.task.created != null ? this.task.created.format(DATE_TIME_FORMAT) : null;
-            this.completed = this.task.completed != null ? this.task.completed.format(DATE_TIME_FORMAT) : null;
+            this.createdAt = this.task.createdAt != null ? this.task.createdAt.format(DATE_TIME_FORMAT) : null;
+            this.completedAt = this.task.completedAt != null ? this.task.completedAt.format(DATE_TIME_FORMAT) : null;
         });
         this.userService
             .query()
@@ -63,8 +63,8 @@ export class TaskUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.task.created = this.created != null ? moment(this.created, DATE_TIME_FORMAT) : null;
-        this.task.completed = this.completed != null ? moment(this.completed, DATE_TIME_FORMAT) : null;
+        this.task.createdAt = this.createdAt != null ? moment(this.createdAt, DATE_TIME_FORMAT) : null;
+        this.task.completedAt = this.completedAt != null ? moment(this.completedAt, DATE_TIME_FORMAT) : null;
         if (this.task.id !== undefined) {
             this.subscribeToSaveResponse(this.taskService.update(this.task));
         } else {

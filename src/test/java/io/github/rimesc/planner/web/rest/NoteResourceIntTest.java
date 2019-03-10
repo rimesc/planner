@@ -59,11 +59,11 @@ public class NoteResourceIntTest {
     private static final String DEFAULT_HTML = "AAAAAAAAAA";
     private static final String UPDATED_HTML = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_CREATED = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Instant DEFAULT_EDITED = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_EDITED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant DEFAULT_EDITED_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_EDITED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final Visibility DEFAULT_VISIBILITY = Visibility.PUBLIC;
     private static final Visibility UPDATED_VISIBILITY = Visibility.PRIVATE;
@@ -121,8 +121,8 @@ public class NoteResourceIntTest {
         Note note = new Note()
             .markdown(DEFAULT_MARKDOWN)
             .html(DEFAULT_HTML)
-            .created(DEFAULT_CREATED)
-            .edited(DEFAULT_EDITED)
+            .createdAt(DEFAULT_CREATED_AT)
+            .editedAt(DEFAULT_EDITED_AT)
             .visibility(DEFAULT_VISIBILITY);
         // Add required entity
         User user = UserResourceIntTest.createEntity(em);
@@ -160,8 +160,8 @@ public class NoteResourceIntTest {
         Note testNote = noteList.get(noteList.size() - 1);
         assertThat(testNote.getMarkdown()).isEqualTo(DEFAULT_MARKDOWN);
         assertThat(testNote.getHtml()).isEqualTo(DEFAULT_HTML);
-        assertThat(testNote.getCreated()).isEqualTo(DEFAULT_CREATED);
-        assertThat(testNote.getEdited()).isEqualTo(DEFAULT_EDITED);
+        assertThat(testNote.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testNote.getEditedAt()).isEqualTo(DEFAULT_EDITED_AT);
         assertThat(testNote.getVisibility()).isEqualTo(DEFAULT_VISIBILITY);
     }
 
@@ -187,10 +187,10 @@ public class NoteResourceIntTest {
 
     @Test
     @Transactional
-    public void checkCreatedIsRequired() throws Exception {
+    public void checkCreatedAtIsRequired() throws Exception {
         int databaseSizeBeforeTest = noteRepository.findAll().size();
         // set the field null
-        note.setCreated(null);
+        note.setCreatedAt(null);
 
         // Create the Note, which fails.
         NoteDTO noteDTO = noteMapper.toDto(note);
@@ -236,8 +236,8 @@ public class NoteResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(note.getId().intValue())))
             .andExpect(jsonPath("$.[*].markdown").value(hasItem(DEFAULT_MARKDOWN.toString())))
             .andExpect(jsonPath("$.[*].html").value(hasItem(DEFAULT_HTML.toString())))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
-            .andExpect(jsonPath("$.[*].edited").value(hasItem(DEFAULT_EDITED.toString())))
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].editedAt").value(hasItem(DEFAULT_EDITED_AT.toString())))
             .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
     }
 
@@ -254,87 +254,87 @@ public class NoteResourceIntTest {
             .andExpect(jsonPath("$.id").value(note.getId().intValue()))
             .andExpect(jsonPath("$.markdown").value(DEFAULT_MARKDOWN.toString()))
             .andExpect(jsonPath("$.html").value(DEFAULT_HTML.toString()))
-            .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
-            .andExpect(jsonPath("$.edited").value(DEFAULT_EDITED.toString()))
+            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
+            .andExpect(jsonPath("$.editedAt").value(DEFAULT_EDITED_AT.toString()))
             .andExpect(jsonPath("$.visibility").value(DEFAULT_VISIBILITY.toString()));
     }
 
     @Test
     @Transactional
-    public void getAllNotesByCreatedIsEqualToSomething() throws Exception {
+    public void getAllNotesByCreatedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);
 
-        // Get all the noteList where created equals to DEFAULT_CREATED
-        defaultNoteShouldBeFound("created.equals=" + DEFAULT_CREATED);
+        // Get all the noteList where createdAt equals to DEFAULT_CREATED_AT
+        defaultNoteShouldBeFound("createdAt.equals=" + DEFAULT_CREATED_AT);
 
-        // Get all the noteList where created equals to UPDATED_CREATED
-        defaultNoteShouldNotBeFound("created.equals=" + UPDATED_CREATED);
+        // Get all the noteList where createdAt equals to UPDATED_CREATED_AT
+        defaultNoteShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllNotesByCreatedIsInShouldWork() throws Exception {
+    public void getAllNotesByCreatedAtIsInShouldWork() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);
 
-        // Get all the noteList where created in DEFAULT_CREATED or UPDATED_CREATED
-        defaultNoteShouldBeFound("created.in=" + DEFAULT_CREATED + "," + UPDATED_CREATED);
+        // Get all the noteList where createdAt in DEFAULT_CREATED_AT or UPDATED_CREATED_AT
+        defaultNoteShouldBeFound("createdAt.in=" + DEFAULT_CREATED_AT + "," + UPDATED_CREATED_AT);
 
-        // Get all the noteList where created equals to UPDATED_CREATED
-        defaultNoteShouldNotBeFound("created.in=" + UPDATED_CREATED);
+        // Get all the noteList where createdAt equals to UPDATED_CREATED_AT
+        defaultNoteShouldNotBeFound("createdAt.in=" + UPDATED_CREATED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllNotesByCreatedIsNullOrNotNull() throws Exception {
+    public void getAllNotesByCreatedAtIsNullOrNotNull() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);
 
-        // Get all the noteList where created is not null
-        defaultNoteShouldBeFound("created.specified=true");
+        // Get all the noteList where createdAt is not null
+        defaultNoteShouldBeFound("createdAt.specified=true");
 
-        // Get all the noteList where created is null
-        defaultNoteShouldNotBeFound("created.specified=false");
+        // Get all the noteList where createdAt is null
+        defaultNoteShouldNotBeFound("createdAt.specified=false");
     }
 
     @Test
     @Transactional
-    public void getAllNotesByEditedIsEqualToSomething() throws Exception {
+    public void getAllNotesByEditedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);
 
-        // Get all the noteList where edited equals to DEFAULT_EDITED
-        defaultNoteShouldBeFound("edited.equals=" + DEFAULT_EDITED);
+        // Get all the noteList where editedAt equals to DEFAULT_EDITED_AT
+        defaultNoteShouldBeFound("editedAt.equals=" + DEFAULT_EDITED_AT);
 
-        // Get all the noteList where edited equals to UPDATED_EDITED
-        defaultNoteShouldNotBeFound("edited.equals=" + UPDATED_EDITED);
+        // Get all the noteList where editedAt equals to UPDATED_EDITED_AT
+        defaultNoteShouldNotBeFound("editedAt.equals=" + UPDATED_EDITED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllNotesByEditedIsInShouldWork() throws Exception {
+    public void getAllNotesByEditedAtIsInShouldWork() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);
 
-        // Get all the noteList where edited in DEFAULT_EDITED or UPDATED_EDITED
-        defaultNoteShouldBeFound("edited.in=" + DEFAULT_EDITED + "," + UPDATED_EDITED);
+        // Get all the noteList where editedAt in DEFAULT_EDITED_AT or UPDATED_EDITED_AT
+        defaultNoteShouldBeFound("editedAt.in=" + DEFAULT_EDITED_AT + "," + UPDATED_EDITED_AT);
 
-        // Get all the noteList where edited equals to UPDATED_EDITED
-        defaultNoteShouldNotBeFound("edited.in=" + UPDATED_EDITED);
+        // Get all the noteList where editedAt equals to UPDATED_EDITED_AT
+        defaultNoteShouldNotBeFound("editedAt.in=" + UPDATED_EDITED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllNotesByEditedIsNullOrNotNull() throws Exception {
+    public void getAllNotesByEditedAtIsNullOrNotNull() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);
 
-        // Get all the noteList where edited is not null
-        defaultNoteShouldBeFound("edited.specified=true");
+        // Get all the noteList where editedAt is not null
+        defaultNoteShouldBeFound("editedAt.specified=true");
 
-        // Get all the noteList where edited is null
-        defaultNoteShouldNotBeFound("edited.specified=false");
+        // Get all the noteList where editedAt is null
+        defaultNoteShouldNotBeFound("editedAt.specified=false");
     }
 
     @Test
@@ -422,8 +422,8 @@ public class NoteResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(note.getId().intValue())))
             .andExpect(jsonPath("$.[*].markdown").value(hasItem(DEFAULT_MARKDOWN.toString())))
             .andExpect(jsonPath("$.[*].html").value(hasItem(DEFAULT_HTML.toString())))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
-            .andExpect(jsonPath("$.[*].edited").value(hasItem(DEFAULT_EDITED.toString())))
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].editedAt").value(hasItem(DEFAULT_EDITED_AT.toString())))
             .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
 
         // Check, that the count call also returns 1
@@ -473,8 +473,8 @@ public class NoteResourceIntTest {
         updatedNote
             .markdown(UPDATED_MARKDOWN)
             .html(UPDATED_HTML)
-            .created(UPDATED_CREATED)
-            .edited(UPDATED_EDITED)
+            .createdAt(UPDATED_CREATED_AT)
+            .editedAt(UPDATED_EDITED_AT)
             .visibility(UPDATED_VISIBILITY);
         NoteDTO noteDTO = noteMapper.toDto(updatedNote);
 
@@ -489,8 +489,8 @@ public class NoteResourceIntTest {
         Note testNote = noteList.get(noteList.size() - 1);
         assertThat(testNote.getMarkdown()).isEqualTo(UPDATED_MARKDOWN);
         assertThat(testNote.getHtml()).isEqualTo(UPDATED_HTML);
-        assertThat(testNote.getCreated()).isEqualTo(UPDATED_CREATED);
-        assertThat(testNote.getEdited()).isEqualTo(UPDATED_EDITED);
+        assertThat(testNote.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testNote.getEditedAt()).isEqualTo(UPDATED_EDITED_AT);
         assertThat(testNote.getVisibility()).isEqualTo(UPDATED_VISIBILITY);
     }
 

@@ -33,11 +33,11 @@ public class Note implements Serializable {
     private String html;
 
     @NotNull
-    @Column(name = "created", nullable = false)
-    private Instant created;
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 
-    @Column(name = "edited")
-    private Instant edited;
+    @Column(name = "edited_at")
+    private Instant editedAt;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -89,30 +89,30 @@ public class Note implements Serializable {
         this.html = html;
     }
 
-    public Instant getCreated() {
-        return created;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public Note created(Instant created) {
-        this.created = created;
+    public Note createdAt(Instant createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Instant getEdited() {
-        return edited;
+    public Instant getEditedAt() {
+        return editedAt;
     }
 
-    public Note edited(Instant edited) {
-        this.edited = edited;
+    public Note editedAt(Instant editedAt) {
+        this.editedAt = editedAt;
         return this;
     }
 
-    public void setEdited(Instant edited) {
-        this.edited = edited;
+    public void setEditedAt(Instant editedAt) {
+        this.editedAt = editedAt;
     }
 
     public Visibility getVisibility() {
@@ -181,8 +181,8 @@ public class Note implements Serializable {
             "id=" + getId() +
             ", markdown='" + getMarkdown() + "'" +
             ", html='" + getHtml() + "'" +
-            ", created='" + getCreated() + "'" +
-            ", edited='" + getEdited() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
+            ", editedAt='" + getEditedAt() + "'" +
             ", visibility='" + getVisibility() + "'" +
             "}";
     }

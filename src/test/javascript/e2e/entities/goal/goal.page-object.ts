@@ -27,8 +27,8 @@ export class GoalUpdatePage {
     saveButton = element(by.id('save-entity'));
     cancelButton = element(by.id('cancel-save'));
     summaryInput = element(by.id('field_summary'));
-    createdInput = element(by.id('field_created'));
-    completedInput = element(by.id('field_completed'));
+    createdAtInput = element(by.id('field_createdAt'));
+    completedAtInput = element(by.id('field_completedAt'));
     orderInput = element(by.id('field_order'));
     visibilitySelect = element(by.id('field_visibility'));
     ownerSelect = element(by.id('field_owner'));
@@ -47,20 +47,20 @@ export class GoalUpdatePage {
         return this.summaryInput.getAttribute('value');
     }
 
-    async setCreatedInput(created) {
-        await this.createdInput.sendKeys(created);
+    async setCreatedAtInput(createdAt) {
+        await this.createdAtInput.sendKeys(createdAt);
     }
 
-    async getCreatedInput() {
-        return this.createdInput.getAttribute('value');
+    async getCreatedAtInput() {
+        return this.createdAtInput.getAttribute('value');
     }
 
-    async setCompletedInput(completed) {
-        await this.completedInput.sendKeys(completed);
+    async setCompletedAtInput(completedAt) {
+        await this.completedAtInput.sendKeys(completedAt);
     }
 
-    async getCompletedInput() {
-        return this.completedInput.getAttribute('value');
+    async getCompletedAtInput() {
+        return this.completedAtInput.getAttribute('value');
     }
 
     async setOrderInput(order) {

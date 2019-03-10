@@ -32,7 +32,7 @@ describe('Service Tests', () => {
             it('should find an element', async () => {
                 const returnedFromService = Object.assign(
                     {
-                        created: currentDate.format(DATE_TIME_FORMAT)
+                        createdAt: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
@@ -49,13 +49,13 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         id: 0,
-                        created: currentDate.format(DATE_TIME_FORMAT)
+                        createdAt: currentDate.format(DATE_TIME_FORMAT)
                     },
                     elemDefault
                 );
                 const expected = Object.assign(
                     {
-                        created: currentDate
+                        createdAt: currentDate
                     },
                     returnedFromService
                 );
@@ -73,7 +73,7 @@ describe('Service Tests', () => {
                         name: 'BBBBBB',
                         description: 'BBBBBB',
                         avatar: 'BBBBBB',
-                        created: currentDate.format(DATE_TIME_FORMAT),
+                        createdAt: currentDate.format(DATE_TIME_FORMAT),
                         visibility: 'BBBBBB'
                     },
                     elemDefault
@@ -81,7 +81,7 @@ describe('Service Tests', () => {
 
                 const expected = Object.assign(
                     {
-                        created: currentDate
+                        createdAt: currentDate
                     },
                     returnedFromService
                 );
@@ -99,14 +99,14 @@ describe('Service Tests', () => {
                         name: 'BBBBBB',
                         description: 'BBBBBB',
                         avatar: 'BBBBBB',
-                        created: currentDate.format(DATE_TIME_FORMAT),
+                        createdAt: currentDate.format(DATE_TIME_FORMAT),
                         visibility: 'BBBBBB'
                     },
                     elemDefault
                 );
                 const expected = Object.assign(
                     {
-                        created: currentDate
+                        createdAt: currentDate
                     },
                     returnedFromService
                 );

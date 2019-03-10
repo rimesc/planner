@@ -23,9 +23,9 @@ public class NoteDTO implements Serializable {
     private String html;
 
     @NotNull
-    private Instant created;
+    private Instant createdAt;
 
-    private Instant edited;
+    private Instant editedAt;
 
     @NotNull
     private Visibility visibility;
@@ -58,20 +58,20 @@ public class NoteDTO implements Serializable {
         this.html = html;
     }
 
-    public Instant getCreated() {
-        return created;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Instant getEdited() {
-        return edited;
+    public Instant getEditedAt() {
+        return editedAt;
     }
 
-    public void setEdited(Instant edited) {
-        this.edited = edited;
+    public void setEditedAt(Instant editedAt) {
+        this.editedAt = editedAt;
     }
 
     public Visibility getVisibility() {
@@ -125,8 +125,8 @@ public class NoteDTO implements Serializable {
             "id=" + getId() +
             ", markdown='" + getMarkdown() + "'" +
             ", html='" + getHtml() + "'" +
-            ", created='" + getCreated() + "'" +
-            ", edited='" + getEdited() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
+            ", editedAt='" + getEditedAt() + "'" +
             ", visibility='" + getVisibility() + "'" +
             ", owner=" + getOwnerId() +
             ", goal=" + getGoalId() +

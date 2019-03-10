@@ -28,8 +28,8 @@ export class NoteUpdatePage {
     cancelButton = element(by.id('cancel-save'));
     markdownInput = element(by.id('field_markdown'));
     htmlInput = element(by.id('field_html'));
-    createdInput = element(by.id('field_created'));
-    editedInput = element(by.id('field_edited'));
+    createdAtInput = element(by.id('field_createdAt'));
+    editedAtInput = element(by.id('field_editedAt'));
     visibilitySelect = element(by.id('field_visibility'));
     ownerSelect = element(by.id('field_owner'));
     goalSelect = element(by.id('field_goal'));
@@ -54,20 +54,20 @@ export class NoteUpdatePage {
         return this.htmlInput.getAttribute('value');
     }
 
-    async setCreatedInput(created) {
-        await this.createdInput.sendKeys(created);
+    async setCreatedAtInput(createdAt) {
+        await this.createdAtInput.sendKeys(createdAt);
     }
 
-    async getCreatedInput() {
-        return this.createdInput.getAttribute('value');
+    async getCreatedAtInput() {
+        return this.createdAtInput.getAttribute('value');
     }
 
-    async setEditedInput(edited) {
-        await this.editedInput.sendKeys(edited);
+    async setEditedAtInput(editedAt) {
+        await this.editedAtInput.sendKeys(editedAt);
     }
 
-    async getEditedInput() {
-        return this.editedInput.getAttribute('value');
+    async getEditedAtInput() {
+        return this.editedAtInput.getAttribute('value');
     }
 
     async setVisibilitySelect(visibility) {

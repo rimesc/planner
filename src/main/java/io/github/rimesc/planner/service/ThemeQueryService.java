@@ -98,8 +98,8 @@ public class ThemeQueryService extends QueryService<Theme> {
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), Theme_.description));
             }
-            if (criteria.getCreated() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreated(), Theme_.created));
+            if (criteria.getCreatedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Theme_.createdAt));
             }
             if (criteria.getVisibility() != null) {
                 specification = specification.and(buildSpecification(criteria.getVisibility(), Theme_.visibility));

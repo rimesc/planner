@@ -42,16 +42,16 @@ describe('Note e2e test', () => {
         await promise.all([
             noteUpdatePage.setMarkdownInput('markdown'),
             noteUpdatePage.setHtmlInput('html'),
-            noteUpdatePage.setCreatedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-            noteUpdatePage.setEditedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            noteUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            noteUpdatePage.setEditedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             noteUpdatePage.visibilitySelectLastOption(),
             noteUpdatePage.ownerSelectLastOption(),
             noteUpdatePage.goalSelectLastOption(),
         ]);
         expect(await noteUpdatePage.getMarkdownInput()).to.eq('markdown');
         expect(await noteUpdatePage.getHtmlInput()).to.eq('html');
-        expect(await noteUpdatePage.getCreatedInput()).to.contain('2001-01-01T02:30');
-        expect(await noteUpdatePage.getEditedInput()).to.contain('2001-01-01T02:30');
+        expect(await noteUpdatePage.getCreatedAtInput()).to.contain('2001-01-01T02:30');
+        expect(await noteUpdatePage.getEditedAtInput()).to.contain('2001-01-01T02:30');
         await noteUpdatePage.save();
         expect(await noteUpdatePage.getSaveButton().isPresent()).to.be.false;
 

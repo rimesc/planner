@@ -16,8 +16,8 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="summary"><span jhiTranslate="plannerApp.goal.summary">Summary</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="created"><span jhiTranslate="plannerApp.goal.created">Created</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="completed"><span jhiTranslate="plannerApp.goal.completed">Completed</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdAt"><span jhiTranslate="plannerApp.goal.createdAt">Created At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="completedAt"><span jhiTranslate="plannerApp.goal.completedAt">Completed At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="order"><span jhiTranslate="plannerApp.goal.order">Order</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="visibility"><span jhiTranslate="plannerApp.goal.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="ownerId"><span jhiTranslate="plannerApp.goal.owner">Owner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -29,8 +29,8 @@
             <tr *ngFor="let goal of goals ;trackBy: trackId">
                 <td><a [routerLink]="['/goal', goal.id, 'view' ]">{{goal.id}}</a></td>
                 <td>{{goal.summary}}</td>
-                <td>{{goal.created | date:'medium'}}</td>
-                <td>{{goal.completed | date:'medium'}}</td>
+                <td>{{goal.createdAt | date:'medium'}}</td>
+                <td>{{goal.completedAt | date:'medium'}}</td>
                 <td>{{goal.order}}</td>
                 <td jhiTranslate="{{'plannerApp.Visibility.' + goal.visibility}}">{{goal.visibility}}</td>
                 <td>

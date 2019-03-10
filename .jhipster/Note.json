@@ -18,14 +18,14 @@
             ]
         },
         {
-            "fieldName": "created",
+            "fieldName": "createdAt",
             "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "edited",
+            "fieldName": "editedAt",
             "fieldType": "Instant"
         },
         {

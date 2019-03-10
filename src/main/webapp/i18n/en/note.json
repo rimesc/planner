@@ -17,8 +17,8 @@
             },
             "markdown": "Markdown",
             "html": "Html",
-            "created": "Created",
-            "edited": "Edited",
+            "createdAt": "Created At",
+            "editedAt": "Edited At",
             "visibility": "Visibility",
             "owner": "Owner",
             "goal": "Goal"

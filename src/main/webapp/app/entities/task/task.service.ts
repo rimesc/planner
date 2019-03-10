@@ -51,16 +51,16 @@ export class TaskService {
 
     protected convertDateFromClient(task: ITask): ITask {
         const copy: ITask = Object.assign({}, task, {
-            created: task.created != null && task.created.isValid() ? task.created.toJSON() : null,
-            completed: task.completed != null && task.completed.isValid() ? task.completed.toJSON() : null
+            createdAt: task.createdAt != null && task.createdAt.isValid() ? task.createdAt.toJSON() : null,
+            completedAt: task.completedAt != null && task.completedAt.isValid() ? task.completedAt.toJSON() : null
         });
         return copy;
     }
 
     protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
         if (res.body) {
-            res.body.created = res.body.created != null ? moment(res.body.created) : null;
-            res.body.completed = res.body.completed != null ? moment(res.body.completed) : null;
+            res.body.createdAt = res.body.createdAt != null ? moment(res.body.createdAt) : null;
+            res.body.completedAt = res.body.completedAt != null ? moment(res.body.completedAt) : null;
         }
         return res;
     }
@@ -68,8 +68,8 @@ export class TaskService {
     protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
         if (res.body) {
             res.body.forEach((task: ITask) => {
-                task.created = task.created != null ? moment(task.created) : null;
-                task.completed = task.completed != null ? moment(task.completed) : null;
+                task.createdAt = task.createdAt != null ? moment(task.createdAt) : null;
+                task.completedAt = task.completedAt != null ? moment(task.completedAt) : null;
             });
         }
         return res;

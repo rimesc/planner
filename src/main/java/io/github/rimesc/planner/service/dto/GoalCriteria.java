@@ -30,9 +30,9 @@ public class GoalCriteria implements Serializable {
 
     private StringFilter summary;
 
-    private InstantFilter created;
+    private InstantFilter createdAt;
 
-    private InstantFilter completed;
+    private InstantFilter completedAt;
 
     private LongFilter order;
 
@@ -64,20 +64,20 @@ public class GoalCriteria implements Serializable {
         this.summary = summary;
     }
 
-    public InstantFilter getCreated() {
-        return created;
+    public InstantFilter getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(InstantFilter created) {
-        this.created = created;
+    public void setCreatedAt(InstantFilter createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public InstantFilter getCompleted() {
-        return completed;
+    public InstantFilter getCompletedAt() {
+        return completedAt;
     }
 
-    public void setCompleted(InstantFilter completed) {
-        this.completed = completed;
+    public void setCompletedAt(InstantFilter completedAt) {
+        this.completedAt = completedAt;
     }
 
     public LongFilter getOrder() {
@@ -147,8 +147,8 @@ public class GoalCriteria implements Serializable {
         final GoalCriteria that = (GoalCriteria) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(summary, that.summary) &&
-            Objects.equals(created, that.created) &&
-            Objects.equals(completed, that.completed) &&
+            Objects.equals(createdAt, that.createdAt) &&
+            Objects.equals(completedAt, that.completedAt) &&
             Objects.equals(order, that.order) &&
             Objects.equals(visibility, that.visibility) &&
             Objects.equals(taskId, that.taskId) &&
@@ -163,8 +163,8 @@ public class GoalCriteria implements Serializable {
         return Objects.hash(
             id,
             summary,
-            created,
-            completed,
+            createdAt,
+            completedAt,
             order,
             visibility,
             taskId,
@@ -179,8 +179,8 @@ public class GoalCriteria implements Serializable {
         return "GoalCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (summary != null ? "summary=" + summary + ", " : "") +
-            (created != null ? "created=" + created + ", " : "") +
-            (completed != null ? "completed=" + completed + ", " : "") +
+            (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
+            (completedAt != null ? "completedAt=" + completedAt + ", " : "") +
             (order != null ? "order=" + order + ", " : "") +
             (visibility != null ? "visibility=" + visibility + ", " : "") +
             (taskId != null ? "taskId=" + taskId + ", " : "") +

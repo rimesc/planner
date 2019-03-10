@@ -11,14 +11,14 @@
             "fieldValidateRulesMaxlength": 128
         },
         {
-            "fieldName": "created",
+            "fieldName": "createdAt",
             "fieldType": "Instant",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "completed",
+            "fieldName": "completedAt",
             "fieldType": "Instant"
         },
         {
