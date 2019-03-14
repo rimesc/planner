@@ -50,10 +50,14 @@ Generic styles
 
 /* other generic styles */
 
+.main {
+    padding-top: 61px;
+}
+
 .jh-card {
     padding: 1.5%;
-    margin-top: 80px;
-    border: none;
+    margin-top: 20px;
+    border: none !important;
 }
 
 .error {
