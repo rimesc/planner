@@ -33,13 +33,13 @@
                     <dt><span jhiTranslate="plannerApp.goal.tag">Tag</span></dt>
                     <dd>
                         <span *ngFor="let tag of goal.tags; let last = last">
-                            <a [routerLink]="['/tag', tag?.id, 'view' ]">{{tag.id}}</a>{{last ? '' : ', '}}
+                            <a [routerLink]="['/entities/tag', tag?.id, 'view' ]">{{tag.id}}</a>{{last ? '' : ', '}}
                         </span>
                     </dd>
                     <dt><span jhiTranslate="plannerApp.goal.theme">Theme</span></dt>
                     <dd>
                         <div *ngIf="goal.themeId">
-                            <a [routerLink]="['/theme', goal.themeId, 'view']">{{goal.themeId}}</a>
+                            <a [routerLink]="['/entities/theme', goal.themeId, 'view']">{{goal.themeId}}</a>
                         </div>
                     </dd>
                 </dl>
@@ -51,7 +51,7 @@
                 </button>
     
                 <button type="button"
-                        [routerLink]="['/goal', goal.id, 'edit']"
+                        [routerLink]="['/entities/goal', goal.id, 'edit']"
                         class="btn btn-primary">
                     <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
                 </button>

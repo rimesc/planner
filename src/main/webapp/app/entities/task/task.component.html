@@ -2,7 +2,7 @@
     <div>
         <h2 id="page-heading">
             <span jhiTranslate="plannerApp.task.home.title">Tasks</span>
-            <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task" [routerLink]="['/task/new']">
+            <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task" [routerLink]="['/entities/task/new']">
                 <fa-icon [icon]="'plus'"></fa-icon>
                 <span  jhiTranslate="plannerApp.task.home.createLabel">
                 Create a new Task
@@ -30,7 +30,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let task of tasks ;trackBy: trackId">
-                    <td><a [routerLink]="['/task', task.id, 'view' ]">{{task.id}}</a></td>
+                    <td><a [routerLink]="['/entities/task', task.id, 'view' ]">{{task.id}}</a></td>
                     <td>{{task.summary}}</td>
                     <td>{{task.createdAt | date:'medium'}}</td>
                     <td>{{task.completedAt | date:'medium'}}</td>
@@ -45,13 +45,13 @@
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
-                                    [routerLink]="['/task', task.id, 'view' ]"
+                                    [routerLink]="['/entities/task', task.id, 'view' ]"
                                     class="btn btn-info btn-sm">
                                 <fa-icon [icon]="'eye'"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                             </button>
                             <button type="submit"
-                                    [routerLink]="['/task', task.id, 'edit']"
+                                    [routerLink]="['/entities/task', task.id, 'edit']"
                                     class="btn btn-primary btn-sm">
                                 <fa-icon [icon]="'pencil-alt'"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>

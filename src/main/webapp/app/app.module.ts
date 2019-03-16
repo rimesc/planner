@@ -6,7 +6,6 @@ import { PlannerSharedModule } from 'app/shared/shared.module';
 import { PlannerCoreModule } from 'app/core/core.module';
 import { PlannerAppRoutingModule } from './app-routing.module';
 import { PlannerHomeModule } from './home/home.module';
-import { PlannerEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
@@ -21,7 +20,6 @@ import { ErrorComponent } from './layouts/error/error.component';
     PlannerCoreModule,
     PlannerHomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
-    PlannerEntityModule,
     PlannerAppRoutingModule
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective],

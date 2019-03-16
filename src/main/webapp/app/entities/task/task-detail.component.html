@@ -25,7 +25,7 @@
                     <dt><span jhiTranslate="plannerApp.task.goal">Goal</span></dt>
                     <dd>
                         <div *ngIf="task.goalId">
-                            <a [routerLink]="['/goal', task.goalId, 'view']">{{task.goalId}}</a>
+                            <a [routerLink]="['/entities/goal', task.goalId, 'view']">{{task.goalId}}</a>
                         </div>
                     </dd>
                 </dl>
@@ -37,7 +37,7 @@
                 </button>
     
                 <button type="button"
-                        [routerLink]="['/task', task.id, 'edit']"
+                        [routerLink]="['/entities/task', task.id, 'edit']"
                         class="btn btn-primary">
                     <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
                 </button>

@@ -17,7 +17,7 @@
                     <dt><span jhiTranslate="plannerApp.tag.theme">Theme</span></dt>
                     <dd>
                         <div *ngIf="tag.themeId">
-                            <a [routerLink]="['/theme', tag.themeId, 'view']">{{tag.themeId}}</a>
+                            <a [routerLink]="['/entities/theme', tag.themeId, 'view']">{{tag.themeId}}</a>
                         </div>
                     </dd>
                 </dl>
@@ -29,7 +29,7 @@
                 </button>
     
                 <button type="button"
-                        [routerLink]="['/tag', tag.id, 'edit']"
+                        [routerLink]="['/entities/tag', tag.id, 'edit']"
                         class="btn btn-primary">
                     <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
                 </button>

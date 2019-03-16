@@ -24,9 +24,16 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           path: 'account',
           loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
         },
+        {
+          path: 'entities',
+          loadChildren: './entities/entity.module#PlannerEntityModule'
+        },
         ...LAYOUT_ROUTES
       ],
-      { enableTracing: DEBUG_INFO_ENABLED }
+      {
+        enableTracing: DEBUG_INFO_ENABLED,
+        relativeLinkResolution: 'corrected' // https://github.com/angular/angular/issues/13011#issuecomment-451030961
+      }
     )
   ],
   exports: [RouterModule]
