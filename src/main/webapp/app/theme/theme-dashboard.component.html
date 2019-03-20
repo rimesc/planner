@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-3 sidebar" style="background-color: white">
+        <div class="sidebar-sticky">
+            <div class="list-group" *ngIf="goals">
+                <a *ngFor="let goal of goals" class="list-group-item list-group-item-action" [routerLink]="['goal', goal.id]" routerLinkActive="active" style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
+                    {{goal.summary}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-9 ml-sm-auto px-0" role="main">
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
