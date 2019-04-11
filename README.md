@@ -87,6 +87,19 @@ will generate few files:
     create src/main/webapp/app/my-component/my-component.component.ts
     update src/main/webapp/app/app.module.ts
 
+### Using Eclipse
+
+See [Configuring Eclipse][].
+
+The Hibernate JPA Metamodel Generator requires the JAXB and Java Common Annotations libraries, which were removed from the JDK in Java 11.
+To work around this, you need to add them to the factory path manually.
+
+In the project properties, under **Java Compiler** → **Annotation Processing** → **Factory Path**:
+1. click **Add Variable...**
+2. select `M2_REPO` and click **Extend...**
+3. navigate to `javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar` and click **OK**
+4. repeat for `javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar`
+
 ## Building for production
 
 To optimize the planner application for production, run:
@@ -177,3 +190,4 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [protractor]: https://angular.github.io/protractor/
 [leaflet]: http://leafletjs.com/
 [definitelytyped]: http://definitelytyped.org/
+[configuring eclipse]: https://www.jhipster.tech/configuring-ide-eclipse/
