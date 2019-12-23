@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the Tag entity.
+ * A DTO for the {@link io.github.rimesc.planner.domain.Tag} entity.
  */
 public class TagDTO implements Serializable {
 
@@ -79,7 +79,7 @@ public class TagDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", icon='" + getIcon() + "'" +
-            ", theme=" + getThemeId() +
+            ", themeId=" + getThemeId() +
             "}";
     }
 }

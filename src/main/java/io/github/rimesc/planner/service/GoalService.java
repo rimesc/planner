@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 /**
- * Service Implementation for managing Goal.
+ * Service Implementation for managing {@link Goal}.
  */
 @Service
 @Transactional
@@ -35,8 +35,8 @@ public class GoalService {
     /**
      * Save a goal.
      *
-     * @param goalDTO the entity to save
-     * @return the persisted entity
+     * @param goalDTO the entity to save.
+     * @return the persisted entity.
      */
     public GoalDTO save(GoalDTO goalDTO) {
         log.debug("Request to save Goal : {}", goalDTO);
@@ -48,8 +48,8 @@ public class GoalService {
     /**
      * Get all the goals.
      *
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public Page<GoalDTO> findAll(Pageable pageable) {
@@ -59,9 +59,9 @@ public class GoalService {
     }
 
     /**
-     * Get all the Goal with eager load of many-to-many relationships.
+     * Get all the goals with eager load of many-to-many relationships.
      *
-     * @return the list of entities
+     * @return the list of entities.
      */
     public Page<GoalDTO> findAllWithEagerRelationships(Pageable pageable) {
         return goalRepository.findAllWithEagerRelationships(pageable).map(goalMapper::toDto);
@@ -71,8 +71,8 @@ public class GoalService {
     /**
      * Get one goal by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Transactional(readOnly = true)
     public Optional<GoalDTO> findOne(Long id) {
@@ -84,7 +84,7 @@ public class GoalService {
     /**
      * Delete the goal by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     public void delete(Long id) {
         log.debug("Request to delete Goal : {}", id);

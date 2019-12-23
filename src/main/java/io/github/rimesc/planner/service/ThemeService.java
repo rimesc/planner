@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 /**
- * Service Implementation for managing Theme.
+ * Service Implementation for managing {@link Theme}.
  */
 @Service
 @Transactional
@@ -35,8 +35,8 @@ public class ThemeService {
     /**
      * Save a theme.
      *
-     * @param themeDTO the entity to save
-     * @return the persisted entity
+     * @param themeDTO the entity to save.
+     * @return the persisted entity.
      */
     public ThemeDTO save(ThemeDTO themeDTO) {
         log.debug("Request to save Theme : {}", themeDTO);
@@ -48,8 +48,8 @@ public class ThemeService {
     /**
      * Get all the themes.
      *
-     * @param pageable the pagination information
-     * @return the list of entities
+     * @param pageable the pagination information.
+     * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public Page<ThemeDTO> findAll(Pageable pageable) {
@@ -62,8 +62,8 @@ public class ThemeService {
     /**
      * Get one theme by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Transactional(readOnly = true)
     public Optional<ThemeDTO> findOne(Long id) {
@@ -75,7 +75,7 @@ public class ThemeService {
     /**
      * Delete the theme by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     public void delete(Long id) {
         log.debug("Request to delete Theme : {}", id);

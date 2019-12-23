@@ -1,65 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ITag } from 'app/shared/model/tag.model';
-import { AccountService } from 'app/core';
 import { TagService } from './tag.service';
+import { TagDeleteDialogComponent } from './tag-delete-dialog.component';
 
 @Component({
-    selector: 'jhi-tag',
-    templateUrl: './tag.component.html'
+  selector: 'jhi-tag',
+  templateUrl: './tag.component.html'
 })
 export class TagComponent implements OnInit, OnDestroy {
-    tags: ITag[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+  tags?: ITag[];
+  eventSubscriber?: Subscription;
 
-    constructor(
-        protected tagService: TagService,
-        protected jhiAlertService: JhiAlertService,
-        protected eventManager: JhiEventManager,
-        protected accountService: AccountService
-    ) {}
+  constructor(protected tagService: TagService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
 
-    loadAll() {
-        this.tagService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<ITag[]>) => res.ok),
-                map((res: HttpResponse<ITag[]>) => res.body)
-            )
-            .subscribe(
-                (res: ITag[]) => {
-                    this.tags = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+  loadAll(): void {
+    this.tagService.query().subscribe((res: HttpResponse<ITag[]>) => {
+      this.tags = res.body ? res.body : [];
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInTags();
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
+  }
 
-    ngOnInit() {
-        this.loadAll();
-        this.accountService.identity().then(account => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInTags();
-    }
+  trackId(index: number, item: ITag): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
+  registerChangeInTags(): void {
+    this.eventSubscriber = this.eventManager.subscribe('tagListModification', () => this.loadAll());
+  }
 
-    trackId(index: number, item: ITag) {
-        return item.id;
-    }
-
-    registerChangeInTags() {
-        this.eventSubscriber = this.eventManager.subscribe('tagListModification', response => this.loadAll());
-    }
-
-    protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
+  delete(tag: ITag): void {
+    const modalRef = this.modalService.open(TagDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.tag = tag;
+  }
 }

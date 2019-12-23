@@ -7,7 +7,7 @@ import javax.persistence.Lob;
 import io.github.rimesc.planner.domain.enumeration.Visibility;
 
 /**
- * A DTO for the Note entity.
+ * A DTO for the {@link io.github.rimesc.planner.domain.Note} entity.
  */
 public class NoteDTO implements Serializable {
 
@@ -128,8 +128,8 @@ public class NoteDTO implements Serializable {
             ", created='" + getCreated() + "'" +
             ", edited='" + getEdited() + "'" +
             ", visibility='" + getVisibility() + "'" +
-            ", owner=" + getOwnerId() +
-            ", goal=" + getGoalId() +
+            ", ownerId=" + getOwnerId() +
+            ", goalId=" + getGoalId() +
             "}";
     }
 }

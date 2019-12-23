@@ -22,7 +22,7 @@ import io.github.rimesc.planner.service.dto.GoalDTO;
 import io.github.rimesc.planner.service.mapper.GoalMapper;
 
 /**
- * Service for executing complex queries for Goal entities in the database.
+ * Service for executing complex queries for {@link Goal} entities in the database.
  * The main input is a {@link GoalCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
  * It returns a {@link List} of {@link GoalDTO} or a {@link Page} of {@link GoalDTO} which fulfills the criteria.
@@ -43,7 +43,7 @@ public class GoalQueryService extends QueryService<Goal> {
     }
 
     /**
-     * Return a {@link List} of {@link GoalDTO} which matches the criteria from the database
+     * Return a {@link List} of {@link GoalDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
@@ -55,7 +55,7 @@ public class GoalQueryService extends QueryService<Goal> {
     }
 
     /**
-     * Return a {@link Page} of {@link GoalDTO} which matches the criteria from the database
+     * Return a {@link Page} of {@link GoalDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
@@ -69,7 +69,7 @@ public class GoalQueryService extends QueryService<Goal> {
     }
 
     /**
-     * Return the number of matching entities in the database
+     * Return the number of matching entities in the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the number of matching entities.
      */
@@ -81,13 +81,15 @@ public class GoalQueryService extends QueryService<Goal> {
     }
 
     /**
-     * Function to convert GoalCriteria to a {@link Specification}
+     * Function to convert {@link GoalCriteria} to a {@link Specification}
+     * @param criteria The object which holds all the filters, which the entities should match.
+     * @return the matching {@link Specification} of the entity.
      */
-    private Specification<Goal> createSpecification(GoalCriteria criteria) {
+    protected Specification<Goal> createSpecification(GoalCriteria criteria) {
         Specification<Goal> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Goal_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Goal_.id));
             }
             if (criteria.getSummary() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSummary(), Goal_.summary));

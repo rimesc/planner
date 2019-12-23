@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the Task entity.
+ * A DTO for the {@link io.github.rimesc.planner.domain.Task} entity.
  */
 public class TaskDTO implements Serializable {
 
@@ -101,8 +101,8 @@ public class TaskDTO implements Serializable {
             ", summary='" + getSummary() + "'" +
             ", created='" + getCreated() + "'" +
             ", completed='" + getCompleted() + "'" +
-            ", owner=" + getOwnerId() +
-            ", goal=" + getGoalId() +
+            ", ownerId=" + getOwnerId() +
+            ", goalId=" + getGoalId() +
             "}";
     }
 }

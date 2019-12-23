@@ -1,74 +1,64 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { INote } from 'app/shared/model/note.model';
-import { AccountService } from 'app/core';
 import { NoteService } from './note.service';
+import { NoteDeleteDialogComponent } from './note-delete-dialog.component';
 
 @Component({
-    selector: 'jhi-note',
-    templateUrl: './note.component.html'
+  selector: 'jhi-note',
+  templateUrl: './note.component.html'
 })
 export class NoteComponent implements OnInit, OnDestroy {
-    notes: INote[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+  notes?: INote[];
+  eventSubscriber?: Subscription;
 
-    constructor(
-        protected noteService: NoteService,
-        protected jhiAlertService: JhiAlertService,
-        protected dataUtils: JhiDataUtils,
-        protected eventManager: JhiEventManager,
-        protected accountService: AccountService
-    ) {}
+  constructor(
+    protected noteService: NoteService,
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal
+  ) {}
 
-    loadAll() {
-        this.noteService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<INote[]>) => res.ok),
-                map((res: HttpResponse<INote[]>) => res.body)
-            )
-            .subscribe(
-                (res: INote[]) => {
-                    this.notes = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+  loadAll(): void {
+    this.noteService.query().subscribe((res: HttpResponse<INote[]>) => {
+      this.notes = res.body ? res.body : [];
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInNotes();
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
+  }
 
-    ngOnInit() {
-        this.loadAll();
-        this.accountService.identity().then(account => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInNotes();
-    }
+  trackId(index: number, item: INote): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
 
-    trackId(index: number, item: INote) {
-        return item.id;
-    }
+  openFile(contentType: string, base64String: string): void {
+    return this.dataUtils.openFile(contentType, base64String);
+  }
 
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
+  registerChangeInNotes(): void {
+    this.eventSubscriber = this.eventManager.subscribe('noteListModification', () => this.loadAll());
+  }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
-
-    registerChangeInNotes() {
-        this.eventSubscriber = this.eventManager.subscribe('noteListModification', response => this.loadAll());
-    }
-
-    protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
+  delete(note: INote): void {
+    const modalRef = this.modalService.open(NoteDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.note = note;
+  }
 }

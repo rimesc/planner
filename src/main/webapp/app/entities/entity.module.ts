@@ -1,35 +1,31 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-    imports: [
-        RouterModule.forChild([
-            {
-                path: 'theme',
-                loadChildren: './theme/theme.module#PlannerThemeModule'
-            },
-            {
-                path: 'goal',
-                loadChildren: './goal/goal.module#PlannerGoalModule'
-            },
-            {
-                path: 'task',
-                loadChildren: './task/task.module#PlannerTaskModule'
-            },
-            {
-                path: 'note',
-                loadChildren: './note/note.module#PlannerNoteModule'
-            },
-            {
-                path: 'tag',
-                loadChildren: './tag/tag.module#PlannerTagModule'
-            }
-            /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
-        ])
-    ],
-    declarations: [],
-    entryComponents: [],
-    providers: [],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [
+    RouterModule.forChild([
+      {
+        path: 'theme',
+        loadChildren: () => import('./theme/theme.module').then(m => m.PlannerThemeModule)
+      },
+      {
+        path: 'goal',
+        loadChildren: () => import('./goal/goal.module').then(m => m.PlannerGoalModule)
+      },
+      {
+        path: 'task',
+        loadChildren: () => import('./task/task.module').then(m => m.PlannerTaskModule)
+      },
+      {
+        path: 'note',
+        loadChildren: () => import('./note/note.module').then(m => m.PlannerNoteModule)
+      },
+      {
+        path: 'tag',
+        loadChildren: () => import('./tag/tag.module').then(m => m.PlannerTagModule)
+      }
+      /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
+    ])
+  ]
 })
 export class PlannerEntityModule {}

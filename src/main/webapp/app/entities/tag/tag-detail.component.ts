@@ -4,21 +4,21 @@ import { ActivatedRoute } from '@angular/router';
 import { ITag } from 'app/shared/model/tag.model';
 
 @Component({
-    selector: 'jhi-tag-detail',
-    templateUrl: './tag-detail.component.html'
+  selector: 'jhi-tag-detail',
+  templateUrl: './tag-detail.component.html'
 })
 export class TagDetailComponent implements OnInit {
-    tag: ITag;
+  tag: ITag | null = null;
 
-    constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected activatedRoute: ActivatedRoute) {}
 
-    ngOnInit() {
-        this.activatedRoute.data.subscribe(({ tag }) => {
-            this.tag = tag;
-        });
-    }
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ tag }) => {
+      this.tag = tag;
+    });
+  }
 
-    previousState() {
-        window.history.back();
-    }
+  previousState(): void {
+    window.history.back();
+  }
 }

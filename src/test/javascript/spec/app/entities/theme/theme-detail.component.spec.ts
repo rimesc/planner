@@ -1,40 +1,69 @@
-/* tslint:disable max-line-length */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { JhiDataUtils } from 'ng-jhipster';
 
 import { PlannerTestModule } from '../../../test.module';
 import { ThemeDetailComponent } from 'app/entities/theme/theme-detail.component';
 import { Theme } from 'app/shared/model/theme.model';
 
 describe('Component Tests', () => {
-    describe('Theme Management Detail Component', () => {
-        let comp: ThemeDetailComponent;
-        let fixture: ComponentFixture<ThemeDetailComponent>;
-        const route = ({ data: of({ theme: new Theme(123) }) } as any) as ActivatedRoute;
+  describe('Theme Management Detail Component', () => {
+    let comp: ThemeDetailComponent;
+    let fixture: ComponentFixture<ThemeDetailComponent>;
+    let dataUtils: JhiDataUtils;
+    const route = ({ data: of({ theme: new Theme(123) }) } as any) as ActivatedRoute;
 
-        beforeEach(() => {
-            TestBed.configureTestingModule({
-                imports: [PlannerTestModule],
-                declarations: [ThemeDetailComponent],
-                providers: [{ provide: ActivatedRoute, useValue: route }]
-            })
-                .overrideTemplate(ThemeDetailComponent, '')
-                .compileComponents();
-            fixture = TestBed.createComponent(ThemeDetailComponent);
-            comp = fixture.componentInstance;
-        });
-
-        describe('OnInit', () => {
-            it('Should call load all on init', () => {
-                // GIVEN
-
-                // WHEN
-                comp.ngOnInit();
-
-                // THEN
-                expect(comp.theme).toEqual(jasmine.objectContaining({ id: 123 }));
-            });
-        });
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [PlannerTestModule],
+        declarations: [ThemeDetailComponent],
+        providers: [{ provide: ActivatedRoute, useValue: route }]
+      })
+        .overrideTemplate(ThemeDetailComponent, '')
+        .compileComponents();
+      fixture = TestBed.createComponent(ThemeDetailComponent);
+      comp = fixture.componentInstance;
+      dataUtils = fixture.debugElement.injector.get(JhiDataUtils);
     });
+
+    describe('OnInit', () => {
+      it('Should load theme on init', () => {
+        // WHEN
+        comp.ngOnInit();
+
+        // THEN
+        expect(comp.theme).toEqual(jasmine.objectContaining({ id: 123 }));
+      });
+    });
+
+    describe('byteSize', () => {
+      it('Should call byteSize from JhiDataUtils', () => {
+        // GIVEN
+        spyOn(dataUtils, 'byteSize');
+        const fakeBase64 = 'fake base64';
+
+        // WHEN
+        comp.byteSize(fakeBase64);
+
+        // THEN
+        expect(dataUtils.byteSize).toBeCalledWith(fakeBase64);
+      });
+    });
+
+    describe('openFile', () => {
+      it('Should call openFile from JhiDataUtils', () => {
+        // GIVEN
+        spyOn(dataUtils, 'openFile');
+        const fakeContentType = 'fake content type';
+        const fakeBase64 = 'fake base64';
+
+        // WHEN
+        comp.openFile(fakeContentType, fakeBase64);
+
+        // THEN
+        expect(dataUtils.openFile).toBeCalledWith(fakeContentType, fakeBase64);
+      });
+    });
+  });
 });

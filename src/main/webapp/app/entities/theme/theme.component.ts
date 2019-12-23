@@ -1,117 +1,114 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { JhiEventManager, JhiParseLinks, JhiDataUtils } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ITheme } from 'app/shared/model/theme.model';
-import { AccountService } from 'app/core';
 
-import { ITEMS_PER_PAGE } from 'app/shared';
+import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ThemeService } from './theme.service';
+import { ThemeDeleteDialogComponent } from './theme-delete-dialog.component';
 
 @Component({
-    selector: 'jhi-theme',
-    templateUrl: './theme.component.html'
+  selector: 'jhi-theme',
+  templateUrl: './theme.component.html'
 })
 export class ThemeComponent implements OnInit, OnDestroy {
-    themes: ITheme[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
-    itemsPerPage: number;
-    links: any;
-    page: any;
-    predicate: any;
-    reverse: any;
-    totalItems: number;
+  themes: ITheme[];
+  eventSubscriber?: Subscription;
+  itemsPerPage: number;
+  links: any;
+  page: number;
+  predicate: string;
+  ascending: boolean;
 
-    constructor(
-        protected themeService: ThemeService,
-        protected jhiAlertService: JhiAlertService,
-        protected dataUtils: JhiDataUtils,
-        protected eventManager: JhiEventManager,
-        protected parseLinks: JhiParseLinks,
-        protected accountService: AccountService
-    ) {
-        this.themes = [];
-        this.itemsPerPage = ITEMS_PER_PAGE;
-        this.page = 0;
-        this.links = {
-            last: 0
-        };
-        this.predicate = 'id';
-        this.reverse = true;
-    }
+  constructor(
+    protected themeService: ThemeService,
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal,
+    protected parseLinks: JhiParseLinks
+  ) {
+    this.themes = [];
+    this.itemsPerPage = ITEMS_PER_PAGE;
+    this.page = 0;
+    this.links = {
+      last: 0
+    };
+    this.predicate = 'id';
+    this.ascending = true;
+  }
 
-    loadAll() {
-        this.themeService
-            .query({
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.sort()
-            })
-            .subscribe(
-                (res: HttpResponse<ITheme[]>) => this.paginateThemes(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
-    }
+  loadAll(): void {
+    this.themeService
+      .query({
+        page: this.page,
+        size: this.itemsPerPage,
+        sort: this.sort()
+      })
+      .subscribe((res: HttpResponse<ITheme[]>) => this.paginateThemes(res.body, res.headers));
+  }
 
-    reset() {
-        this.page = 0;
-        this.themes = [];
-        this.loadAll();
-    }
+  reset(): void {
+    this.page = 0;
+    this.themes = [];
+    this.loadAll();
+  }
 
-    loadPage(page) {
-        this.page = page;
-        this.loadAll();
-    }
+  loadPage(page: number): void {
+    this.page = page;
+    this.loadAll();
+  }
 
-    ngOnInit() {
-        this.loadAll();
-        this.accountService.identity().then(account => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInThemes();
-    }
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInThemes();
+  }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
+  }
 
-    trackId(index: number, item: ITheme) {
-        return item.id;
-    }
+  trackId(index: number, item: ITheme): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
 
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
-    }
+  openFile(contentType: string, base64String: string): void {
+    return this.dataUtils.openFile(contentType, base64String);
+  }
 
-    registerChangeInThemes() {
-        this.eventSubscriber = this.eventManager.subscribe('themeListModification', response => this.reset());
-    }
+  registerChangeInThemes(): void {
+    this.eventSubscriber = this.eventManager.subscribe('themeListModification', () => this.reset());
+  }
 
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
-        }
-        return result;
-    }
+  delete(theme: ITheme): void {
+    const modalRef = this.modalService.open(ThemeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.theme = theme;
+  }
 
-    protected paginateThemes(data: ITheme[], headers: HttpHeaders) {
-        this.links = this.parseLinks.parse(headers.get('link'));
-        this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
-        for (let i = 0; i < data.length; i++) {
-            this.themes.push(data[i]);
-        }
+  sort(): string[] {
+    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
+    if (this.predicate !== 'id') {
+      result.push('id');
     }
+    return result;
+  }
 
-    protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
+  protected paginateThemes(data: ITheme[] | null, headers: HttpHeaders): void {
+    const headersLink = headers.get('link');
+    this.links = this.parseLinks.parse(headersLink ? headersLink : '');
+    if (data) {
+      for (let i = 0; i < data.length; i++) {
+        this.themes.push(data[i]);
+      }
     }
+  }
 }

@@ -20,7 +20,7 @@
                 <dt><span jhiTranslate="plannerApp.theme.avatar">Avatar</span></dt>
                 <dd>
                     <div *ngIf="theme.avatar">
-                        <a (click)="openFile(theme.avatarContentType, theme.avatar)">
+                        <a (click)="openFile(theme.avatarContentType!, theme.avatar)">
                             <img [src]="'data:' + theme.avatarContentType + ';base64,' + theme.avatar" style="max-width: 100%;" alt="theme image"/>
                         </a>
                         {{theme.avatarContentType}}, {{byteSize(theme.avatar)}}

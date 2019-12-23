@@ -4,25 +4,29 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-theme" [routerLink]="['/theme/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="plannerApp.theme.home.createLabel">
-            Create new Theme
+            Create a new Theme
             </span>
         </button>
     </h2>
+    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="table-responsive" *ngIf="themes">
-        <table class="table table-striped">
+    <div class="alert alert-warning" *ngIf="themes?.length === 0">
+        <span jhiTranslate="plannerApp.theme.home.notFound">No themes found</span>
+    </div>
+    <div class="table-responsive" *ngIf="themes?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="name"><span jhiTranslate="plannerApp.theme.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="description"><span jhiTranslate="plannerApp.theme.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="shortName"><span jhiTranslate="plannerApp.theme.shortName">Short Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="avatar"><span jhiTranslate="plannerApp.theme.avatar">Avatar</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="created"><span jhiTranslate="plannerApp.theme.created">Created</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="visibility"><span jhiTranslate="plannerApp.theme.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="ownerId"><span jhiTranslate="plannerApp.theme.owner">Owner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th></th>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="name"><span jhiTranslate="plannerApp.theme.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="description"><span jhiTranslate="plannerApp.theme.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="shortName"><span jhiTranslate="plannerApp.theme.shortName">Short Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="avatar"><span jhiTranslate="plannerApp.theme.avatar">Avatar</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="created"><span jhiTranslate="plannerApp.theme.created">Created</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="visibility"><span jhiTranslate="plannerApp.theme.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="ownerId"><span jhiTranslate="plannerApp.theme.owner">Owner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"></th>
             </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
@@ -43,7 +47,7 @@
                     {{theme.ownerId}}
                 </td>
                 <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
+                    <div class="btn-group">
                         <button type="submit"
                                 [routerLink]="['/theme', theme.id, 'view' ]"
                                 class="btn btn-info btn-sm">
@@ -56,10 +60,7 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'theme', { outlets: { popup: theme.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
+                        <button type="submit" (click)="delete(theme)"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

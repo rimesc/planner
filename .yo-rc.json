@@ -4,7 +4,7 @@
       "packageName": "io.github.rimesc.planner",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "5.8.2",
+    "jhipsterVersion": "6.6.0",
     "applicationType": "monolith",
     "baseName": "planner",
     "packageName": "io.github.rimesc.planner",
@@ -25,18 +25,18 @@
     "clientFramework": "angularX",
     "useSass": true,
     "clientPackageManager": "npm",
-    "testFrameworks": [
-      "protractor"
-    ],
+    "testFrameworks": ["protractor"],
     "jhiPrefix": "jhi",
     "entitySuffix": "",
     "dtoSuffix": "DTO",
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "en",
-    "languages": [
-      "en"
-    ],
-    "enableHibernateCache": false
+    "languages": ["en"],
+    "enableHibernateCache": false,
+    "embeddableLaunchScript": false,
+    "clientTheme": "none",
+    "creationTimestamp": 1577116498189,
+    "blueprints": []
   }
 }

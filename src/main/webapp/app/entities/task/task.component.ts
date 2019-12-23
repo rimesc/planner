@@ -1,65 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ITask } from 'app/shared/model/task.model';
-import { AccountService } from 'app/core';
 import { TaskService } from './task.service';
+import { TaskDeleteDialogComponent } from './task-delete-dialog.component';
 
 @Component({
-    selector: 'jhi-task',
-    templateUrl: './task.component.html'
+  selector: 'jhi-task',
+  templateUrl: './task.component.html'
 })
 export class TaskComponent implements OnInit, OnDestroy {
-    tasks: ITask[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+  tasks?: ITask[];
+  eventSubscriber?: Subscription;
 
-    constructor(
-        protected taskService: TaskService,
-        protected jhiAlertService: JhiAlertService,
-        protected eventManager: JhiEventManager,
-        protected accountService: AccountService
-    ) {}
+  constructor(protected taskService: TaskService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
 
-    loadAll() {
-        this.taskService
-            .query()
-            .pipe(
-                filter((res: HttpResponse<ITask[]>) => res.ok),
-                map((res: HttpResponse<ITask[]>) => res.body)
-            )
-            .subscribe(
-                (res: ITask[]) => {
-                    this.tasks = res;
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+  loadAll(): void {
+    this.taskService.query().subscribe((res: HttpResponse<ITask[]>) => {
+      this.tasks = res.body ? res.body : [];
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInTasks();
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
+  }
 
-    ngOnInit() {
-        this.loadAll();
-        this.accountService.identity().then(account => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInTasks();
-    }
+  trackId(index: number, item: ITask): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
+  registerChangeInTasks(): void {
+    this.eventSubscriber = this.eventManager.subscribe('taskListModification', () => this.loadAll());
+  }
 
-    trackId(index: number, item: ITask) {
-        return item.id;
-    }
-
-    registerChangeInTasks() {
-        this.eventSubscriber = this.eventManager.subscribe('taskListModification', response => this.loadAll());
-    }
-
-    protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
+  delete(task: ITask): void {
+    const modalRef = this.modalService.open(TaskDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.task = task;
+  }
 }

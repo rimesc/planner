@@ -1,103 +1,104 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
-import { ITag } from 'app/shared/model/tag.model';
+import { map } from 'rxjs/operators';
+
+import { ITag, Tag } from 'app/shared/model/tag.model';
 import { TagService } from './tag.service';
 import { ITheme } from 'app/shared/model/theme.model';
-import { ThemeService } from 'app/entities/theme';
-import { IGoal } from 'app/shared/model/goal.model';
-import { GoalService } from 'app/entities/goal';
+import { ThemeService } from 'app/entities/theme/theme.service';
 
 @Component({
-    selector: 'jhi-tag-update',
-    templateUrl: './tag-update.component.html'
+  selector: 'jhi-tag-update',
+  templateUrl: './tag-update.component.html'
 })
 export class TagUpdateComponent implements OnInit {
-    tag: ITag;
-    isSaving: boolean;
+  isSaving = false;
 
-    themes: ITheme[];
+  themes: ITheme[] = [];
 
-    goals: IGoal[];
+  editForm = this.fb.group({
+    id: [],
+    name: [null, [Validators.required, Validators.maxLength(32)]],
+    icon: [null, [Validators.maxLength(16)]],
+    themeId: []
+  });
 
-    constructor(
-        protected jhiAlertService: JhiAlertService,
-        protected tagService: TagService,
-        protected themeService: ThemeService,
-        protected goalService: GoalService,
-        protected activatedRoute: ActivatedRoute
-    ) {}
+  constructor(
+    protected tagService: TagService,
+    protected themeService: ThemeService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
-    ngOnInit() {
-        this.isSaving = false;
-        this.activatedRoute.data.subscribe(({ tag }) => {
-            this.tag = tag;
-        });
-        this.themeService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<ITheme[]>) => mayBeOk.ok),
-                map((response: HttpResponse<ITheme[]>) => response.body)
-            )
-            .subscribe((res: ITheme[]) => (this.themes = res), (res: HttpErrorResponse) => this.onError(res.message));
-        this.goalService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IGoal[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IGoal[]>) => response.body)
-            )
-            .subscribe((res: IGoal[]) => (this.goals = res), (res: HttpErrorResponse) => this.onError(res.message));
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ tag }) => {
+      this.updateForm(tag);
+
+      this.themeService
+        .query()
+        .pipe(
+          map((res: HttpResponse<ITheme[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: ITheme[]) => (this.themes = resBody));
+    });
+  }
+
+  updateForm(tag: ITag): void {
+    this.editForm.patchValue({
+      id: tag.id,
+      name: tag.name,
+      icon: tag.icon,
+      themeId: tag.themeId
+    });
+  }
+
+  previousState(): void {
+    window.history.back();
+  }
+
+  save(): void {
+    this.isSaving = true;
+    const tag = this.createFromForm();
+    if (tag.id !== undefined) {
+      this.subscribeToSaveResponse(this.tagService.update(tag));
+    } else {
+      this.subscribeToSaveResponse(this.tagService.create(tag));
     }
+  }
 
-    previousState() {
-        window.history.back();
-    }
+  private createFromForm(): ITag {
+    return {
+      ...new Tag(),
+      id: this.editForm.get(['id'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      icon: this.editForm.get(['icon'])!.value,
+      themeId: this.editForm.get(['themeId'])!.value
+    };
+  }
 
-    save() {
-        this.isSaving = true;
-        if (this.tag.id !== undefined) {
-            this.subscribeToSaveResponse(this.tagService.update(this.tag));
-        } else {
-            this.subscribeToSaveResponse(this.tagService.create(this.tag));
-        }
-    }
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<ITag>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
+  }
 
-    protected subscribeToSaveResponse(result: Observable<HttpResponse<ITag>>) {
-        result.subscribe((res: HttpResponse<ITag>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
-    }
+  protected onSaveSuccess(): void {
+    this.isSaving = false;
+    this.previousState();
+  }
 
-    protected onSaveSuccess() {
-        this.isSaving = false;
-        this.previousState();
-    }
+  protected onSaveError(): void {
+    this.isSaving = false;
+  }
 
-    protected onSaveError() {
-        this.isSaving = false;
-    }
-
-    protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackThemeById(index: number, item: ITheme) {
-        return item.id;
-    }
-
-    trackGoalById(index: number, item: IGoal) {
-        return item.id;
-    }
-
-    getSelected(selectedVals: Array<any>, option: any) {
-        if (selectedVals) {
-            for (let i = 0; i < selectedVals.length; i++) {
-                if (option.id === selectedVals[i].id) {
-                    return selectedVals[i];
-                }
-            }
-        }
-        return option;
-    }
+  trackById(index: number, item: ITheme): any {
+    return item.id;
+  }
 }

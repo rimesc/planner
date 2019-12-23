@@ -2,6 +2,7 @@ package io.github.rimesc.planner.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import io.github.jhipster.service.Criteria;
 import io.github.rimesc.planner.domain.enumeration.Visibility;
 import io.github.jhipster.service.filter.BooleanFilter;
 import io.github.jhipster.service.filter.DoubleFilter;
@@ -13,18 +14,32 @@ import io.github.jhipster.service.filter.StringFilter;
 import io.github.jhipster.service.filter.InstantFilter;
 
 /**
- * Criteria class for the Theme entity. This class is used in ThemeResource to
- * receive all the possible filtering options from the Http GET request parameters.
- * For example the following could be a valid requests:
- * <code> /themes?id.greaterThan=5&amp;attr1.contains=something&amp;attr2.specified=false</code>
+ * Criteria class for the {@link io.github.rimesc.planner.domain.Theme} entity. This class is used
+ * in {@link io.github.rimesc.planner.web.rest.ThemeResource} to receive all the possible filtering options from
+ * the Http GET request parameters.
+ * For example the following could be a valid request:
+ * {@code /themes?id.greaterThan=5&attr1.contains=something&attr2.specified=false}
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
-public class ThemeCriteria implements Serializable {
+public class ThemeCriteria implements Serializable, Criteria {
     /**
      * Class for filtering Visibility
      */
     public static class VisibilityFilter extends Filter<Visibility> {
+
+        public VisibilityFilter() {
+        }
+
+        public VisibilityFilter(VisibilityFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public VisibilityFilter copy() {
+            return new VisibilityFilter(this);
+        }
+
     }
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +61,26 @@ public class ThemeCriteria implements Serializable {
     private LongFilter goalId;
 
     private LongFilter ownerId;
+
+    public ThemeCriteria(){
+    }
+
+    public ThemeCriteria(ThemeCriteria other){
+        this.id = other.id == null ? null : other.id.copy();
+        this.name = other.name == null ? null : other.name.copy();
+        this.description = other.description == null ? null : other.description.copy();
+        this.shortName = other.shortName == null ? null : other.shortName.copy();
+        this.created = other.created == null ? null : other.created.copy();
+        this.visibility = other.visibility == null ? null : other.visibility.copy();
+        this.tagId = other.tagId == null ? null : other.tagId.copy();
+        this.goalId = other.goalId == null ? null : other.goalId.copy();
+        this.ownerId = other.ownerId == null ? null : other.ownerId.copy();
+    }
+
+    @Override
+    public ThemeCriteria copy() {
+        return new ThemeCriteria(this);
+    }
 
     public LongFilter getId() {
         return id;

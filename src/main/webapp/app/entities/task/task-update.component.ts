@@ -1,99 +1,129 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService } from 'ng-jhipster';
-import { ITask } from 'app/shared/model/task.model';
+
+import { ITask, Task } from 'app/shared/model/task.model';
 import { TaskService } from './task.service';
-import { IUser, UserService } from 'app/core';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 import { IGoal } from 'app/shared/model/goal.model';
-import { GoalService } from 'app/entities/goal';
+import { GoalService } from 'app/entities/goal/goal.service';
+
+type SelectableEntity = IUser | IGoal;
 
 @Component({
-    selector: 'jhi-task-update',
-    templateUrl: './task-update.component.html'
+  selector: 'jhi-task-update',
+  templateUrl: './task-update.component.html'
 })
 export class TaskUpdateComponent implements OnInit {
-    task: ITask;
-    isSaving: boolean;
+  isSaving = false;
 
-    users: IUser[];
+  users: IUser[] = [];
 
-    goals: IGoal[];
-    created: string;
-    completed: string;
+  goals: IGoal[] = [];
 
-    constructor(
-        protected jhiAlertService: JhiAlertService,
-        protected taskService: TaskService,
-        protected userService: UserService,
-        protected goalService: GoalService,
-        protected activatedRoute: ActivatedRoute
-    ) {}
+  editForm = this.fb.group({
+    id: [],
+    summary: [null, [Validators.required, Validators.maxLength(128)]],
+    created: [null, [Validators.required]],
+    completed: [],
+    ownerId: [],
+    goalId: []
+  });
 
-    ngOnInit() {
-        this.isSaving = false;
-        this.activatedRoute.data.subscribe(({ task }) => {
-            this.task = task;
-            this.created = this.task.created != null ? this.task.created.format(DATE_TIME_FORMAT) : null;
-            this.completed = this.task.completed != null ? this.task.completed.format(DATE_TIME_FORMAT) : null;
-        });
-        this.userService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IUser[]>) => response.body)
-            )
-            .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
-        this.goalService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IGoal[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IGoal[]>) => response.body)
-            )
-            .subscribe((res: IGoal[]) => (this.goals = res), (res: HttpErrorResponse) => this.onError(res.message));
+  constructor(
+    protected taskService: TaskService,
+    protected userService: UserService,
+    protected goalService: GoalService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ task }) => {
+      this.updateForm(task);
+
+      this.userService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IUser[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IUser[]) => (this.users = resBody));
+
+      this.goalService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IGoal[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IGoal[]) => (this.goals = resBody));
+    });
+  }
+
+  updateForm(task: ITask): void {
+    this.editForm.patchValue({
+      id: task.id,
+      summary: task.summary,
+      created: task.created != null ? task.created.format(DATE_TIME_FORMAT) : null,
+      completed: task.completed != null ? task.completed.format(DATE_TIME_FORMAT) : null,
+      ownerId: task.ownerId,
+      goalId: task.goalId
+    });
+  }
+
+  previousState(): void {
+    window.history.back();
+  }
+
+  save(): void {
+    this.isSaving = true;
+    const task = this.createFromForm();
+    if (task.id !== undefined) {
+      this.subscribeToSaveResponse(this.taskService.update(task));
+    } else {
+      this.subscribeToSaveResponse(this.taskService.create(task));
     }
+  }
 
-    previousState() {
-        window.history.back();
-    }
+  private createFromForm(): ITask {
+    return {
+      ...new Task(),
+      id: this.editForm.get(['id'])!.value,
+      summary: this.editForm.get(['summary'])!.value,
+      created: this.editForm.get(['created'])!.value != null ? moment(this.editForm.get(['created'])!.value, DATE_TIME_FORMAT) : undefined,
+      completed:
+        this.editForm.get(['completed'])!.value != null ? moment(this.editForm.get(['completed'])!.value, DATE_TIME_FORMAT) : undefined,
+      ownerId: this.editForm.get(['ownerId'])!.value,
+      goalId: this.editForm.get(['goalId'])!.value
+    };
+  }
 
-    save() {
-        this.isSaving = true;
-        this.task.created = this.created != null ? moment(this.created, DATE_TIME_FORMAT) : null;
-        this.task.completed = this.completed != null ? moment(this.completed, DATE_TIME_FORMAT) : null;
-        if (this.task.id !== undefined) {
-            this.subscribeToSaveResponse(this.taskService.update(this.task));
-        } else {
-            this.subscribeToSaveResponse(this.taskService.create(this.task));
-        }
-    }
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<ITask>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
+  }
 
-    protected subscribeToSaveResponse(result: Observable<HttpResponse<ITask>>) {
-        result.subscribe((res: HttpResponse<ITask>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
-    }
+  protected onSaveSuccess(): void {
+    this.isSaving = false;
+    this.previousState();
+  }
 
-    protected onSaveSuccess() {
-        this.isSaving = false;
-        this.previousState();
-    }
+  protected onSaveError(): void {
+    this.isSaving = false;
+  }
 
-    protected onSaveError() {
-        this.isSaving = false;
-    }
-
-    protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackUserById(index: number, item: IUser) {
-        return item.id;
-    }
-
-    trackGoalById(index: number, item: IGoal) {
-        return item.id;
-    }
+  trackById(index: number, item: SelectableEntity): any {
+    return item.id;
+  }
 }

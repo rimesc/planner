@@ -4,21 +4,21 @@ import { ActivatedRoute } from '@angular/router';
 import { IGoal } from 'app/shared/model/goal.model';
 
 @Component({
-    selector: 'jhi-goal-detail',
-    templateUrl: './goal-detail.component.html'
+  selector: 'jhi-goal-detail',
+  templateUrl: './goal-detail.component.html'
 })
 export class GoalDetailComponent implements OnInit {
-    goal: IGoal;
+  goal: IGoal | null = null;
 
-    constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected activatedRoute: ActivatedRoute) {}
 
-    ngOnInit() {
-        this.activatedRoute.data.subscribe(({ goal }) => {
-            this.goal = goal;
-        });
-    }
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ goal }) => {
+      this.goal = goal;
+    });
+  }
 
-    previousState() {
-        window.history.back();
-    }
+  previousState(): void {
+    window.history.back();
+  }
 }

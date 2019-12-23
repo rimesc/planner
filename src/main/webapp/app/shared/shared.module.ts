@@ -1,21 +1,22 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
-
-import { NgbDateMomentAdapter } from './util/datepicker-adapter';
-import { PlannerSharedLibsModule, PlannerSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective } from './';
+import { NgModule } from '@angular/core';
+import { PlannerSharedLibsModule } from './shared-libs.module';
+import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
+import { AlertComponent } from './alert/alert.component';
+import { AlertErrorComponent } from './alert/alert-error.component';
+import { LoginModalComponent } from './login/login.component';
+import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 @NgModule({
-    imports: [PlannerSharedLibsModule, PlannerSharedCommonModule],
-    declarations: [JhiLoginModalComponent, HasAnyAuthorityDirective],
-    providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
-    entryComponents: [JhiLoginModalComponent],
-    exports: [PlannerSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [PlannerSharedLibsModule],
+  declarations: [FindLanguageFromKeyPipe, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
+  entryComponents: [LoginModalComponent],
+  exports: [
+    PlannerSharedLibsModule,
+    FindLanguageFromKeyPipe,
+    AlertComponent,
+    AlertErrorComponent,
+    LoginModalComponent,
+    HasAnyAuthorityDirective
+  ]
 })
-export class PlannerSharedModule {
-    static forRoot() {
-        return {
-            ngModule: PlannerSharedModule
-        };
-    }
-}
+export class PlannerSharedModule {}

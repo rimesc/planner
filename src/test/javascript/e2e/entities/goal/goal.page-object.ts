@@ -1,170 +1,170 @@
 import { element, by, ElementFinder } from 'protractor';
 
 export class GoalComponentsPage {
-    createButton = element(by.id('jh-create-entity'));
-    deleteButtons = element.all(by.css('jhi-goal div table .btn-danger'));
-    title = element.all(by.css('jhi-goal div h2#page-heading span')).first();
+  createButton = element(by.id('jh-create-entity'));
+  deleteButtons = element.all(by.css('jhi-goal div table .btn-danger'));
+  title = element.all(by.css('jhi-goal div h2#page-heading span')).first();
 
-    async clickOnCreateButton() {
-        await this.createButton.click();
-    }
+  async clickOnCreateButton(): Promise<void> {
+    await this.createButton.click();
+  }
 
-    async clickOnLastDeleteButton() {
-        await this.deleteButtons.last().click();
-    }
+  async clickOnLastDeleteButton(): Promise<void> {
+    await this.deleteButtons.last().click();
+  }
 
-    async countDeleteButtons() {
-        return this.deleteButtons.count();
-    }
+  async countDeleteButtons(): Promise<number> {
+    return this.deleteButtons.count();
+  }
 
-    async getTitle() {
-        return this.title.getAttribute('jhiTranslate');
-    }
+  async getTitle(): Promise<string> {
+    return this.title.getAttribute('jhiTranslate');
+  }
 }
 
 export class GoalUpdatePage {
-    pageTitle = element(by.id('jhi-goal-heading'));
-    saveButton = element(by.id('save-entity'));
-    cancelButton = element(by.id('cancel-save'));
-    summaryInput = element(by.id('field_summary'));
-    createdInput = element(by.id('field_created'));
-    completedInput = element(by.id('field_completed'));
-    orderInput = element(by.id('field_order'));
-    visibilitySelect = element(by.id('field_visibility'));
-    ownerSelect = element(by.id('field_owner'));
-    tagSelect = element(by.id('field_tag'));
-    themeSelect = element(by.id('field_theme'));
+  pageTitle = element(by.id('jhi-goal-heading'));
+  saveButton = element(by.id('save-entity'));
+  cancelButton = element(by.id('cancel-save'));
+  summaryInput = element(by.id('field_summary'));
+  createdInput = element(by.id('field_created'));
+  completedInput = element(by.id('field_completed'));
+  orderInput = element(by.id('field_order'));
+  visibilitySelect = element(by.id('field_visibility'));
+  ownerSelect = element(by.id('field_owner'));
+  tagSelect = element(by.id('field_tag'));
+  themeSelect = element(by.id('field_theme'));
 
-    async getPageTitle() {
-        return this.pageTitle.getAttribute('jhiTranslate');
-    }
+  async getPageTitle(): Promise<string> {
+    return this.pageTitle.getAttribute('jhiTranslate');
+  }
 
-    async setSummaryInput(summary) {
-        await this.summaryInput.sendKeys(summary);
-    }
+  async setSummaryInput(summary: string): Promise<void> {
+    await this.summaryInput.sendKeys(summary);
+  }
 
-    async getSummaryInput() {
-        return this.summaryInput.getAttribute('value');
-    }
+  async getSummaryInput(): Promise<string> {
+    return await this.summaryInput.getAttribute('value');
+  }
 
-    async setCreatedInput(created) {
-        await this.createdInput.sendKeys(created);
-    }
+  async setCreatedInput(created: string): Promise<void> {
+    await this.createdInput.sendKeys(created);
+  }
 
-    async getCreatedInput() {
-        return this.createdInput.getAttribute('value');
-    }
+  async getCreatedInput(): Promise<string> {
+    return await this.createdInput.getAttribute('value');
+  }
 
-    async setCompletedInput(completed) {
-        await this.completedInput.sendKeys(completed);
-    }
+  async setCompletedInput(completed: string): Promise<void> {
+    await this.completedInput.sendKeys(completed);
+  }
 
-    async getCompletedInput() {
-        return this.completedInput.getAttribute('value');
-    }
+  async getCompletedInput(): Promise<string> {
+    return await this.completedInput.getAttribute('value');
+  }
 
-    async setOrderInput(order) {
-        await this.orderInput.sendKeys(order);
-    }
+  async setOrderInput(order: string): Promise<void> {
+    await this.orderInput.sendKeys(order);
+  }
 
-    async getOrderInput() {
-        return this.orderInput.getAttribute('value');
-    }
+  async getOrderInput(): Promise<string> {
+    return await this.orderInput.getAttribute('value');
+  }
 
-    async setVisibilitySelect(visibility) {
-        await this.visibilitySelect.sendKeys(visibility);
-    }
+  async setVisibilitySelect(visibility: string): Promise<void> {
+    await this.visibilitySelect.sendKeys(visibility);
+  }
 
-    async getVisibilitySelect() {
-        return this.visibilitySelect.element(by.css('option:checked')).getText();
-    }
+  async getVisibilitySelect(): Promise<string> {
+    return await this.visibilitySelect.element(by.css('option:checked')).getText();
+  }
 
-    async visibilitySelectLastOption() {
-        await this.visibilitySelect
-            .all(by.tagName('option'))
-            .last()
-            .click();
-    }
+  async visibilitySelectLastOption(): Promise<void> {
+    await this.visibilitySelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
 
-    async ownerSelectLastOption() {
-        await this.ownerSelect
-            .all(by.tagName('option'))
-            .last()
-            .click();
-    }
+  async ownerSelectLastOption(): Promise<void> {
+    await this.ownerSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
 
-    async ownerSelectOption(option) {
-        await this.ownerSelect.sendKeys(option);
-    }
+  async ownerSelectOption(option: string): Promise<void> {
+    await this.ownerSelect.sendKeys(option);
+  }
 
-    getOwnerSelect(): ElementFinder {
-        return this.ownerSelect;
-    }
+  getOwnerSelect(): ElementFinder {
+    return this.ownerSelect;
+  }
 
-    async getOwnerSelectedOption() {
-        return this.ownerSelect.element(by.css('option:checked')).getText();
-    }
+  async getOwnerSelectedOption(): Promise<string> {
+    return await this.ownerSelect.element(by.css('option:checked')).getText();
+  }
 
-    async tagSelectLastOption() {
-        await this.tagSelect
-            .all(by.tagName('option'))
-            .last()
-            .click();
-    }
+  async tagSelectLastOption(): Promise<void> {
+    await this.tagSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
 
-    async tagSelectOption(option) {
-        await this.tagSelect.sendKeys(option);
-    }
+  async tagSelectOption(option: string): Promise<void> {
+    await this.tagSelect.sendKeys(option);
+  }
 
-    getTagSelect(): ElementFinder {
-        return this.tagSelect;
-    }
+  getTagSelect(): ElementFinder {
+    return this.tagSelect;
+  }
 
-    async getTagSelectedOption() {
-        return this.tagSelect.element(by.css('option:checked')).getText();
-    }
+  async getTagSelectedOption(): Promise<string> {
+    return await this.tagSelect.element(by.css('option:checked')).getText();
+  }
 
-    async themeSelectLastOption() {
-        await this.themeSelect
-            .all(by.tagName('option'))
-            .last()
-            .click();
-    }
+  async themeSelectLastOption(): Promise<void> {
+    await this.themeSelect
+      .all(by.tagName('option'))
+      .last()
+      .click();
+  }
 
-    async themeSelectOption(option) {
-        await this.themeSelect.sendKeys(option);
-    }
+  async themeSelectOption(option: string): Promise<void> {
+    await this.themeSelect.sendKeys(option);
+  }
 
-    getThemeSelect(): ElementFinder {
-        return this.themeSelect;
-    }
+  getThemeSelect(): ElementFinder {
+    return this.themeSelect;
+  }
 
-    async getThemeSelectedOption() {
-        return this.themeSelect.element(by.css('option:checked')).getText();
-    }
+  async getThemeSelectedOption(): Promise<string> {
+    return await this.themeSelect.element(by.css('option:checked')).getText();
+  }
 
-    async save() {
-        await this.saveButton.click();
-    }
+  async save(): Promise<void> {
+    await this.saveButton.click();
+  }
 
-    async cancel() {
-        await this.cancelButton.click();
-    }
+  async cancel(): Promise<void> {
+    await this.cancelButton.click();
+  }
 
-    getSaveButton(): ElementFinder {
-        return this.saveButton;
-    }
+  getSaveButton(): ElementFinder {
+    return this.saveButton;
+  }
 }
 
 export class GoalDeleteDialog {
-    private dialogTitle = element(by.id('jhi-delete-goal-heading'));
-    private confirmButton = element(by.id('jhi-confirm-delete-goal'));
+  private dialogTitle = element(by.id('jhi-delete-goal-heading'));
+  private confirmButton = element(by.id('jhi-confirm-delete-goal'));
 
-    async getDialogTitle() {
-        return this.dialogTitle.getAttribute('jhiTranslate');
-    }
+  async getDialogTitle(): Promise<string> {
+    return this.dialogTitle.getAttribute('jhiTranslate');
+  }
 
-    async clickOnConfirmButton() {
-        await this.confirmButton.click();
-    }
+  async clickOnConfirmButton(): Promise<void> {
+    await this.confirmButton.click();
+  }
 }
