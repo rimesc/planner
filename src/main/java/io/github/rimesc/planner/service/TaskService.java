@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Service Implementation for managing Task.
+ * Service Implementation for managing {@link Task}.
  */
 @Service
 @Transactional
@@ -37,8 +37,8 @@ public class TaskService {
     /**
      * Save a task.
      *
-     * @param taskDTO the entity to save
-     * @return the persisted entity
+     * @param taskDTO the entity to save.
+     * @return the persisted entity.
      */
     public TaskDTO save(TaskDTO taskDTO) {
         log.debug("Request to save Task : {}", taskDTO);
@@ -50,7 +50,7 @@ public class TaskService {
     /**
      * Get all the tasks.
      *
-     * @return the list of entities
+     * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public List<TaskDTO> findAll() {
@@ -64,8 +64,8 @@ public class TaskService {
     /**
      * Get one task by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Transactional(readOnly = true)
     public Optional<TaskDTO> findOne(Long id) {
@@ -77,7 +77,7 @@ public class TaskService {
     /**
      * Delete the task by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     public void delete(Long id) {
         log.debug("Request to delete Task : {}", id);

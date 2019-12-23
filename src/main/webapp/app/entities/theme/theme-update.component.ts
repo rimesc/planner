@@ -1,98 +1,152 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
-import { ITheme } from 'app/shared/model/theme.model';
+import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+
+import { ITheme, Theme } from 'app/shared/model/theme.model';
 import { ThemeService } from './theme.service';
-import { IUser, UserService } from 'app/core';
+import { AlertError } from 'app/shared/alert/alert-error.model';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
-    selector: 'jhi-theme-update',
-    templateUrl: './theme-update.component.html'
+  selector: 'jhi-theme-update',
+  templateUrl: './theme-update.component.html'
 })
 export class ThemeUpdateComponent implements OnInit {
-    theme: ITheme;
-    isSaving: boolean;
+  isSaving = false;
 
-    users: IUser[];
-    created: string;
+  users: IUser[] = [];
 
-    constructor(
-        protected dataUtils: JhiDataUtils,
-        protected jhiAlertService: JhiAlertService,
-        protected themeService: ThemeService,
-        protected userService: UserService,
-        protected elementRef: ElementRef,
-        protected activatedRoute: ActivatedRoute
-    ) {}
+  editForm = this.fb.group({
+    id: [],
+    name: [null, [Validators.required, Validators.maxLength(128)]],
+    description: [null, [Validators.required, Validators.maxLength(512)]],
+    shortName: [null, [Validators.required, Validators.maxLength(32)]],
+    avatar: [null, []],
+    avatarContentType: [],
+    created: [null, [Validators.required]],
+    visibility: [null, [Validators.required]],
+    ownerId: []
+  });
 
-    ngOnInit() {
-        this.isSaving = false;
-        this.activatedRoute.data.subscribe(({ theme }) => {
-            this.theme = theme;
-            this.created = this.theme.created != null ? this.theme.created.format(DATE_TIME_FORMAT) : null;
-        });
-        this.userService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IUser[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IUser[]>) => response.body)
-            )
-            .subscribe((res: IUser[]) => (this.users = res), (res: HttpErrorResponse) => this.onError(res.message));
+  constructor(
+    protected dataUtils: JhiDataUtils,
+    protected eventManager: JhiEventManager,
+    protected themeService: ThemeService,
+    protected userService: UserService,
+    protected elementRef: ElementRef,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ theme }) => {
+      this.updateForm(theme);
+
+      this.userService
+        .query()
+        .pipe(
+          map((res: HttpResponse<IUser[]>) => {
+            return res.body ? res.body : [];
+          })
+        )
+        .subscribe((resBody: IUser[]) => (this.users = resBody));
+    });
+  }
+
+  updateForm(theme: ITheme): void {
+    this.editForm.patchValue({
+      id: theme.id,
+      name: theme.name,
+      description: theme.description,
+      shortName: theme.shortName,
+      avatar: theme.avatar,
+      avatarContentType: theme.avatarContentType,
+      created: theme.created != null ? theme.created.format(DATE_TIME_FORMAT) : null,
+      visibility: theme.visibility,
+      ownerId: theme.ownerId
+    });
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(contentType: string, base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
+
+  setFileData(event: Event, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe(null, (err: JhiFileLoadError) => {
+      this.eventManager.broadcast(
+        new JhiEventWithContent<AlertError>('plannerApp.error', { ...err, key: 'error.file.' + err.key })
+      );
+    });
+  }
+
+  clearInputImage(field: string, fieldContentType: string, idInput: string): void {
+    this.editForm.patchValue({
+      [field]: null,
+      [fieldContentType]: null
+    });
+    if (this.elementRef && idInput && this.elementRef.nativeElement.querySelector('#' + idInput)) {
+      this.elementRef.nativeElement.querySelector('#' + idInput).value = null;
     }
+  }
 
-    byteSize(field) {
-        return this.dataUtils.byteSize(field);
-    }
+  previousState(): void {
+    window.history.back();
+  }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
+  save(): void {
+    this.isSaving = true;
+    const theme = this.createFromForm();
+    if (theme.id !== undefined) {
+      this.subscribeToSaveResponse(this.themeService.update(theme));
+    } else {
+      this.subscribeToSaveResponse(this.themeService.create(theme));
     }
+  }
 
-    setFileData(event, entity, field, isImage) {
-        this.dataUtils.setFileData(event, entity, field, isImage);
-    }
+  private createFromForm(): ITheme {
+    return {
+      ...new Theme(),
+      id: this.editForm.get(['id'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      description: this.editForm.get(['description'])!.value,
+      shortName: this.editForm.get(['shortName'])!.value,
+      avatarContentType: this.editForm.get(['avatarContentType'])!.value,
+      avatar: this.editForm.get(['avatar'])!.value,
+      created: this.editForm.get(['created'])!.value != null ? moment(this.editForm.get(['created'])!.value, DATE_TIME_FORMAT) : undefined,
+      visibility: this.editForm.get(['visibility'])!.value,
+      ownerId: this.editForm.get(['ownerId'])!.value
+    };
+  }
 
-    clearInputImage(field: string, fieldContentType: string, idInput: string) {
-        this.dataUtils.clearInputImage(this.theme, this.elementRef, field, fieldContentType, idInput);
-    }
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<ITheme>>): void {
+    result.subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
+  }
 
-    previousState() {
-        window.history.back();
-    }
+  protected onSaveSuccess(): void {
+    this.isSaving = false;
+    this.previousState();
+  }
 
-    save() {
-        this.isSaving = true;
-        this.theme.created = this.created != null ? moment(this.created, DATE_TIME_FORMAT) : null;
-        if (this.theme.id !== undefined) {
-            this.subscribeToSaveResponse(this.themeService.update(this.theme));
-        } else {
-            this.subscribeToSaveResponse(this.themeService.create(this.theme));
-        }
-    }
+  protected onSaveError(): void {
+    this.isSaving = false;
+  }
 
-    protected subscribeToSaveResponse(result: Observable<HttpResponse<ITheme>>) {
-        result.subscribe((res: HttpResponse<ITheme>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
-    }
-
-    protected onSaveSuccess() {
-        this.isSaving = false;
-        this.previousState();
-    }
-
-    protected onSaveError() {
-        this.isSaving = false;
-    }
-
-    protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
-    }
-
-    trackUserById(index: number, item: IUser) {
-        return item.id;
-    }
+  trackById(index: number, item: IUser): any {
+    return item.id;
+  }
 }

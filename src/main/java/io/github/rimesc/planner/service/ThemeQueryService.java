@@ -25,7 +25,7 @@ import io.github.rimesc.planner.service.dto.ThemeDTO;
 import io.github.rimesc.planner.service.mapper.ThemeMapper;
 
 /**
- * Service for executing complex queries for Theme entities in the database.
+ * Service for executing complex queries for {@link Theme} entities in the database.
  * The main input is a {@link ThemeCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
  * It returns a {@link List} of {@link ThemeDTO} or a {@link Page} of {@link ThemeDTO} which fulfills the criteria.
@@ -46,7 +46,7 @@ public class ThemeQueryService extends QueryService<Theme> {
     }
 
     /**
-     * Return a {@link List} of {@link ThemeDTO} which matches the criteria from the database
+     * Return a {@link List} of {@link ThemeDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
@@ -58,7 +58,7 @@ public class ThemeQueryService extends QueryService<Theme> {
     }
 
     /**
-     * Return a {@link Page} of {@link ThemeDTO} which matches the criteria from the database
+     * Return a {@link Page} of {@link ThemeDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
@@ -72,7 +72,7 @@ public class ThemeQueryService extends QueryService<Theme> {
     }
 
     /**
-     * Return the number of matching entities in the database
+     * Return the number of matching entities in the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the number of matching entities.
      */
@@ -84,13 +84,15 @@ public class ThemeQueryService extends QueryService<Theme> {
     }
 
     /**
-     * Function to convert ThemeCriteria to a {@link Specification}
+     * Function to convert {@link ThemeCriteria} to a {@link Specification}
+     * @param criteria The object which holds all the filters, which the entities should match.
+     * @return the matching {@link Specification} of the entity.
      */
-    private Specification<Theme> createSpecification(ThemeCriteria criteria) {
+    protected Specification<Theme> createSpecification(ThemeCriteria criteria) {
         Specification<Theme> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Theme_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Theme_.id));
             }
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), Theme_.name));

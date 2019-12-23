@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Service Implementation for managing Tag.
+ * Service Implementation for managing {@link Tag}.
  */
 @Service
 @Transactional
@@ -37,8 +37,8 @@ public class TagService {
     /**
      * Save a tag.
      *
-     * @param tagDTO the entity to save
-     * @return the persisted entity
+     * @param tagDTO the entity to save.
+     * @return the persisted entity.
      */
     public TagDTO save(TagDTO tagDTO) {
         log.debug("Request to save Tag : {}", tagDTO);
@@ -50,7 +50,7 @@ public class TagService {
     /**
      * Get all the tags.
      *
-     * @return the list of entities
+     * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public List<TagDTO> findAll() {
@@ -64,8 +64,8 @@ public class TagService {
     /**
      * Get one tag by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Transactional(readOnly = true)
     public Optional<TagDTO> findOne(Long id) {
@@ -77,7 +77,7 @@ public class TagService {
     /**
      * Delete the tag by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     public void delete(Long id) {
         log.debug("Request to delete Tag : {}", id);

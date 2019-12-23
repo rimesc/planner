@@ -1,34 +1,16 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
 
-import { PlannerSharedModule } from 'app/shared';
-import {
-    ThemeComponent,
-    ThemeDetailComponent,
-    ThemeUpdateComponent,
-    ThemeDeletePopupComponent,
-    ThemeDeleteDialogComponent,
-    themeRoute,
-    themePopupRoute
-} from './';
-
-const ENTITY_STATES = [...themeRoute, ...themePopupRoute];
+import { PlannerSharedModule } from 'app/shared/shared.module';
+import { ThemeComponent } from './theme.component';
+import { ThemeDetailComponent } from './theme-detail.component';
+import { ThemeUpdateComponent } from './theme-update.component';
+import { ThemeDeleteDialogComponent } from './theme-delete-dialog.component';
+import { themeRoute } from './theme.route';
 
 @NgModule({
-    imports: [PlannerSharedModule, RouterModule.forChild(ENTITY_STATES)],
-    declarations: [ThemeComponent, ThemeDetailComponent, ThemeUpdateComponent, ThemeDeleteDialogComponent, ThemeDeletePopupComponent],
-    entryComponents: [ThemeComponent, ThemeUpdateComponent, ThemeDeleteDialogComponent, ThemeDeletePopupComponent],
-    providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [PlannerSharedModule, RouterModule.forChild(themeRoute)],
+  declarations: [ThemeComponent, ThemeDetailComponent, ThemeUpdateComponent, ThemeDeleteDialogComponent],
+  entryComponents: [ThemeDeleteDialogComponent]
 })
-export class PlannerThemeModule {
-    constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper.language.subscribe((languageKey: string) => {
-            if (languageKey !== undefined) {
-                this.languageService.changeLanguage(languageKey);
-            }
-        });
-    }
-}
+export class PlannerThemeModule {}

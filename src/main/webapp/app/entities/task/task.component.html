@@ -4,23 +4,27 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-task" [routerLink]="['/task/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="plannerApp.task.home.createLabel">
-            Create new Task
+            Create a new Task
             </span>
         </button>
     </h2>
+    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="table-responsive" *ngIf="tasks">
-        <table class="table table-striped">
+    <div class="alert alert-warning" *ngIf="tasks?.length === 0">
+        <span jhiTranslate="plannerApp.task.home.notFound">No tasks found</span>
+    </div>
+    <div class="table-responsive" *ngIf="tasks?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="plannerApp.task.summary">Summary</span></th>
-            <th><span jhiTranslate="plannerApp.task.created">Created</span></th>
-            <th><span jhiTranslate="plannerApp.task.completed">Completed</span></th>
-            <th><span jhiTranslate="plannerApp.task.owner">Owner</span></th>
-            <th><span jhiTranslate="plannerApp.task.goal">Goal</span></th>
-            <th></th>
+            <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+            <th scope="col" ><span jhiTranslate="plannerApp.task.summary">Summary</span></th>
+            <th scope="col" ><span jhiTranslate="plannerApp.task.created">Created</span></th>
+            <th scope="col" ><span jhiTranslate="plannerApp.task.completed">Completed</span></th>
+            <th scope="col" ><span jhiTranslate="plannerApp.task.owner">Owner</span></th>
+            <th scope="col" ><span jhiTranslate="plannerApp.task.goal">Goal</span></th>
+            <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -34,11 +38,11 @@
                 </td>
                 <td>
                     <div *ngIf="task.goalId">
-                        <a [routerLink]="['../goal', task.goalId , 'view' ]" >{{task.goalId}}</a>
+                        <a [routerLink]="['/goal', task.goalId , 'view' ]" >{{task.goalId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
+                    <div class="btn-group">
                         <button type="submit"
                                 [routerLink]="['/task', task.id, 'view' ]"
                                 class="btn btn-info btn-sm">
@@ -51,10 +55,7 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'task', { outlets: { popup: task.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
+                        <button type="submit" (click)="delete(task)"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

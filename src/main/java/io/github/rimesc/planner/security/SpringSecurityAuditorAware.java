@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import io.github.rimesc.planner.config.Constants;
 
 /**
- * Implementation of AuditorAware based on Spring Security.
+ * Implementation of {@link AuditorAware} based on Spring Security.
  */
 @Component
 public class SpringSecurityAuditorAware implements AuditorAware<String> {

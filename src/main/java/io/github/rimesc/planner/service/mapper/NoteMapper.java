@@ -6,7 +6,7 @@ import io.github.rimesc.planner.domain.*;
 import io.github.rimesc.planner.service.dto.NoteDTO;
 
 /**
- * Mapper for the entity Note and its DTO NoteDTO.
+ * Mapper for the entity {@link Note} and its DTO {@link NoteDTO}.
  */
 @Mapper(componentModel = "spring", uses = {UserMapper.class, GoalMapper.class})
 public interface NoteMapper extends EntityMapper<NoteDTO, Note> {

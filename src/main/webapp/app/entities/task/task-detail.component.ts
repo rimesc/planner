@@ -4,21 +4,21 @@ import { ActivatedRoute } from '@angular/router';
 import { ITask } from 'app/shared/model/task.model';
 
 @Component({
-    selector: 'jhi-task-detail',
-    templateUrl: './task-detail.component.html'
+  selector: 'jhi-task-detail',
+  templateUrl: './task-detail.component.html'
 })
 export class TaskDetailComponent implements OnInit {
-    task: ITask;
+  task: ITask | null = null;
 
-    constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected activatedRoute: ActivatedRoute) {}
 
-    ngOnInit() {
-        this.activatedRoute.data.subscribe(({ task }) => {
-            this.task = task;
-        });
-    }
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ task }) => {
+      this.task = task;
+    });
+  }
 
-    previousState() {
-        window.history.back();
-    }
+  previousState(): void {
+    window.history.back();
+  }
 }

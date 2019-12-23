@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Service Implementation for managing Note.
+ * Service Implementation for managing {@link Note}.
  */
 @Service
 @Transactional
@@ -37,8 +37,8 @@ public class NoteService {
     /**
      * Save a note.
      *
-     * @param noteDTO the entity to save
-     * @return the persisted entity
+     * @param noteDTO the entity to save.
+     * @return the persisted entity.
      */
     public NoteDTO save(NoteDTO noteDTO) {
         log.debug("Request to save Note : {}", noteDTO);
@@ -50,7 +50,7 @@ public class NoteService {
     /**
      * Get all the notes.
      *
-     * @return the list of entities
+     * @return the list of entities.
      */
     @Transactional(readOnly = true)
     public List<NoteDTO> findAll() {
@@ -64,8 +64,8 @@ public class NoteService {
     /**
      * Get one note by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     @Transactional(readOnly = true)
     public Optional<NoteDTO> findOne(Long id) {
@@ -77,7 +77,7 @@ public class NoteService {
     /**
      * Delete the note by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     public void delete(Long id) {
         log.debug("Request to delete Note : {}", id);

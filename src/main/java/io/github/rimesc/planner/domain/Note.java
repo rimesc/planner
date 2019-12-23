@@ -1,6 +1,4 @@
 package io.github.rimesc.planner.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.github.rimesc.planner.domain.enumeration.Visibility;
@@ -10,7 +8,6 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
 /**
  * A Note.
@@ -20,7 +17,7 @@ import java.util.Objects;
 public class Note implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -161,19 +158,15 @@ public class Note implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Note)) {
             return false;
         }
-        Note note = (Note) o;
-        if (note.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), note.getId());
+        return id != null && id.equals(((Note) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

@@ -1,6 +1,4 @@
 package io.github.rimesc.planner.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -8,7 +6,6 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
 /**
  * A Task.
@@ -18,7 +15,7 @@ import java.util.Objects;
 public class Task implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -123,19 +120,15 @@ public class Task implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Task)) {
             return false;
         }
-        Task task = (Task) o;
-        if (task.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), task.getId());
+        return id != null && id.equals(((Task) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

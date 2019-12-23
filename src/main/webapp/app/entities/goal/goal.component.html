@@ -4,25 +4,29 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-goal" [routerLink]="['/goal/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="plannerApp.goal.home.createLabel">
-            Create new Goal
+            Create a new Goal
             </span>
         </button>
     </h2>
+    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="table-responsive" *ngIf="goals">
-        <table class="table table-striped">
+    <div class="alert alert-warning" *ngIf="goals?.length === 0">
+        <span jhiTranslate="plannerApp.goal.home.notFound">No goals found</span>
+    </div>
+    <div class="table-responsive" *ngIf="goals?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="summary"><span jhiTranslate="plannerApp.goal.summary">Summary</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="created"><span jhiTranslate="plannerApp.goal.created">Created</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="completed"><span jhiTranslate="plannerApp.goal.completed">Completed</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="order"><span jhiTranslate="plannerApp.goal.order">Order</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="visibility"><span jhiTranslate="plannerApp.goal.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="ownerId"><span jhiTranslate="plannerApp.goal.owner">Owner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="themeId"><span jhiTranslate="plannerApp.goal.theme">Theme</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th></th>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="summary"><span jhiTranslate="plannerApp.goal.summary">Summary</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="created"><span jhiTranslate="plannerApp.goal.created">Created</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="completed"><span jhiTranslate="plannerApp.goal.completed">Completed</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="order"><span jhiTranslate="plannerApp.goal.order">Order</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="visibility"><span jhiTranslate="plannerApp.goal.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="ownerId"><span jhiTranslate="plannerApp.goal.owner">Owner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="themeId"><span jhiTranslate="plannerApp.goal.theme">Theme</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"></th>
             </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
@@ -38,11 +42,11 @@
                 </td>
                 <td>
                     <div *ngIf="goal.themeId">
-                        <a [routerLink]="['../theme', goal.themeId , 'view' ]" >{{goal.themeId}}</a>
+                        <a [routerLink]="['/theme', goal.themeId , 'view' ]" >{{goal.themeId}}</a>
                     </div>
                 </td>
                 <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
+                    <div class="btn-group">
                         <button type="submit"
                                 [routerLink]="['/goal', goal.id, 'view' ]"
                                 class="btn btn-info btn-sm">
@@ -55,10 +59,7 @@
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
-                        <button type="submit"
-                                [routerLink]="['/', 'goal', { outlets: { popup: goal.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
+                        <button type="submit" (click)="delete(goal)"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

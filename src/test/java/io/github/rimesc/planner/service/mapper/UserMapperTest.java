@@ -1,13 +1,10 @@
 package io.github.rimesc.planner.service.mapper;
 
-
+import io.github.rimesc.planner.domain.User;
+import io.github.rimesc.planner.service.dto.UserDTO;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.domain.User;
@@ -22,26 +19,20 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test class for the UserMapper.
- *
- * @see UserMapper
+ * Unit tests for {@link UserMapper}.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = PlannerApp.class)
 public class UserMapperTest {
 
     private static final String DEFAULT_LOGIN = "johndoe";
+    private static final Long DEFAULT_ID = 1L;
 
-    @Autowired
     private UserMapper userMapper;
-
     private User user;
     private UserDTO userDto;
 
-    private static final Long DEFAULT_ID = 1L;
-
-    @Before
+    @BeforeEach
     public void init() {
+        userMapper = new UserMapper();
         user = new User();
         user.setLogin(DEFAULT_LOGIN);
         user.setPassword(RandomStringUtils.random(60));
@@ -56,7 +47,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void usersToUserDTOsShouldMapOnlyNonNullUsers(){
+    public void usersToUserDTOsShouldMapOnlyNonNullUsers() {
         List<User> users = new ArrayList<>();
         users.add(user);
         users.add(null);
@@ -68,7 +59,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOsToUsersShouldMapOnlyNonNullUsers(){
+    public void userDTOsToUsersShouldMapOnlyNonNullUsers() {
         List<UserDTO> usersDto = new ArrayList<>();
         usersDto.add(userDto);
         usersDto.add(null);
@@ -80,7 +71,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOsToUsersWithAuthoritiesStringShouldMapToUsersWithAuthoritiesDomain(){
+    public void userDTOsToUsersWithAuthoritiesStringShouldMapToUsersWithAuthoritiesDomain() {
         Set<String> authoritiesAsString = new HashSet<>();
         authoritiesAsString.add("ADMIN");
         userDto.setAuthorities(authoritiesAsString);
@@ -98,7 +89,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOsToUsersMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities(){
+    public void userDTOsToUsersMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
         userDto.setAuthorities(null);
 
         List<UserDTO> usersDto = new ArrayList<>();
@@ -113,11 +104,9 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOToUserMapWithAuthoritiesStringShouldReturnUserWithAuthorities(){
+    public void userDTOToUserMapWithAuthoritiesStringShouldReturnUserWithAuthorities() {
         Set<String> authoritiesAsString = new HashSet<>();
         authoritiesAsString.add("ADMIN");
-        userDto.setAuthorities(authoritiesAsString);
-
         userDto.setAuthorities(authoritiesAsString);
 
         User user = userMapper.userDTOToUser(userDto);
@@ -129,7 +118,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOToUserMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities(){
+    public void userDTOToUserMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
         userDto.setAuthorities(null);
 
         User user = userMapper.userDTOToUser(userDto);
@@ -140,7 +129,7 @@ public class UserMapperTest {
     }
 
     @Test
-    public void userDTOToUserMapWithNullUserShouldReturnNull(){
+    public void userDTOToUserMapWithNullUserShouldReturnNull() {
         assertThat(userMapper.userDTOToUser(null)).isNull();
     }
 

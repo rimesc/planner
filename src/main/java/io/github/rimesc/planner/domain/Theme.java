@@ -1,7 +1,4 @@
 package io.github.rimesc.planner.domain;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.github.rimesc.planner.domain.enumeration.Visibility;
@@ -13,7 +10,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Theme.
@@ -23,7 +19,7 @@ import java.util.Objects;
 public class Theme implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -62,8 +58,10 @@ public class Theme implements Serializable {
 
     @OneToMany(mappedBy = "theme")
     private Set<Tag> tags = new HashSet<>();
+
     @OneToMany(mappedBy = "theme")
     private Set<Goal> goals = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("themes")
     private User owner;
@@ -237,19 +235,15 @@ public class Theme implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Theme)) {
             return false;
         }
-        Theme theme = (Theme) o;
-        if (theme.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), theme.getId());
+        return id != null && id.equals(((Theme) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

@@ -1,19 +1,22 @@
 package io.github.rimesc.planner.web.rest;
-import io.github.jhipster.web.util.ResponseUtil;
-import io.github.rimesc.planner.service.ThemeQueryService;
+
 import io.github.rimesc.planner.service.ThemeService;
 import io.github.rimesc.planner.service.dto.ThemeCriteria;
 import io.github.rimesc.planner.service.dto.ThemeDTO;
 import io.github.rimesc.planner.web.rest.errors.BadRequestAlertException;
-import io.github.rimesc.planner.web.rest.util.HeaderUtil;
-import io.github.rimesc.planner.web.rest.util.PaginationUtil;
+import io.github.rimesc.planner.service.ThemeQueryService;
 
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * REST controller for managing Theme.
+ * REST controller for managing {@link io.github.rimesc.planner.domain.Theme}.
  */
 @RestController
 @RequestMapping("/api")
@@ -34,6 +37,9 @@ public class ThemeResource {
     private final Logger log = LoggerFactory.getLogger(ThemeResource.class);
 
     private static final String ENTITY_NAME = "theme";
+
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
 
     private final ThemeService themeService;
 
@@ -45,11 +51,11 @@ public class ThemeResource {
     }
 
     /**
-     * POST  /themes : Create a new theme.
+     * {@code POST  /themes} : Create a new theme.
      *
-     * @param themeDTO the themeDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new themeDTO, or with status 400 (Bad Request) if the theme has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param themeDTO the themeDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new themeDTO, or with status {@code 400 (Bad Request)} if the theme has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/themes")
     public ResponseEntity<ThemeDTO> createTheme(@Valid @RequestBody ThemeDTO themeDTO) throws URISyntaxException {
@@ -59,18 +65,18 @@ public class ThemeResource {
         }
         ThemeDTO result = themeService.save(themeDTO);
         return ResponseEntity.created(new URI("/api/themes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
-     * PUT  /themes : Updates an existing theme.
+     * {@code PUT  /themes} : Updates an existing theme.
      *
-     * @param themeDTO the themeDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated themeDTO,
-     * or with status 400 (Bad Request) if the themeDTO is not valid,
-     * or with status 500 (Internal Server Error) if the themeDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
+     * @param themeDTO the themeDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated themeDTO,
+     * or with status {@code 400 (Bad Request)} if the themeDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the themeDTO couldn't be updated.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/themes")
     public ResponseEntity<ThemeDTO> updateTheme(@Valid @RequestBody ThemeDTO themeDTO) throws URISyntaxException {
@@ -80,30 +86,32 @@ public class ThemeResource {
         }
         ThemeDTO result = themeService.save(themeDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, themeDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, themeDTO.getId().toString()))
             .body(result);
     }
 
     /**
-     * GET  /themes : get all the themes.
+     * {@code GET  /themes} : get all the themes.
      *
-     * @param pageable the pagination information
-     * @param criteria the criterias which the requested entities should match
-     * @return the ResponseEntity with status 200 (OK) and the list of themes in body
+
+     * @param pageable the pagination information.
+
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of themes in body.
      */
     @GetMapping("/themes")
     public ResponseEntity<List<ThemeDTO>> getAllThemes(ThemeCriteria criteria, Pageable pageable) {
         log.debug("REST request to get Themes by criteria: {}", criteria);
         Page<ThemeDTO> page = themeQueryService.findByCriteria(criteria, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/themes");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
-    * GET  /themes/count : count all the themes.
+    * {@code GET  /themes/count} : count all the themes.
     *
-    * @param criteria the criterias which the requested entities should match
-    * @return the ResponseEntity with status 200 (OK) and the count in body
+    * @param criteria the criteria which the requested entities should match.
+    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
     */
     @GetMapping("/themes/count")
     public ResponseEntity<Long> countThemes(ThemeCriteria criteria) {
@@ -112,10 +120,10 @@ public class ThemeResource {
     }
 
     /**
-     * GET  /themes/:id : get the "id" theme.
+     * {@code GET  /themes/:id} : get the "id" theme.
      *
-     * @param id the id of the themeDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the themeDTO, or with status 404 (Not Found)
+     * @param id the id of the themeDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the themeDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/themes/{id}")
     public ResponseEntity<ThemeDTO> getTheme(@PathVariable Long id) {
@@ -125,15 +133,15 @@ public class ThemeResource {
     }
 
     /**
-     * DELETE  /themes/:id : delete the "id" theme.
+     * {@code DELETE  /themes/:id} : delete the "id" theme.
      *
-     * @param id the id of the themeDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
+     * @param id the id of the themeDTO to delete.
+     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/themes/{id}")
     public ResponseEntity<Void> deleteTheme(@PathVariable Long id) {
         log.debug("REST request to delete Theme : {}", id);
         themeService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

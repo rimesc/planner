@@ -1,93 +1,82 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Task } from 'app/shared/model/task.model';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { ITask, Task } from 'app/shared/model/task.model';
 import { TaskService } from './task.service';
 import { TaskComponent } from './task.component';
 import { TaskDetailComponent } from './task-detail.component';
 import { TaskUpdateComponent } from './task-update.component';
-import { TaskDeletePopupComponent } from './task-delete-dialog.component';
-import { ITask } from 'app/shared/model/task.model';
 
 @Injectable({ providedIn: 'root' })
 export class TaskResolve implements Resolve<ITask> {
-    constructor(private service: TaskService) {}
+  constructor(private service: TaskService, private router: Router) {}
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITask> {
-        const id = route.params['id'] ? route.params['id'] : null;
-        if (id) {
-            return this.service.find(id).pipe(
-                filter((response: HttpResponse<Task>) => response.ok),
-                map((task: HttpResponse<Task>) => task.body)
-            );
-        }
-        return of(new Task());
+  resolve(route: ActivatedRouteSnapshot): Observable<ITask> | Observable<never> {
+    const id = route.params['id'];
+    if (id) {
+      return this.service.find(id).pipe(
+        flatMap((task: HttpResponse<Task>) => {
+          if (task.body) {
+            return of(task.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
+      );
     }
+    return of(new Task());
+  }
 }
 
 export const taskRoute: Routes = [
-    {
-        path: '',
-        component: TaskComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'plannerApp.task.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+  {
+    path: '',
+    component: TaskComponent,
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'plannerApp.task.home.title'
     },
-    {
-        path: ':id/view',
-        component: TaskDetailComponent,
-        resolve: {
-            task: TaskResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'plannerApp.task.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':id/view',
+    component: TaskDetailComponent,
+    resolve: {
+      task: TaskResolve
     },
-    {
-        path: 'new',
-        component: TaskUpdateComponent,
-        resolve: {
-            task: TaskResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'plannerApp.task.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'plannerApp.task.home.title'
     },
-    {
-        path: ':id/edit',
-        component: TaskUpdateComponent,
-        resolve: {
-            task: TaskResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'plannerApp.task.home.title'
-        },
-        canActivate: [UserRouteAccessService]
-    }
-];
-
-export const taskPopupRoute: Routes = [
-    {
-        path: ':id/delete',
-        component: TaskDeletePopupComponent,
-        resolve: {
-            task: TaskResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'plannerApp.task.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    }
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'new',
+    component: TaskUpdateComponent,
+    resolve: {
+      task: TaskResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'plannerApp.task.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':id/edit',
+    component: TaskUpdateComponent,
+    resolve: {
+      task: TaskResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'plannerApp.task.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  }
 ];

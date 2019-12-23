@@ -14,7 +14,6 @@ import java.util.Optional;
 /**
  * Spring Data  repository for the Goal entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface GoalRepository extends JpaRepository<Goal, Long>, JpaSpecificationExecutor<Goal> {
 
@@ -25,7 +24,7 @@ public interface GoalRepository extends JpaRepository<Goal, Long>, JpaSpecificat
         countQuery = "select count(distinct goal) from Goal goal")
     Page<Goal> findAllWithEagerRelationships(Pageable pageable);
 
-    @Query(value = "select distinct goal from Goal goal left join fetch goal.tags")
+    @Query("select distinct goal from Goal goal left join fetch goal.tags")
     List<Goal> findAllWithEagerRelationships();
 
     @Query("select goal from Goal goal left join fetch goal.tags where goal.id =:id")

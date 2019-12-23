@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.Objects;
 
 /**
- * A DTO for the Goal entity.
+ * A DTO for the {@link io.github.rimesc.planner.domain.Goal} entity.
  */
 public class GoalDTO implements Serializable {
 
@@ -140,8 +140,8 @@ public class GoalDTO implements Serializable {
             ", completed='" + getCompleted() + "'" +
             ", order=" + getOrder() +
             ", visibility='" + getVisibility() + "'" +
-            ", owner=" + getOwnerId() +
-            ", theme=" + getThemeId() +
+            ", ownerId=" + getOwnerId() +
+            ", themeId=" + getThemeId() +
             "}";
     }
 }

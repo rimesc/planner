@@ -1,7 +1,4 @@
 package io.github.rimesc.planner.domain;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.github.rimesc.planner.domain.enumeration.Visibility;
@@ -13,7 +10,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Goal.
@@ -23,7 +19,7 @@ import java.util.Objects;
 public class Goal implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,8 +47,10 @@ public class Goal implements Serializable {
 
     @OneToMany(mappedBy = "goal")
     private Set<Task> tasks = new HashSet<>();
+
     @OneToMany(mappedBy = "goal")
     private Set<Note> notes = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("goals")
     private User owner;
@@ -248,19 +246,15 @@ public class Goal implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Goal)) {
             return false;
         }
-        Goal goal = (Goal) o;
-        if (goal.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), goal.getId());
+        return id != null && id.equals(((Goal) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

@@ -1,25 +1,25 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-task-heading" jhiTranslate="plannerApp.task.home.createOrEditLabel">Create or edit a Task</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!task.id">
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="task.id" readonly />
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.task.summary" for="field_summary">Summary</label>
                     <input type="text" class="form-control" name="summary" id="field_summary"
-                        [(ngModel)]="task.summary" required maxlength="128"/>
-                    <div [hidden]="!(editForm.controls.summary?.dirty && editForm.controls.summary?.invalid)">
+                           formControlName="summary"/>
+                    <div *ngIf="editForm.get('summary')!.invalid && (editForm.get('summary')!.dirty || editForm.get('summary')!.touched)">
                         <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.summary?.errors?.required" jhiTranslate="entity.validation.required">
+                               *ngIf="editForm.get('summary')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                         <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.summary?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 128 }">
+                               *ngIf="editForm.get('summary')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 128 }">
                         This field cannot be longer than 128 characters.
                         </small>
                     </div>
@@ -27,16 +27,15 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.task.created" for="field_created">Created</label>
                     <div class="d-flex">
-                        <input id="field_created" type="datetime-local" class="form-control" name="created" [(ngModel)]="created" placeholder="YYYY-MM-DD HH:mm"
-                        required/>
+                        <input id="field_created" type="datetime-local" class="form-control" name="created" formControlName="created" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
-                    <div [hidden]="!(editForm.controls.created?.dirty && editForm.controls.created?.invalid)">
+                    <div *ngIf="editForm.get('created')!.invalid && (editForm.get('created')!.dirty || editForm.get('created')!.touched)">
                         <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.created?.errors?.required" jhiTranslate="entity.validation.required">
+                               *ngIf="editForm.get('created')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                         <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.created?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            [hidden]="!editForm.get('created')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
                             This field should be a date and time.
                         </small>
                     </div>
@@ -44,23 +43,22 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.task.completed" for="field_completed">Completed</label>
                     <div class="d-flex">
-                        <input id="field_completed" type="datetime-local" class="form-control" name="completed" [(ngModel)]="completed" placeholder="YYYY-MM-DD HH:mm"
-                        />
+                        <input id="field_completed" type="datetime-local" class="form-control" name="completed" formControlName="completed" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.task.owner" for="field_owner">Owner</label>
-                    <select class="form-control" id="field_owner" name="owner" [(ngModel)]="task.ownerId" >
+                    <select class="form-control" id="field_owner" name="owner" formControlName="ownerId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{userOption.id}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.task.goal" for="field_goal">Goal</label>
-                    <select class="form-control" id="field_goal" name="goal" [(ngModel)]="task.goalId" >
+                    <select class="form-control" id="field_goal" name="goal" formControlName="goalId">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="goalOption.id" *ngFor="let goalOption of goals; trackBy: trackGoalById">{{goalOption.id}}</option>
+                        <option [ngValue]="goalOption.id" *ngFor="let goalOption of goals; trackBy: trackById">{{goalOption.id}}</option>
                     </select>
                 </div>
             </div>
@@ -68,7 +66,7 @@
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

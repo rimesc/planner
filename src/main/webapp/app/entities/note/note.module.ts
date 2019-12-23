@@ -1,34 +1,16 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
 
-import { PlannerSharedModule } from 'app/shared';
-import {
-    NoteComponent,
-    NoteDetailComponent,
-    NoteUpdateComponent,
-    NoteDeletePopupComponent,
-    NoteDeleteDialogComponent,
-    noteRoute,
-    notePopupRoute
-} from './';
-
-const ENTITY_STATES = [...noteRoute, ...notePopupRoute];
+import { PlannerSharedModule } from 'app/shared/shared.module';
+import { NoteComponent } from './note.component';
+import { NoteDetailComponent } from './note-detail.component';
+import { NoteUpdateComponent } from './note-update.component';
+import { NoteDeleteDialogComponent } from './note-delete-dialog.component';
+import { noteRoute } from './note.route';
 
 @NgModule({
-    imports: [PlannerSharedModule, RouterModule.forChild(ENTITY_STATES)],
-    declarations: [NoteComponent, NoteDetailComponent, NoteUpdateComponent, NoteDeleteDialogComponent, NoteDeletePopupComponent],
-    entryComponents: [NoteComponent, NoteUpdateComponent, NoteDeleteDialogComponent, NoteDeletePopupComponent],
-    providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [PlannerSharedModule, RouterModule.forChild(noteRoute)],
+  declarations: [NoteComponent, NoteDetailComponent, NoteUpdateComponent, NoteDeleteDialogComponent],
+  entryComponents: [NoteDeleteDialogComponent]
 })
-export class PlannerNoteModule {
-    constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper.language.subscribe((languageKey: string) => {
-            if (languageKey !== undefined) {
-                this.languageService.changeLanguage(languageKey);
-            }
-        });
-    }
-}
+export class PlannerNoteModule {}

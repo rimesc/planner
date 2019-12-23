@@ -9,7 +9,7 @@ import java.util.Objects;
 import javax.persistence.Lob;
 
 /**
- * A DTO for the Theme entity.
+ * A DTO for the {@link io.github.rimesc.planner.domain.Theme} entity.
  */
 public class ThemeDTO implements Serializable {
 
@@ -144,7 +144,7 @@ public class ThemeDTO implements Serializable {
             ", avatar='" + getAvatar() + "'" +
             ", created='" + getCreated() + "'" +
             ", visibility='" + getVisibility() + "'" +
-            ", owner=" + getOwnerId() +
+            ", ownerId=" + getOwnerId() +
             "}";
     }
 }
