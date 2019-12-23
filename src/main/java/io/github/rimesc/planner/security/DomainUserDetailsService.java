@@ -1,5 +1,9 @@
 package io.github.rimesc.planner.security;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.repository.UserRepository;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Authenticate a user from the database.

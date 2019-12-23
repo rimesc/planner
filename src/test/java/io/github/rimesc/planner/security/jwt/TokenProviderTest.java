@@ -1,7 +1,11 @@
 package io.github.rimesc.planner.security.jwt;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.security.Key;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,13 +17,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.rimesc.planner.security.AuthoritiesConstants;
-import io.github.rimesc.planner.security.jwt.TokenProvider;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class TokenProviderTest {
 

@@ -1,5 +1,10 @@
 package io.github.rimesc.planner.repository;
 
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -11,9 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import io.github.rimesc.planner.config.Constants;
 import io.github.rimesc.planner.config.audit.AuditEventConverter;
 import io.github.rimesc.planner.domain.PersistentAuditEvent;
-
-import java.time.Instant;
-import java.util.*;
 
 /**
  * An implementation of Spring Boot's {@link AuditEventRepository}.

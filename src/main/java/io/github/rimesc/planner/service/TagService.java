@@ -1,8 +1,12 @@
 package io.github.rimesc.planner.service;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,11 +14,6 @@ import io.github.rimesc.planner.domain.Tag;
 import io.github.rimesc.planner.repository.TagRepository;
 import io.github.rimesc.planner.service.dto.TagDTO;
 import io.github.rimesc.planner.service.mapper.TagMapper;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Tag}.

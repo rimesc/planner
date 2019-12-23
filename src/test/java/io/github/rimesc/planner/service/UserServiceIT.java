@@ -1,12 +1,13 @@
 package io.github.rimesc.planner.service;
 
-import io.github.rimesc.planner.PlannerApp;
-import io.github.rimesc.planner.config.Constants;
-import io.github.rimesc.planner.domain.User;
-import io.github.rimesc.planner.repository.UserRepository;
-import io.github.rimesc.planner.service.dto.UserDTO;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-import io.github.jhipster.security.RandomUtil;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,21 +21,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.github.jhipster.security.RandomUtil;
 import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.config.Constants;
 import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.repository.UserRepository;
-import io.github.rimesc.planner.service.UserService;
 import io.github.rimesc.planner.service.dto.UserDTO;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 /**
  * Integration tests for {@link UserService}.

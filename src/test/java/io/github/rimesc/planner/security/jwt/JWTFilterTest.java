@@ -1,11 +1,8 @@
 package io.github.rimesc.planner.security.jwt;
 
-import io.github.jhipster.config.JHipsterProperties;
-import io.github.rimesc.planner.security.AuthoritiesConstants;
-import io.github.rimesc.planner.security.jwt.JWTFilter;
-import io.github.rimesc.planner.security.jwt.TokenProvider;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,9 +15,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Collections;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import io.github.jhipster.config.JHipsterProperties;
+import io.github.rimesc.planner.security.AuthoritiesConstants;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 public class JWTFilterTest {
 

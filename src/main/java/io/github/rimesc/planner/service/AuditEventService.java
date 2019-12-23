@@ -1,8 +1,9 @@
 package io.github.rimesc.planner.service;
 
-import io.github.jhipster.config.JHipsterProperties;
-import io.github.rimesc.planner.config.audit.AuditEventConverter;
-import io.github.rimesc.planner.repository.PersistenceAuditEventRepository;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -12,12 +13,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.github.jhipster.config.JHipsterProperties;
 import io.github.rimesc.planner.config.audit.AuditEventConverter;
 import io.github.rimesc.planner.repository.PersistenceAuditEventRepository;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 /**
  * Service for managing audit events.

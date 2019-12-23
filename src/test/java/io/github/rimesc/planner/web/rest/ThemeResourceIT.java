@@ -1,17 +1,21 @@
 package io.github.rimesc.planner.web.rest;
 
-import io.github.rimesc.planner.PlannerApp;
-import io.github.rimesc.planner.domain.Theme;
-import io.github.rimesc.planner.domain.Tag;
-import io.github.rimesc.planner.domain.Goal;
-import io.github.rimesc.planner.domain.User;
-import io.github.rimesc.planner.repository.ThemeRepository;
-import io.github.rimesc.planner.service.ThemeService;
-import io.github.rimesc.planner.service.dto.ThemeDTO;
-import io.github.rimesc.planner.service.mapper.ThemeMapper;
-import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
-import io.github.rimesc.planner.service.dto.ThemeCriteria;
-import io.github.rimesc.planner.service.ThemeQueryService;
+import static io.github.rimesc.planner.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,22 +40,9 @@ import io.github.rimesc.planner.domain.enumeration.Visibility;
 import io.github.rimesc.planner.repository.ThemeRepository;
 import io.github.rimesc.planner.service.ThemeQueryService;
 import io.github.rimesc.planner.service.ThemeService;
-import io.github.rimesc.planner.service.dto.ThemeCriteria;
 import io.github.rimesc.planner.service.dto.ThemeDTO;
 import io.github.rimesc.planner.service.mapper.ThemeMapper;
-import io.github.rimesc.planner.web.rest.ThemeResource;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
-
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
-import static io.github.rimesc.planner.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 /**
  * Integration tests for the {@link ThemeResource} REST controller.
  */

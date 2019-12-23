@@ -1,12 +1,15 @@
 package io.github.rimesc.planner.web.rest;
 
-import io.github.rimesc.planner.PlannerApp;
-import io.github.jhipster.config.JHipsterProperties;
-import io.github.rimesc.planner.config.audit.AuditEventConverter;
-import io.github.rimesc.planner.domain.PersistentAuditEvent;
-import io.github.rimesc.planner.repository.PersistenceAuditEventRepository;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import io.github.rimesc.planner.service.AuditEventService;
+import java.time.Instant;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -21,19 +24,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.github.jhipster.config.JHipsterProperties;
 import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.config.audit.AuditEventConverter;
 import io.github.rimesc.planner.domain.PersistentAuditEvent;
 import io.github.rimesc.planner.repository.PersistenceAuditEventRepository;
 import io.github.rimesc.planner.service.AuditEventService;
-import io.github.rimesc.planner.web.rest.AuditResource;
-
-import java.time.Instant;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link AuditResource} REST controller.

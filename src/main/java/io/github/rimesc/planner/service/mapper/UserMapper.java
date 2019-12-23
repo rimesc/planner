@@ -1,13 +1,16 @@
 package io.github.rimesc.planner.service.mapper;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import io.github.rimesc.planner.domain.Authority;
 import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.service.dto.UserDTO;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Mapper for the entity {@link User} and its DTO called {@link UserDTO}.

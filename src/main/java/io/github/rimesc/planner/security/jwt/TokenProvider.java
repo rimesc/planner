@@ -2,7 +2,9 @@ package io.github.rimesc.planner.security.jwt;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -17,7 +19,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import io.github.jhipster.config.JHipsterProperties;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 

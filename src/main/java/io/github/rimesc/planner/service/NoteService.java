@@ -1,8 +1,12 @@
 package io.github.rimesc.planner.service;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,11 +14,6 @@ import io.github.rimesc.planner.domain.Note;
 import io.github.rimesc.planner.repository.NoteRepository;
 import io.github.rimesc.planner.service.dto.NoteDTO;
 import io.github.rimesc.planner.service.mapper.NoteMapper;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Note}.

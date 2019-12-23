@@ -1,5 +1,13 @@
 package io.github.rimesc.planner.service;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -9,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.github.jhipster.security.RandomUtil;
 import io.github.rimesc.planner.config.Constants;
 import io.github.rimesc.planner.domain.Authority;
 import io.github.rimesc.planner.domain.User;
@@ -17,13 +26,6 @@ import io.github.rimesc.planner.repository.UserRepository;
 import io.github.rimesc.planner.security.AuthoritiesConstants;
 import io.github.rimesc.planner.security.SecurityUtils;
 import io.github.rimesc.planner.service.dto.UserDTO;
-
-import io.github.jhipster.security.RandomUtil;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Service class for managing users.

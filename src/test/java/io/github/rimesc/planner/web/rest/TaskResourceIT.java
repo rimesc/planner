@@ -1,12 +1,21 @@
 package io.github.rimesc.planner.web.rest;
 
-import io.github.rimesc.planner.PlannerApp;
-import io.github.rimesc.planner.domain.Task;
-import io.github.rimesc.planner.repository.TaskRepository;
-import io.github.rimesc.planner.service.TaskService;
-import io.github.rimesc.planner.service.dto.TaskDTO;
-import io.github.rimesc.planner.service.mapper.TaskMapper;
-import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
+import static io.github.rimesc.planner.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,19 +36,7 @@ import io.github.rimesc.planner.repository.TaskRepository;
 import io.github.rimesc.planner.service.TaskService;
 import io.github.rimesc.planner.service.dto.TaskDTO;
 import io.github.rimesc.planner.service.mapper.TaskMapper;
-import io.github.rimesc.planner.web.rest.TaskResource;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
-
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-
-import static io.github.rimesc.planner.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link TaskResource} REST controller.

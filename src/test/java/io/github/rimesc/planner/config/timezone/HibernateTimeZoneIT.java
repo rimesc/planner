@@ -1,8 +1,19 @@
 package io.github.rimesc.planner.config.timezone;
 
-import io.github.rimesc.planner.PlannerApp;
-import io.github.rimesc.planner.repository.timezone.DateTimeWrapper;
-import io.github.rimesc.planner.repository.timezone.DateTimeWrapperRepository;
+import static java.lang.String.format;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +22,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-
-import static java.lang.String.format;
-import static org.assertj.core.api.Assertions.assertThat;
+import io.github.rimesc.planner.PlannerApp;
+import io.github.rimesc.planner.repository.timezone.DateTimeWrapper;
+import io.github.rimesc.planner.repository.timezone.DateTimeWrapperRepository;
 
 /**
  * Integration tests for the UTC Hibernate configuration.

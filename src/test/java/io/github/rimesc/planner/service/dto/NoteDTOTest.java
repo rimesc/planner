@@ -1,7 +1,9 @@
 package io.github.rimesc.planner.service.dto;
 
-import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+
 import io.github.rimesc.planner.web.rest.TestUtil;
 
 public class NoteDTOTest {

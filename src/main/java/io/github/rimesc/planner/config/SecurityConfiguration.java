@@ -1,7 +1,5 @@
 package io.github.rimesc.planner.config;
 
-import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -18,8 +16,9 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-import io.github.rimesc.planner.security.*;
-import io.github.rimesc.planner.security.jwt.*;
+import io.github.rimesc.planner.security.AuthoritiesConstants;
+import io.github.rimesc.planner.security.jwt.JWTConfigurer;
+import io.github.rimesc.planner.security.jwt.TokenProvider;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)

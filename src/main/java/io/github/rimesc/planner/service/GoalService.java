@@ -1,8 +1,9 @@
 package io.github.rimesc.planner.service;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,8 +13,6 @@ import io.github.rimesc.planner.domain.Goal;
 import io.github.rimesc.planner.repository.GoalRepository;
 import io.github.rimesc.planner.service.dto.GoalDTO;
 import io.github.rimesc.planner.service.mapper.GoalMapper;
-
-import java.util.Optional;
 
 /**
  * Service Implementation for managing {@link Goal}.

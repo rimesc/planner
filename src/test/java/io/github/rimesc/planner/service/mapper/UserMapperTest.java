@@ -1,22 +1,18 @@
 package io.github.rimesc.planner.service.mapper;
 
-import io.github.rimesc.planner.domain.User;
-import io.github.rimesc.planner.service.dto.UserDTO;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import io.github.rimesc.planner.PlannerApp;
-import io.github.rimesc.planner.domain.User;
-import io.github.rimesc.planner.service.dto.UserDTO;
-import io.github.rimesc.planner.service.mapper.UserMapper;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import io.github.rimesc.planner.domain.User;
+import io.github.rimesc.planner.service.dto.UserDTO;
 
 /**
  * Unit tests for {@link UserMapper}.

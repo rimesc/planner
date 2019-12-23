@@ -12,6 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.github.jhipster.service.QueryService;
+import io.github.rimesc.planner.domain.Goal;
 // for static metamodels
 import io.github.rimesc.planner.domain.Goal_;
 import io.github.rimesc.planner.domain.Note_;
@@ -19,8 +21,6 @@ import io.github.rimesc.planner.domain.Tag_;
 import io.github.rimesc.planner.domain.Task_;
 import io.github.rimesc.planner.domain.Theme_;
 import io.github.rimesc.planner.domain.User_;
-import io.github.jhipster.service.QueryService;
-import io.github.rimesc.planner.domain.*;
 import io.github.rimesc.planner.repository.GoalRepository;
 import io.github.rimesc.planner.service.dto.GoalCriteria;
 import io.github.rimesc.planner.service.dto.GoalDTO;
