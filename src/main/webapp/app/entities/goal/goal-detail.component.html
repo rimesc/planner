@@ -1,0 +1,59 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="goal">
+            <h2><span jhiTranslate="plannerApp.goal.detail.title">Goal</span> {{goal.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="plannerApp.goal.summary">Summary</span></dt>
+                <dd>
+                    <span>{{goal.summary}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.goal.created">Created</span></dt>
+                <dd>
+                    <span>{{goal.created}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.goal.completed">Completed</span></dt>
+                <dd>
+                    <span>{{goal.completed}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.goal.order">Order</span></dt>
+                <dd>
+                    <span>{{goal.order}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.goal.visibility">Visibility</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'plannerApp.Visibility.' + goal.visibility}}">{{goal.visibility}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.goal.owner">Owner</span></dt>
+                <dd>
+                    {{goal.ownerId}}
+                </dd>
+                <dt><span jhiTranslate="plannerApp.goal.tag">Tag</span></dt>
+                <dd>
+                    <span *ngFor="let tag of goal.tags; let last = last">
+                        <a [routerLink]="['/tag', tag?.id, 'view' ]">{{tag.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.goal.theme">Theme</span></dt>
+                <dd>
+                    <div *ngIf="goal.themeId">
+                        <a [routerLink]="['/theme', goal.themeId, 'view']">{{goal.themeId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/goal', goal.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

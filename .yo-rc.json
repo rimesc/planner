@@ -1,0 +1,42 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "io.github.rimesc.planner",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "5.8.2",
+    "applicationType": "monolith",
+    "baseName": "planner",
+    "packageName": "io.github.rimesc.planner",
+    "packageFolder": "io/github/rimesc/planner",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MjkyNDU4M2U0MGM1MDdjYmUzNjIyYTFmODlhZGI1OTgxZTQyNmUwNTRlMDgyMjM2ZjdhMWY0ZTVkYzE1YWQ0ODM3NmI3NWY2OWRjMTQxZGFmYmUzZjJlY2EwYTE1ODk2ODMxMjc2ZDNkYjY5NTRlZGQxNmM3YzdhYzdkNmRkOTk=",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [
+      "protractor"
+    ],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "enableHibernateCache": false
+  }
+}

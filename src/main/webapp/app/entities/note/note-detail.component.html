@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="note">
+            <h2><span jhiTranslate="plannerApp.note.detail.title">Note</span> {{note.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="plannerApp.note.markdown">Markdown</span></dt>
+                <dd>
+                    <span>{{note.markdown}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.note.html">Html</span></dt>
+                <dd>
+                    <span>{{note.html}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.note.created">Created</span></dt>
+                <dd>
+                    <span>{{note.created}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.note.edited">Edited</span></dt>
+                <dd>
+                    <span>{{note.edited}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.note.visibility">Visibility</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'plannerApp.Visibility.' + note.visibility}}">{{note.visibility}}</span>
+                </dd>
+                <dt><span jhiTranslate="plannerApp.note.owner">Owner</span></dt>
+                <dd>
+                    {{note.ownerId}}
+                </dd>
+                <dt><span jhiTranslate="plannerApp.note.goal">Goal</span></dt>
+                <dd>
+                    <div *ngIf="note.goalId">
+                        <a [routerLink]="['/goal', note.goalId, 'view']">{{note.goalId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/note', note.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

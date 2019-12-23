@@ -1,0 +1,9 @@
+{
+    "plannerApp": {
+        "Visibility": {
+            "null": "",
+            "PUBLIC": "PUBLIC",
+            "PRIVATE": "PRIVATE"
+        }
+    }
+}

@@ -1,0 +1,111 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-goal-heading" jhiTranslate="plannerApp.goal.home.createOrEditLabel">Create or edit a Goal</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!goal.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="goal.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="plannerApp.goal.summary" for="field_summary">Summary</label>
+                    <input type="text" class="form-control" name="summary" id="field_summary"
+                        [(ngModel)]="goal.summary" required maxlength="128"/>
+                    <div [hidden]="!(editForm.controls.summary?.dirty && editForm.controls.summary?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.summary?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.summary?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 128 }">
+                        This field cannot be longer than 128 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="plannerApp.goal.created" for="field_created">Created</label>
+                    <div class="d-flex">
+                        <input id="field_created" type="datetime-local" class="form-control" name="created" [(ngModel)]="created" placeholder="YYYY-MM-DD HH:mm"
+                        required/>
+                    </div>
+                    <div [hidden]="!(editForm.controls.created?.dirty && editForm.controls.created?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.created?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.created?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="plannerApp.goal.completed" for="field_completed">Completed</label>
+                    <div class="d-flex">
+                        <input id="field_completed" type="datetime-local" class="form-control" name="completed" [(ngModel)]="completed" placeholder="YYYY-MM-DD HH:mm"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="plannerApp.goal.order" for="field_order">Order</label>
+                    <input type="number" class="form-control" name="order" id="field_order"
+                        [(ngModel)]="goal.order" required/>
+                    <div [hidden]="!(editForm.controls.order?.dirty && editForm.controls.order?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.order?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.order?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="plannerApp.goal.visibility" for="field_visibility">Visibility</label>
+                    <select class="form-control" name="visibility" [(ngModel)]="goal.visibility" id="field_visibility"  required>
+                        <option value="PUBLIC">{{'plannerApp.Visibility.PUBLIC' | translate}}</option>
+                        <option value="PRIVATE">{{'plannerApp.Visibility.PRIVATE' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.visibility?.dirty && editForm.controls.visibility?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.visibility?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="plannerApp.goal.owner" for="field_owner">Owner</label>
+                    <select class="form-control" id="field_owner" name="owner" [(ngModel)]="goal.ownerId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="plannerApp.goal.tag" for="field_tag">Tag</label>
+                    <select class="form-control" id="field_tag" multiple name="tag" [(ngModel)]="goal.tags">
+                        <option [ngValue]="getSelected(goal.tags, tagOption)" *ngFor="let tagOption of tags; trackBy: trackTagById">{{tagOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="plannerApp.goal.theme" for="field_theme">Theme</label>
+                    <select class="form-control" id="field_theme" name="theme" [(ngModel)]="goal.themeId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="themeOption.id" *ngFor="let themeOption of themes; trackBy: trackThemeById">{{themeOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
