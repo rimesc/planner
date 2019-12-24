@@ -132,7 +132,7 @@ public final class TestUtil {
      * @return the {@link FormattingConversionService}.
      */
     public static FormattingConversionService createFormattingConversionService() {
-        DefaultFormattingConversionService dfcs = new DefaultFormattingConversionService ();
+        DefaultFormattingConversionService dfcs = new DefaultFormattingConversionService();
         DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
         registrar.setUseIsoFormat(true);
         registrar.registerFormatters(dfcs);
@@ -155,5 +155,6 @@ public final class TestUtil {
         return allQuery.getResultList();
     }
 
-    private TestUtil() {}
+    private TestUtil() {
+    }
 }

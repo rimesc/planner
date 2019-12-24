@@ -1,4 +1,5 @@
 package io.github.rimesc.planner.service.dto;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -31,7 +32,6 @@ public class GoalDTO implements Serializable {
 
     @NotNull
     private Visibility visibility;
-
 
     private Long ownerId;
 

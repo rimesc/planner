@@ -9,13 +9,15 @@ import io.github.rimesc.planner.service.dto.NoteDTO;
 /**
  * Mapper for the entity {@link Note} and its DTO {@link NoteDTO}.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, GoalMapper.class})
+@Mapper(componentModel = "spring", uses = { UserMapper.class, GoalMapper.class })
 public interface NoteMapper extends EntityMapper<NoteDTO, Note> {
 
+    @Override
     @Mapping(source = "owner.id", target = "ownerId")
     @Mapping(source = "goal.id", target = "goalId")
     NoteDTO toDto(Note note);
 
+    @Override
     @Mapping(source = "ownerId", target = "owner")
     @Mapping(source = "goalId", target = "goal")
     Note toEntity(NoteDTO noteDTO);

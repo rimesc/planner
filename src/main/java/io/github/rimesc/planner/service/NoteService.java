@@ -59,7 +59,6 @@ public class NoteService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
     /**
      * Get one note by id.
      *

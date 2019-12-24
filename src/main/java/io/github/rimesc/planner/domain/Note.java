@@ -1,4 +1,5 @@
 package io.github.rimesc.planner.domain;
+
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -31,12 +32,10 @@ public class Note implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    
     @Lob
     @Column(name = "markdown", nullable = false)
     private String markdown;
 
-    
     @Lob
     @Column(name = "html", nullable = false)
     private String html;

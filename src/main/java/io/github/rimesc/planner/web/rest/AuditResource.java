@@ -56,11 +56,10 @@ public class AuditResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of {@link AuditEvent} in body.
      */
-    @GetMapping(params = {"fromDate", "toDate"})
-    public ResponseEntity<List<AuditEvent>> getByDates(
-        @RequestParam(value = "fromDate") LocalDate fromDate,
-        @RequestParam(value = "toDate") LocalDate toDate,
-        Pageable pageable) {
+    @GetMapping(params = { "fromDate", "toDate" })
+    public ResponseEntity<List<AuditEvent>> getByDates(@RequestParam(value = "fromDate") LocalDate fromDate,
+                                                       @RequestParam(value = "toDate") LocalDate toDate,
+                                                       Pageable pageable) {
 
         Instant from = fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant();
         Instant to = toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant();

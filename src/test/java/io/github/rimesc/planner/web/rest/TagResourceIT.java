@@ -198,7 +198,7 @@ public class TagResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].icon").value(hasItem(DEFAULT_ICON)));
     }
-    
+
     @Test
     @Transactional
     public void getTag() throws Exception {

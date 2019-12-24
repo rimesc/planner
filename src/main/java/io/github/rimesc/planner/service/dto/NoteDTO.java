@@ -1,4 +1,5 @@
 package io.github.rimesc.planner.service.dto;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -15,11 +16,9 @@ public class NoteDTO implements Serializable {
 
     private Long id;
 
-    
     @Lob
     private String markdown;
 
-    
     @Lob
     private String html;
 
@@ -30,7 +29,6 @@ public class NoteDTO implements Serializable {
 
     @NotNull
     private Visibility visibility;
-
 
     private Long ownerId;
 

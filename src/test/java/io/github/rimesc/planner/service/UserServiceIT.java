@@ -194,8 +194,7 @@ public class UserServiceIT {
         final PageRequest pageable = PageRequest.of(0, (int) userRepository.count());
         final Page<UserDTO> allManagedUsers = userService.getAllManagedUsers(pageable);
         assertThat(allManagedUsers.getContent().stream()
-            .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin())))
-            .isTrue();
+            .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin()))).isTrue();
     }
 
 }

@@ -40,6 +40,7 @@ import io.github.rimesc.planner.service.NoteService;
 import io.github.rimesc.planner.service.dto.NoteDTO;
 import io.github.rimesc.planner.service.mapper.NoteMapper;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
+
 /**
  * Integration tests for the {@link NoteResource} REST controller.
  */
@@ -246,7 +247,7 @@ public class NoteResourceIT {
             .andExpect(jsonPath("$.[*].edited").value(hasItem(DEFAULT_EDITED.toString())))
             .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getNote() throws Exception {

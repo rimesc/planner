@@ -173,7 +173,6 @@ public class GoalCriteria implements Serializable, Criteria {
         this.themeId = themeId;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -183,8 +182,7 @@ public class GoalCriteria implements Serializable, Criteria {
             return false;
         }
         final GoalCriteria that = (GoalCriteria) o;
-        return
-            Objects.equals(id, that.id) &&
+        return Objects.equals(id, that.id) &&
             Objects.equals(summary, that.summary) &&
             Objects.equals(created, that.created) &&
             Objects.equals(completed, that.completed) &&
@@ -200,34 +198,33 @@ public class GoalCriteria implements Serializable, Criteria {
     @Override
     public int hashCode() {
         return Objects.hash(
-        id,
-        summary,
-        created,
-        completed,
-        order,
-        visibility,
-        taskId,
-        noteId,
-        ownerId,
-        tagId,
-        themeId
-        );
+            id,
+            summary,
+            created,
+            completed,
+            order,
+            visibility,
+            taskId,
+            noteId,
+            ownerId,
+            tagId,
+            themeId);
     }
 
     @Override
     public String toString() {
         return "GoalCriteria{" +
-                (id != null ? "id=" + id + ", " : "") +
-                (summary != null ? "summary=" + summary + ", " : "") +
-                (created != null ? "created=" + created + ", " : "") +
-                (completed != null ? "completed=" + completed + ", " : "") +
-                (order != null ? "order=" + order + ", " : "") +
-                (visibility != null ? "visibility=" + visibility + ", " : "") +
-                (taskId != null ? "taskId=" + taskId + ", " : "") +
-                (noteId != null ? "noteId=" + noteId + ", " : "") +
-                (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
-                (tagId != null ? "tagId=" + tagId + ", " : "") +
-                (themeId != null ? "themeId=" + themeId + ", " : "") +
+            (id != null ? "id=" + id + ", " : "") +
+            (summary != null ? "summary=" + summary + ", " : "") +
+            (created != null ? "created=" + created + ", " : "") +
+            (completed != null ? "completed=" + completed + ", " : "") +
+            (order != null ? "order=" + order + ", " : "") +
+            (visibility != null ? "visibility=" + visibility + ", " : "") +
+            (taskId != null ? "taskId=" + taskId + ", " : "") +
+            (noteId != null ? "noteId=" + noteId + ", " : "") +
+            (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
+            (tagId != null ? "tagId=" + tagId + ", " : "") +
+            (themeId != null ? "themeId=" + themeId + ", " : "") +
             "}";
     }
 

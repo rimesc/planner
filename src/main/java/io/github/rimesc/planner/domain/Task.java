@@ -1,4 +1,5 @@
 package io.github.rimesc.planner.domain;
+
 import java.io.Serializable;
 import java.time.Instant;
 

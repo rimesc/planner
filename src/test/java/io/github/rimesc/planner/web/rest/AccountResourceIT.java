@@ -84,11 +84,9 @@ public class AccountResourceIT {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
-        AccountResource accountResource =
-            new AccountResource(userRepository, userService, mockMailService);
+        AccountResource accountResource = new AccountResource(userRepository, userService, mockMailService);
 
-        AccountResource accountUserMockResource =
-            new AccountResource(userRepository, mockUserService, mockMailService);
+        AccountResource accountUserMockResource = new AccountResource(userRepository, mockUserService, mockMailService);
         this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
             .setMessageConverters(httpMessageConverters)
             .setControllerAdvice(exceptionTranslator)
@@ -622,7 +620,7 @@ public class AccountResourceIT {
 
         restMvc.perform(post("/api/account/change-password")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1"+currentPassword, "new password"))))
+            .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new password"))))
             .andExpect(status().isBadRequest());
 
         User updatedUser = userRepository.findOneByLogin("change-password-wrong-existing-password").orElse(null);
@@ -801,7 +799,6 @@ public class AccountResourceIT {
         User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
         assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isFalse();
     }
-
 
     @Test
     @Transactional

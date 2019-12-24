@@ -66,7 +66,6 @@ public class GoalService {
     public Page<GoalDTO> findAllWithEagerRelationships(Pageable pageable) {
         return goalRepository.findAllWithEagerRelationships(pageable).map(goalMapper::toDto);
     }
-    
 
     /**
      * Get one goal by id.

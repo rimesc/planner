@@ -1,4 +1,5 @@
 package io.github.rimesc.planner.domain;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -45,7 +46,6 @@ public class Theme implements Serializable {
     @Column(name = "description", length = 512, nullable = false)
     private String description;
 
-    
     @Lob
     @Column(name = "avatar")
     private byte[] avatar;

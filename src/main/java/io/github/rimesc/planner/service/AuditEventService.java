@@ -34,9 +34,9 @@ public class AuditEventService {
 
     private final AuditEventConverter auditEventConverter;
 
-    public AuditEventService(
-        PersistenceAuditEventRepository persistenceAuditEventRepository,
-        AuditEventConverter auditEventConverter, JHipsterProperties jhipsterProperties) {
+    public AuditEventService(PersistenceAuditEventRepository persistenceAuditEventRepository,
+                             AuditEventConverter auditEventConverter,
+                             JHipsterProperties jhipsterProperties) {
 
         this.persistenceAuditEventRepository = persistenceAuditEventRepository;
         this.auditEventConverter = auditEventConverter;

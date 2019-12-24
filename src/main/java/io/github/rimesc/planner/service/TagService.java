@@ -59,7 +59,6 @@ public class TagService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
     /**
      * Get one tag by id.
      *

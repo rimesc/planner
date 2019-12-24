@@ -12,13 +12,12 @@ import org.springframework.context.annotation.Profile;
 
 import io.github.jhipster.config.JHipsterConstants;
 
-
 @Configuration
 @Profile(JHipsterConstants.SPRING_PROFILE_CLOUD)
 public class CloudDatabaseConfiguration extends AbstractCloudConfig {
 
     private final Logger log = LoggerFactory.getLogger(CloudDatabaseConfiguration.class);
-    
+
     private static final String CLOUD_CONFIGURATION_HIKARI_PREFIX = "spring.datasource.hikari";
 
     @Bean
