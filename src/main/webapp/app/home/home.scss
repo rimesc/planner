@@ -2,6 +2,8 @@
 Main page styles
 ========================================================================== */
 
+@import '~bootstrap/scss/bootstrap.scss';
+
 .hipster {
   display: inline-block;
   width: 347px;
@@ -19,5 +21,48 @@ Main page styles
   .hipster {
     background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
     background-size: contain;
+  }
+}
+
+.theme-deck {
+  @extend .card-deck;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  .card {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    a {
+      color: $body-color;
+    }
+  }
+}
+
+.theme-avatar {
+  min-height: 64px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    max-height: 64px;
+    max-width: 64px;
+  }
+}
+
+@media (min-width: 576px) {
+  .theme-deck {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+  .theme-deck {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
