@@ -28,7 +28,6 @@ export class ThemeUpdateComponent implements OnInit {
     id: [],
     name: [null, [Validators.required, Validators.maxLength(128)]],
     description: [null, [Validators.required, Validators.maxLength(512)]],
-    shortName: [null, [Validators.required, Validators.maxLength(32)]],
     avatar: [null, []],
     avatarContentType: [],
     createdAt: [null, [Validators.required]],
@@ -66,7 +65,6 @@ export class ThemeUpdateComponent implements OnInit {
       id: theme.id,
       name: theme.name,
       description: theme.description,
-      shortName: theme.shortName,
       avatar: theme.avatar,
       avatarContentType: theme.avatarContentType,
       createdAt: theme.createdAt != null ? theme.createdAt.format(DATE_TIME_FORMAT) : null,
@@ -121,7 +119,6 @@ export class ThemeUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
       description: this.editForm.get(['description'])!.value,
-      shortName: this.editForm.get(['shortName'])!.value,
       avatarContentType: this.editForm.get(['avatarContentType'])!.value,
       avatar: this.editForm.get(['avatar'])!.value,
       createdAt:
