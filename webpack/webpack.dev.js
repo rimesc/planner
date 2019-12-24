@@ -31,6 +31,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
             target: `http${options.tls ? 's' : ''}://localhost:8080`,
             secure: false,
             changeOrigin: options.tls
+            headers: { host: 'localhost:9001' }
         }],
         stats: options.stats,
         watchOptions: {
@@ -113,7 +114,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         new BrowserSyncPlugin({
             https: options.tls,
             host: 'localhost',
-            port: 9000,
+            port: 9001,
             proxy: {
                 target: `http${options.tls ? 's' : ''}://localhost:9060`,
                 proxyOptions: {
