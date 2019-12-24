@@ -31,7 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import io.github.rimesc.planner.PlannerApp;
+import io.github.rimesc.planner.domain.Goal;
 import io.github.rimesc.planner.domain.Task;
+import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.repository.TaskRepository;
 import io.github.rimesc.planner.service.TaskService;
 import io.github.rimesc.planner.service.dto.TaskDTO;
@@ -104,6 +106,16 @@ public class TaskResourceIT {
             .summary(DEFAULT_SUMMARY)
             .created(DEFAULT_CREATED)
             .completed(DEFAULT_COMPLETED);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        task.setOwner(user);
+        // Add required entity
+        Goal goal = GoalResourceIT.createEntity(em);
+        em.persist(goal);
+        em.flush();
+        task.setGoal(goal);
         return task;
     }
     /**

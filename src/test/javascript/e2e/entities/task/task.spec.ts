@@ -10,7 +10,7 @@ describe('Task e2e test', () => {
   let signInPage: SignInPage;
   let taskComponentsPage: TaskComponentsPage;
   let taskUpdatePage: TaskUpdatePage;
-  let taskDeleteDialog: TaskDeleteDialog;
+  /*let taskDeleteDialog: TaskDeleteDialog;*/
 
   before(async () => {
     await browser.get('/');
@@ -34,7 +34,7 @@ describe('Task e2e test', () => {
     await taskUpdatePage.cancel();
   });
 
-  it('should create and save Tasks', async () => {
+  /* it('should create and save Tasks', async () => {
     const nbButtonsBeforeCreate = await taskComponentsPage.countDeleteButtons();
 
     await taskComponentsPage.clickOnCreateButton();
@@ -52,9 +52,9 @@ describe('Task e2e test', () => {
     expect(await taskUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
     expect(await taskComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-  });
+  });*/
 
-  it('should delete last Task', async () => {
+  /* it('should delete last Task', async () => {
     const nbButtonsBeforeDelete = await taskComponentsPage.countDeleteButtons();
     await taskComponentsPage.clickOnLastDeleteButton();
 
@@ -63,7 +63,7 @@ describe('Task e2e test', () => {
     await taskDeleteDialog.clickOnConfirmButton();
 
     expect(await taskComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+  });*/
 
   after(async () => {
     await navBarPage.autoSignOut();

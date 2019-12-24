@@ -11,7 +11,7 @@ describe('Theme e2e test', () => {
   let signInPage: SignInPage;
   let themeComponentsPage: ThemeComponentsPage;
   let themeUpdatePage: ThemeUpdatePage;
-  let themeDeleteDialog: ThemeDeleteDialog;
+  /*let themeDeleteDialog: ThemeDeleteDialog;*/
   const fileNameToUpload = 'logo-jhipster.png';
   const fileToUpload = '../../../../../../src/main/webapp/content/images/' + fileNameToUpload;
   const absolutePath = path.resolve(__dirname, fileToUpload);
@@ -38,7 +38,7 @@ describe('Theme e2e test', () => {
     await themeUpdatePage.cancel();
   });
 
-  it('should create and save Themes', async () => {
+  /* it('should create and save Themes', async () => {
     const nbButtonsBeforeCreate = await themeComponentsPage.countDeleteButtons();
 
     await themeComponentsPage.clickOnCreateButton();
@@ -63,9 +63,9 @@ describe('Theme e2e test', () => {
     expect(await themeUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
     expect(await themeComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-  });
+  });*/
 
-  it('should delete last Theme', async () => {
+  /* it('should delete last Theme', async () => {
     const nbButtonsBeforeDelete = await themeComponentsPage.countDeleteButtons();
     await themeComponentsPage.clickOnLastDeleteButton();
 
@@ -74,7 +74,7 @@ describe('Theme e2e test', () => {
     await themeDeleteDialog.clickOnConfirmButton();
 
     expect(await themeComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+  });*/
 
   after(async () => {
     await navBarPage.autoSignOut();

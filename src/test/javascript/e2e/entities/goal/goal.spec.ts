@@ -10,7 +10,7 @@ describe('Goal e2e test', () => {
   let signInPage: SignInPage;
   let goalComponentsPage: GoalComponentsPage;
   let goalUpdatePage: GoalUpdatePage;
-  let goalDeleteDialog: GoalDeleteDialog;
+  /*let goalDeleteDialog: GoalDeleteDialog;*/
 
   before(async () => {
     await browser.get('/');
@@ -34,7 +34,7 @@ describe('Goal e2e test', () => {
     await goalUpdatePage.cancel();
   });
 
-  it('should create and save Goals', async () => {
+  /* it('should create and save Goals', async () => {
     const nbButtonsBeforeCreate = await goalComponentsPage.countDeleteButtons();
 
     await goalComponentsPage.clickOnCreateButton();
@@ -56,9 +56,9 @@ describe('Goal e2e test', () => {
     expect(await goalUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
     expect(await goalComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-  });
+  });*/
 
-  it('should delete last Goal', async () => {
+  /* it('should delete last Goal', async () => {
     const nbButtonsBeforeDelete = await goalComponentsPage.countDeleteButtons();
     await goalComponentsPage.clickOnLastDeleteButton();
 
@@ -67,7 +67,7 @@ describe('Goal e2e test', () => {
     await goalDeleteDialog.clickOnConfirmButton();
 
     expect(await goalComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+  });*/
 
   after(async () => {
     await navBarPage.autoSignOut();

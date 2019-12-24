@@ -135,6 +135,16 @@ public class GoalResourceIT {
             .completed(DEFAULT_COMPLETED)
             .order(DEFAULT_ORDER)
             .visibility(DEFAULT_VISIBILITY);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        goal.setOwner(user);
+        // Add required entity
+        Theme theme = ThemeResourceIT.createEntity(em);
+        em.persist(theme);
+        em.flush();
+        goal.setTheme(theme);
         return goal;
     }
     /**

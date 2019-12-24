@@ -31,7 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import io.github.rimesc.planner.PlannerApp;
+import io.github.rimesc.planner.domain.Goal;
 import io.github.rimesc.planner.domain.Note;
+import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.domain.enumeration.Visibility;
 import io.github.rimesc.planner.repository.NoteRepository;
 import io.github.rimesc.planner.service.NoteService;
@@ -112,6 +114,16 @@ public class NoteResourceIT {
             .created(DEFAULT_CREATED)
             .edited(DEFAULT_EDITED)
             .visibility(DEFAULT_VISIBILITY);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        note.setOwner(user);
+        // Add required entity
+        Goal goal = GoalResourceIT.createEntity(em);
+        em.persist(goal);
+        em.flush();
+        note.setGoal(goal);
         return note;
     }
     /**

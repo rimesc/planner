@@ -39,11 +39,13 @@ public class Task implements Serializable {
     @Column(name = "completed")
     private Instant completed;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("tasks")
     private User owner;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("tasks")
     private Goal goal;
 

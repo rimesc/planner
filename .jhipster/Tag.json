@@ -24,6 +24,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "theme",
             "otherEntityRelationshipName": "tag",
+            "relationshipValidateRules": "required",
             "relationshipName": "theme",
             "otherEntityField": "id"
         },

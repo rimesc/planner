@@ -39,7 +39,8 @@ public class Tag implements Serializable {
     @Column(name = "icon", length = 16)
     private String icon;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("tags")
     private Theme theme;
 

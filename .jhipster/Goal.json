@@ -54,6 +54,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "user",
             "otherEntityRelationshipName": "goal",
+            "relationshipValidateRules": "required",
             "relationshipName": "owner",
             "otherEntityField": "id"
         },
@@ -69,6 +70,7 @@
             "relationshipType": "many-to-one",
             "otherEntityName": "theme",
             "otherEntityRelationshipName": "goal",
+            "relationshipValidateRules": "required",
             "relationshipName": "theme",
             "otherEntityField": "id"
         }

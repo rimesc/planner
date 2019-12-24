@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;

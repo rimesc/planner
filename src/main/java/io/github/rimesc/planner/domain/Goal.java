@@ -64,7 +64,8 @@ public class Goal implements Serializable {
     @OneToMany(mappedBy = "goal")
     private Set<Note> notes = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("goals")
     private User owner;
 
@@ -74,7 +75,8 @@ public class Goal implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private Set<Tag> tags = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("goals")
     private Theme theme;
 

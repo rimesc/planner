@@ -10,7 +10,7 @@ describe('Tag e2e test', () => {
   let signInPage: SignInPage;
   let tagComponentsPage: TagComponentsPage;
   let tagUpdatePage: TagUpdatePage;
-  let tagDeleteDialog: TagDeleteDialog;
+  /*let tagDeleteDialog: TagDeleteDialog;*/
 
   before(async () => {
     await browser.get('/');
@@ -34,7 +34,7 @@ describe('Tag e2e test', () => {
     await tagUpdatePage.cancel();
   });
 
-  it('should create and save Tags', async () => {
+  /* it('should create and save Tags', async () => {
     const nbButtonsBeforeCreate = await tagComponentsPage.countDeleteButtons();
 
     await tagComponentsPage.clickOnCreateButton();
@@ -45,9 +45,9 @@ describe('Tag e2e test', () => {
     expect(await tagUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
     expect(await tagComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-  });
+  });*/
 
-  it('should delete last Tag', async () => {
+  /* it('should delete last Tag', async () => {
     const nbButtonsBeforeDelete = await tagComponentsPage.countDeleteButtons();
     await tagComponentsPage.clickOnLastDeleteButton();
 
@@ -56,7 +56,7 @@ describe('Tag e2e test', () => {
     await tagDeleteDialog.clickOnConfirmButton();
 
     expect(await tagComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+  });*/
 
   after(async () => {
     await navBarPage.autoSignOut();
