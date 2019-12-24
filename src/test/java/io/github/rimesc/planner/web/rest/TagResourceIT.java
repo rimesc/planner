@@ -105,9 +105,14 @@ public class TagResourceIT {
             .name(DEFAULT_NAME)
             .icon(DEFAULT_ICON);
         // Add required entity
-        Theme theme = ThemeResourceIT.createEntity(em);
-        em.persist(theme);
-        em.flush();
+        Theme theme;
+        if (TestUtil.findAll(em, Theme.class).isEmpty()) {
+            theme = ThemeResourceIT.createEntity(em);
+            em.persist(theme);
+            em.flush();
+        } else {
+            theme = TestUtil.findAll(em, Theme.class).get(0);
+        }
         tag.setTheme(theme);
         return tag;
     }
@@ -121,6 +126,16 @@ public class TagResourceIT {
         Tag tag = new Tag()
             .name(UPDATED_NAME)
             .icon(UPDATED_ICON);
+        // Add required entity
+        Theme theme;
+        if (TestUtil.findAll(em, Theme.class).isEmpty()) {
+            theme = ThemeResourceIT.createUpdatedEntity(em);
+            em.persist(theme);
+            em.flush();
+        } else {
+            theme = TestUtil.findAll(em, Theme.class).get(0);
+        }
+        tag.setTheme(theme);
         return tag;
     }
 
@@ -219,6 +234,26 @@ public class TagResourceIT {
             .andExpect(jsonPath("$.icon").value(DEFAULT_ICON));
     }
 
+
+    @Test
+    @Transactional
+    public void getTagsByIdFiltering() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        Long id = tag.getId();
+
+        defaultTagShouldBeFound("id.equals=" + id);
+        defaultTagShouldNotBeFound("id.notEquals=" + id);
+
+        defaultTagShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultTagShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultTagShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultTagShouldNotBeFound("id.lessThan=" + id);
+    }
+
+
     @Test
     @Transactional
     public void getAllTagsByNameIsEqualToSomething() throws Exception {
@@ -230,6 +265,19 @@ public class TagResourceIT {
 
         // Get all the tagList where name equals to UPDATED_NAME
         defaultTagShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByNameIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where name not equals to DEFAULT_NAME
+        defaultTagShouldNotBeFound("name.notEquals=" + DEFAULT_NAME);
+
+        // Get all the tagList where name not equals to UPDATED_NAME
+        defaultTagShouldBeFound("name.notEquals=" + UPDATED_NAME);
     }
 
     @Test
@@ -257,6 +305,32 @@ public class TagResourceIT {
         // Get all the tagList where name is null
         defaultTagShouldNotBeFound("name.specified=false");
     }
+                @Test
+    @Transactional
+    public void getAllTagsByNameContainsSomething() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where name contains DEFAULT_NAME
+        defaultTagShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the tagList where name contains UPDATED_NAME
+        defaultTagShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where name does not contain DEFAULT_NAME
+        defaultTagShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the tagList where name does not contain UPDATED_NAME
+        defaultTagShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
 
     @Test
     @Transactional
@@ -269,6 +343,19 @@ public class TagResourceIT {
 
         // Get all the tagList where icon equals to UPDATED_ICON
         defaultTagShouldNotBeFound("icon.equals=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByIconIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where icon not equals to DEFAULT_ICON
+        defaultTagShouldNotBeFound("icon.notEquals=" + DEFAULT_ICON);
+
+        // Get all the tagList where icon not equals to UPDATED_ICON
+        defaultTagShouldBeFound("icon.notEquals=" + UPDATED_ICON);
     }
 
     @Test
@@ -296,15 +383,38 @@ public class TagResourceIT {
         // Get all the tagList where icon is null
         defaultTagShouldNotBeFound("icon.specified=false");
     }
+                @Test
+    @Transactional
+    public void getAllTagsByIconContainsSomething() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where icon contains DEFAULT_ICON
+        defaultTagShouldBeFound("icon.contains=" + DEFAULT_ICON);
+
+        // Get all the tagList where icon contains UPDATED_ICON
+        defaultTagShouldNotBeFound("icon.contains=" + UPDATED_ICON);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTagsByIconNotContainsSomething() throws Exception {
+        // Initialize the database
+        tagRepository.saveAndFlush(tag);
+
+        // Get all the tagList where icon does not contain DEFAULT_ICON
+        defaultTagShouldNotBeFound("icon.doesNotContain=" + DEFAULT_ICON);
+
+        // Get all the tagList where icon does not contain UPDATED_ICON
+        defaultTagShouldBeFound("icon.doesNotContain=" + UPDATED_ICON);
+    }
+
 
     @Test
     @Transactional
     public void getAllTagsByThemeIsEqualToSomething() throws Exception {
-        // Initialize the database
-        Theme theme = ThemeResourceIT.createEntity(em);
-        em.persist(theme);
-        em.flush();
-        tag.setTheme(theme);
+        // Get already existing entity
+        Theme theme = tag.getTheme();
         tagRepository.saveAndFlush(tag);
         Long themeId = theme.getId();
 
@@ -319,6 +429,7 @@ public class TagResourceIT {
     @Transactional
     public void getAllTagsByGoalIsEqualToSomething() throws Exception {
         // Initialize the database
+        tagRepository.saveAndFlush(tag);
         Goal goal = GoalResourceIT.createEntity(em);
         em.persist(goal);
         em.flush();
@@ -334,7 +445,7 @@ public class TagResourceIT {
     }
 
     /**
-     * Executes the search, and checks that the default entity is returned
+     * Executes the search, and checks that the default entity is returned.
      */
     private void defaultTagShouldBeFound(String filter) throws Exception {
         restTagMockMvc.perform(get("/api/tags?sort=id,desc&" + filter))
@@ -352,7 +463,7 @@ public class TagResourceIT {
     }
 
     /**
-     * Executes the search, and checks that the default entity is not returned
+     * Executes the search, and checks that the default entity is not returned.
      */
     private void defaultTagShouldNotBeFound(String filter) throws Exception {
         restTagMockMvc.perform(get("/api/tags?sort=id,desc&" + filter))

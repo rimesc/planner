@@ -125,9 +125,14 @@ public class NoteResourceIT {
         em.flush();
         note.setOwner(user);
         // Add required entity
-        Goal goal = GoalResourceIT.createEntity(em);
-        em.persist(goal);
-        em.flush();
+        Goal goal;
+        if (TestUtil.findAll(em, Goal.class).isEmpty()) {
+            goal = GoalResourceIT.createEntity(em);
+            em.persist(goal);
+            em.flush();
+        } else {
+            goal = TestUtil.findAll(em, Goal.class).get(0);
+        }
         note.setGoal(goal);
         return note;
     }
@@ -144,6 +149,21 @@ public class NoteResourceIT {
             .createdAt(UPDATED_CREATED_AT)
             .editedAt(UPDATED_EDITED_AT)
             .visibility(UPDATED_VISIBILITY);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        note.setOwner(user);
+        // Add required entity
+        Goal goal;
+        if (TestUtil.findAll(em, Goal.class).isEmpty()) {
+            goal = GoalResourceIT.createUpdatedEntity(em);
+            em.persist(goal);
+            em.flush();
+        } else {
+            goal = TestUtil.findAll(em, Goal.class).get(0);
+        }
+        note.setGoal(goal);
         return note;
     }
 
@@ -272,6 +292,25 @@ public class NoteResourceIT {
 
     @Test
     @Transactional
+    public void getNotesByIdFiltering() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        Long id = note.getId();
+
+        defaultNoteShouldBeFound("id.equals=" + id);
+        defaultNoteShouldNotBeFound("id.notEquals=" + id);
+
+        defaultNoteShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultNoteShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultNoteShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultNoteShouldNotBeFound("id.lessThan=" + id);
+    }
+
+
+    @Test
+    @Transactional
     public void getAllNotesByCreatedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);
@@ -281,6 +320,19 @@ public class NoteResourceIT {
 
         // Get all the noteList where createdAt equals to UPDATED_CREATED_AT
         defaultNoteShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllNotesByCreatedAtIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where createdAt not equals to DEFAULT_CREATED_AT
+        defaultNoteShouldNotBeFound("createdAt.notEquals=" + DEFAULT_CREATED_AT);
+
+        // Get all the noteList where createdAt not equals to UPDATED_CREATED_AT
+        defaultNoteShouldBeFound("createdAt.notEquals=" + UPDATED_CREATED_AT);
     }
 
     @Test
@@ -324,6 +376,19 @@ public class NoteResourceIT {
 
     @Test
     @Transactional
+    public void getAllNotesByEditedAtIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where editedAt not equals to DEFAULT_EDITED_AT
+        defaultNoteShouldNotBeFound("editedAt.notEquals=" + DEFAULT_EDITED_AT);
+
+        // Get all the noteList where editedAt not equals to UPDATED_EDITED_AT
+        defaultNoteShouldBeFound("editedAt.notEquals=" + UPDATED_EDITED_AT);
+    }
+
+    @Test
+    @Transactional
     public void getAllNotesByEditedAtIsInShouldWork() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);
@@ -363,6 +428,19 @@ public class NoteResourceIT {
 
     @Test
     @Transactional
+    public void getAllNotesByVisibilityIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        noteRepository.saveAndFlush(note);
+
+        // Get all the noteList where visibility not equals to DEFAULT_VISIBILITY
+        defaultNoteShouldNotBeFound("visibility.notEquals=" + DEFAULT_VISIBILITY);
+
+        // Get all the noteList where visibility not equals to UPDATED_VISIBILITY
+        defaultNoteShouldBeFound("visibility.notEquals=" + UPDATED_VISIBILITY);
+    }
+
+    @Test
+    @Transactional
     public void getAllNotesByVisibilityIsInShouldWork() throws Exception {
         // Initialize the database
         noteRepository.saveAndFlush(note);
@@ -390,11 +468,8 @@ public class NoteResourceIT {
     @Test
     @Transactional
     public void getAllNotesByOwnerIsEqualToSomething() throws Exception {
-        // Initialize the database
-        User owner = UserResourceIT.createEntity(em);
-        em.persist(owner);
-        em.flush();
-        note.setOwner(owner);
+        // Get already existing entity
+        User owner = note.getOwner();
         noteRepository.saveAndFlush(note);
         Long ownerId = owner.getId();
 
@@ -408,11 +483,8 @@ public class NoteResourceIT {
     @Test
     @Transactional
     public void getAllNotesByGoalIsEqualToSomething() throws Exception {
-        // Initialize the database
-        Goal goal = GoalResourceIT.createEntity(em);
-        em.persist(goal);
-        em.flush();
-        note.setGoal(goal);
+        // Get already existing entity
+        Goal goal = note.getGoal();
         noteRepository.saveAndFlush(note);
         Long goalId = goal.getId();
 
@@ -424,7 +496,7 @@ public class NoteResourceIT {
     }
 
     /**
-     * Executes the search, and checks that the default entity is returned
+     * Executes the search, and checks that the default entity is returned.
      */
     private void defaultNoteShouldBeFound(String filter) throws Exception {
         restNoteMockMvc.perform(get("/api/notes?sort=id,desc&" + filter))
@@ -445,7 +517,7 @@ public class NoteResourceIT {
     }
 
     /**
-     * Executes the search, and checks that the default entity is not returned
+     * Executes the search, and checks that the default entity is not returned.
      */
     private void defaultNoteShouldNotBeFound(String filter) throws Exception {
         restNoteMockMvc.perform(get("/api/notes?sort=id,desc&" + filter))

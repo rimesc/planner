@@ -37,8 +37,8 @@ export class NoteUpdateComponent implements OnInit {
     createdAt: [null, [Validators.required]],
     editedAt: [],
     visibility: [null, [Validators.required]],
-    ownerId: [],
-    goalId: []
+    ownerId: [null, Validators.required],
+    goalId: [null, Validators.required]
   });
 
   constructor(

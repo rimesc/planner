@@ -3,19 +3,21 @@ package io.github.rimesc.planner.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
+import io.github.jhipster.service.Criteria;
 import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
 
 /**
- * Criteria class for the Tag entity. This class is used in TagResource to
- * receive all the possible filtering options from the Http GET request parameters.
- * For example the following could be a valid requests:
- * <code> /tags?id.greaterThan=5&amp;attr1.contains=something&amp;attr2.specified=false</code>
+ * Criteria class for the {@link io.github.rimesc.planner.domain.Tag} entity. This class is used
+ * in {@link io.github.rimesc.planner.web.rest.TagResource} to receive all the possible filtering options from
+ * the Http GET request parameters.
+ * For example the following could be a valid request:
+ * {@code /tags?id.greaterThan=5&attr1.contains=something&attr2.specified=false}
  * As Spring is unable to properly convert the types, unless specific {@link Filter} class are used, we need to use
  * fix type specific filters.
  */
-public class TagCriteria implements Serializable {
+public class TagCriteria implements Serializable, Criteria {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,6 +30,22 @@ public class TagCriteria implements Serializable {
     private LongFilter themeId;
 
     private LongFilter goalId;
+
+    public TagCriteria(){
+    }
+
+    public TagCriteria(TagCriteria other){
+        this.id = other.id == null ? null : other.id.copy();
+        this.name = other.name == null ? null : other.name.copy();
+        this.icon = other.icon == null ? null : other.icon.copy();
+        this.themeId = other.themeId == null ? null : other.themeId.copy();
+        this.goalId = other.goalId == null ? null : other.goalId.copy();
+    }
+
+    @Override
+    public TagCriteria copy() {
+        return new TagCriteria(this);
+    }
 
     public LongFilter getId() {
         return id;

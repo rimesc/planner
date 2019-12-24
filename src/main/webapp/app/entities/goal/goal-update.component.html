@@ -77,14 +77,14 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.goal.owner" for="field_owner">Owner</label>
-                    <select class="form-control" id="field_owner" name="owner" [(ngModel)]="goal.ownerId"  required>
-                        <option *ngIf="!editForm.value.owner" [ngValue]="null" selected></option>
+                    <select class="form-control" id="field_owner" name="owner" formControlName="ownerId">
+                        <option *ngIf="!editForm.get('ownerId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{userOption.id}}</option>
                     </select>
                 </div>
-                <div [hidden]="!(editForm.controls.owner?.dirty && editForm.controls.owner?.invalid)">
+                <div *ngIf="editForm.get('ownerId')!.invalid && (editForm.get('ownerId')!.dirty || editForm.get('ownerId')!.touched)">
                     <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.owner?.errors?.required" jhiTranslate="entity.validation.required">
+                           *ngIf="editForm.get('ownerId')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                     </small>
                 </div>
@@ -97,13 +97,13 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="plannerApp.goal.theme" for="field_theme">Theme</label>
                     <select class="form-control" id="field_theme" name="theme" formControlName="themeId">
-                        <option *ngIf="!editForm.value.theme" [ngValue]="null" selected></option>
+                        <option *ngIf="!editForm.get('themeId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="themeOption.id" *ngFor="let themeOption of themes; trackBy: trackById">{{themeOption.id}}</option>
                     </select>
                 </div>
-                <div [hidden]="!(editForm.controls.theme?.dirty && editForm.controls.theme?.invalid)">
+                <div *ngIf="editForm.get('themeId')!.invalid && (editForm.get('themeId')!.dirty || editForm.get('themeId')!.touched)">
                     <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.theme?.errors?.required" jhiTranslate="entity.validation.required">
+                           *ngIf="editForm.get('themeId')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                     </small>
                 </div>

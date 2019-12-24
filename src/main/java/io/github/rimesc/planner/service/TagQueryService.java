@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.github.jhipster.service.QueryService;
+// for static metamodels
 import io.github.rimesc.planner.domain.Goal_;
 import io.github.rimesc.planner.domain.Tag;
 import io.github.rimesc.planner.domain.Tag_;
@@ -23,7 +24,7 @@ import io.github.rimesc.planner.service.dto.TagDTO;
 import io.github.rimesc.planner.service.mapper.TagMapper;
 
 /**
- * Service for executing complex queries for Tag entities in the database.
+ * Service for executing complex queries for {@link Tag} entities in the database.
  * The main input is a {@link TagCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
  * It returns a {@link List} of {@link TagDTO} or a {@link Page} of {@link TagDTO} which fulfills the criteria.
@@ -44,7 +45,7 @@ public class TagQueryService extends QueryService<Tag> {
     }
 
     /**
-     * Return a {@link List} of {@link TagDTO} which matches the criteria from the database
+     * Return a {@link List} of {@link TagDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
@@ -56,7 +57,7 @@ public class TagQueryService extends QueryService<Tag> {
     }
 
     /**
-     * Return a {@link Page} of {@link TagDTO} which matches the criteria from the database
+     * Return a {@link Page} of {@link TagDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
@@ -70,7 +71,7 @@ public class TagQueryService extends QueryService<Tag> {
     }
 
     /**
-     * Return the number of matching entities in the database
+     * Return the number of matching entities in the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the number of matching entities.
      */
@@ -82,13 +83,15 @@ public class TagQueryService extends QueryService<Tag> {
     }
 
     /**
-     * Function to convert TagCriteria to a {@link Specification}
+     * Function to convert {@link TagCriteria} to a {@link Specification}
+     * @param criteria The object which holds all the filters, which the entities should match.
+     * @return the matching {@link Specification} of the entity.
      */
-    private Specification<Tag> createSpecification(TagCriteria criteria) {
+    protected Specification<Tag> createSpecification(TagCriteria criteria) {
         Specification<Tag> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Tag_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Tag_.id));
             }
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), Tag_.name));

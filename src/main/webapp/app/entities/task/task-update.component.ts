@@ -33,8 +33,8 @@ export class TaskUpdateComponent implements OnInit {
     summary: [null, [Validators.required, Validators.maxLength(128)]],
     createdAt: [null, [Validators.required]],
     completedAt: [],
-    ownerId: [],
-    goalId: []
+    ownerId: [null, Validators.required],
+    goalId: [null, Validators.required]
   });
 
   constructor(

@@ -51,7 +51,6 @@ import io.github.rimesc.planner.service.GoalService;
 import io.github.rimesc.planner.service.dto.GoalDTO;
 import io.github.rimesc.planner.service.mapper.GoalMapper;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
-
 /**
  * Integration tests for the {@link GoalResource} REST controller.
  */
@@ -142,9 +141,14 @@ public class GoalResourceIT {
         em.flush();
         goal.setOwner(user);
         // Add required entity
-        Theme theme = ThemeResourceIT.createEntity(em);
-        em.persist(theme);
-        em.flush();
+        Theme theme;
+        if (TestUtil.findAll(em, Theme.class).isEmpty()) {
+            theme = ThemeResourceIT.createEntity(em);
+            em.persist(theme);
+            em.flush();
+        } else {
+            theme = TestUtil.findAll(em, Theme.class).get(0);
+        }
         goal.setTheme(theme);
         return goal;
     }
@@ -161,6 +165,21 @@ public class GoalResourceIT {
             .completedAt(UPDATED_COMPLETED_AT)
             .order(UPDATED_ORDER)
             .visibility(UPDATED_VISIBILITY);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        goal.setOwner(user);
+        // Add required entity
+        Theme theme;
+        if (TestUtil.findAll(em, Theme.class).isEmpty()) {
+            theme = ThemeResourceIT.createUpdatedEntity(em);
+            em.persist(theme);
+            em.flush();
+        } else {
+            theme = TestUtil.findAll(em, Theme.class).get(0);
+        }
+        goal.setTheme(theme);
         return goal;
     }
 
@@ -327,8 +346,8 @@ public class GoalResourceIT {
     @SuppressWarnings({ "unchecked" })
     public void getAllGoalsWithEagerRelationshipsIsNotEnabled() throws Exception {
         GoalResource goalResource = new GoalResource(goalServiceMock, goalQueryService);
-        when(goalServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-        MockMvc restGoalMockMvc = MockMvcBuilders.standaloneSetup(goalResource)
+            when(goalServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restGoalMockMvc = MockMvcBuilders.standaloneSetup(goalResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
@@ -471,7 +490,7 @@ public class GoalResourceIT {
 
     @Test
     @Transactional
-    public void getAllGoalsByCreatedIsNotEqualToSomething() throws Exception {
+    public void getAllGoalsByCreatedAtIsNotEqualToSomething() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
@@ -523,7 +542,7 @@ public class GoalResourceIT {
 
     @Test
     @Transactional
-    public void getAllGoalsByCompletedIsNotEqualToSomething() throws Exception {
+    public void getAllGoalsByCompletedAtIsNotEqualToSomething() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
@@ -757,12 +776,8 @@ public class GoalResourceIT {
     @Test
     @Transactional
     public void getAllGoalsByOwnerIsEqualToSomething() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-        User owner = UserResourceIT.createEntity(em);
-        em.persist(owner);
-        em.flush();
-        goal.setOwner(owner);
+        // Get already existing entity
+        User owner = goal.getOwner();
         goalRepository.saveAndFlush(goal);
         Long ownerId = owner.getId();
 
@@ -795,12 +810,8 @@ public class GoalResourceIT {
     @Test
     @Transactional
     public void getAllGoalsByThemeIsEqualToSomething() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-        Theme theme = ThemeResourceIT.createEntity(em);
-        em.persist(theme);
-        em.flush();
-        goal.setTheme(theme);
+        // Get already existing entity
+        Theme theme = goal.getTheme();
         goalRepository.saveAndFlush(goal);
         Long themeId = theme.getId();
 

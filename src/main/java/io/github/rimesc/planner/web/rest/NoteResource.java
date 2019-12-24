@@ -94,7 +94,8 @@ public class NoteResource {
     /**
      * {@code GET  /notes} : get all the notes.
      *
-     * @param criteria the criterias which the requested entities should match
+
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of notes in body.
      */
     @GetMapping("/notes")
@@ -105,10 +106,10 @@ public class NoteResource {
     }
 
     /**
-    * GET  /notes/count : count all the notes.
+    * {@code GET  /notes/count} : count all the notes.
     *
-    * @param criteria the criterias which the requested entities should match
-    * @return the ResponseEntity with status 200 (OK) and the count in body
+    * @param criteria the criteria which the requested entities should match.
+    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
     */
     @GetMapping("/notes/count")
     public ResponseEntity<Long> countNotes(NoteCriteria criteria) {
