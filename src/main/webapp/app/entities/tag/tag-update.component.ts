@@ -24,7 +24,7 @@ export class TagUpdateComponent implements OnInit {
     id: [],
     name: [null, [Validators.required, Validators.maxLength(32)]],
     icon: [null, [Validators.maxLength(16)]],
-    themeId: []
+    themeId: [null, Validators.required]
   });
 
   constructor(

@@ -32,7 +32,7 @@ export class ThemeUpdateComponent implements OnInit {
     avatarContentType: [],
     createdAt: [null, [Validators.required]],
     visibility: [null, [Validators.required]],
-    ownerId: []
+    ownerId: [null, Validators.required]
   });
 
   constructor(

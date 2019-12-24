@@ -1,15 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Theme } from 'app/shared/model/theme.model';
-import { ThemeService } from '../entities/theme/theme.service';
+import { Routes } from '@angular/router';
+
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { ThemeResolve } from '../entities/theme/theme.route';
 import { ThemeDashboardComponent } from './theme-dashboard.component';
-import { GoalDetailComponent, GoalResolve } from '../entities/goal';
-import { ITheme } from 'app/shared/model/theme.model';
+import { GoalDetailComponent } from '../entities/goal/goal-detail.component';
+import { GoalResolve } from '../entities/goal/goal.route';
 
 export const themeRoute: Routes = [
   {

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.github.jhipster.service.QueryService;
+// for static metamodels
 import io.github.rimesc.planner.domain.Goal_;
 import io.github.rimesc.planner.domain.Note;
 import io.github.rimesc.planner.domain.Note_;
@@ -23,7 +24,7 @@ import io.github.rimesc.planner.service.dto.NoteDTO;
 import io.github.rimesc.planner.service.mapper.NoteMapper;
 
 /**
- * Service for executing complex queries for Note entities in the database.
+ * Service for executing complex queries for {@link Note} entities in the database.
  * The main input is a {@link NoteCriteria} which gets converted to {@link Specification},
  * in a way that all the filters must apply.
  * It returns a {@link List} of {@link NoteDTO} or a {@link Page} of {@link NoteDTO} which fulfills the criteria.
@@ -44,7 +45,7 @@ public class NoteQueryService extends QueryService<Note> {
     }
 
     /**
-     * Return a {@link List} of {@link NoteDTO} which matches the criteria from the database
+     * Return a {@link List} of {@link NoteDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the matching entities.
      */
@@ -56,7 +57,7 @@ public class NoteQueryService extends QueryService<Note> {
     }
 
     /**
-     * Return a {@link Page} of {@link NoteDTO} which matches the criteria from the database
+     * Return a {@link Page} of {@link NoteDTO} which matches the criteria from the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @param page The page, which should be returned.
      * @return the matching entities.
@@ -70,7 +71,7 @@ public class NoteQueryService extends QueryService<Note> {
     }
 
     /**
-     * Return the number of matching entities in the database
+     * Return the number of matching entities in the database.
      * @param criteria The object which holds all the filters, which the entities should match.
      * @return the number of matching entities.
      */
@@ -82,13 +83,15 @@ public class NoteQueryService extends QueryService<Note> {
     }
 
     /**
-     * Function to convert NoteCriteria to a {@link Specification}
+     * Function to convert {@link NoteCriteria} to a {@link Specification}
+     * @param criteria The object which holds all the filters, which the entities should match.
+     * @return the matching {@link Specification} of the entity.
      */
-    private Specification<Note> createSpecification(NoteCriteria criteria) {
+    protected Specification<Note> createSpecification(NoteCriteria criteria) {
         Specification<Note> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Note_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Note_.id));
             }
             if (criteria.getCreatedAt() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Note_.createdAt));

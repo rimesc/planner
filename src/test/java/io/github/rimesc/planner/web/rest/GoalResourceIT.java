@@ -142,12 +142,18 @@ public class GoalResourceIT {
         em.flush();
         goal.setOwner(user);
         // Add required entity
-        Theme theme = ThemeResourceIT.createEntity(em);
-        em.persist(theme);
-        em.flush();
+        Theme theme;
+        if (TestUtil.findAll(em, Theme.class).isEmpty()) {
+            theme = ThemeResourceIT.createEntity(em);
+            em.persist(theme);
+            em.flush();
+        } else {
+            theme = TestUtil.findAll(em, Theme.class).get(0);
+        }
         goal.setTheme(theme);
         return goal;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -161,6 +167,21 @@ public class GoalResourceIT {
             .completedAt(UPDATED_COMPLETED_AT)
             .order(UPDATED_ORDER)
             .visibility(UPDATED_VISIBILITY);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        goal.setOwner(user);
+        // Add required entity
+        Theme theme;
+        if (TestUtil.findAll(em, Theme.class).isEmpty()) {
+            theme = ThemeResourceIT.createUpdatedEntity(em);
+            em.persist(theme);
+            em.flush();
+        } else {
+            theme = TestUtil.findAll(em, Theme.class).get(0);
+        }
+        goal.setTheme(theme);
         return goal;
     }
 
@@ -211,7 +232,6 @@ public class GoalResourceIT {
         List<Goal> goalList = goalRepository.findAll();
         assertThat(goalList).hasSize(databaseSizeBeforeCreate);
     }
-
 
     @Test
     @Transactional
@@ -358,7 +378,6 @@ public class GoalResourceIT {
             .andExpect(jsonPath("$.visibility").value(DEFAULT_VISIBILITY.toString()));
     }
 
-
     @Test
     @Transactional
     public void getGoalsByIdFiltering() throws Exception {
@@ -376,7 +395,6 @@ public class GoalResourceIT {
         defaultGoalShouldBeFound("id.lessThanOrEqual=" + id);
         defaultGoalShouldNotBeFound("id.lessThan=" + id);
     }
-
 
     @Test
     @Transactional
@@ -429,7 +447,8 @@ public class GoalResourceIT {
         // Get all the goalList where summary is null
         defaultGoalShouldNotBeFound("summary.specified=false");
     }
-                @Test
+
+    @Test
     @Transactional
     public void getAllGoalsBySummaryContainsSomething() throws Exception {
         // Initialize the database
@@ -455,7 +474,6 @@ public class GoalResourceIT {
         defaultGoalShouldBeFound("summary.doesNotContain=" + UPDATED_SUMMARY);
     }
 
-
     @Test
     @Transactional
     public void getAllGoalsByCreatedAtIsEqualToSomething() throws Exception {
@@ -471,7 +489,7 @@ public class GoalResourceIT {
 
     @Test
     @Transactional
-    public void getAllGoalsByCreatedIsNotEqualToSomething() throws Exception {
+    public void getAllGoalsByCreatedAtIsNotEqualToSomething() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
@@ -523,7 +541,7 @@ public class GoalResourceIT {
 
     @Test
     @Transactional
-    public void getAllGoalsByCompletedIsNotEqualToSomething() throws Exception {
+    public void getAllGoalsByCompletedAtIsNotEqualToSomething() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
@@ -757,12 +775,8 @@ public class GoalResourceIT {
     @Test
     @Transactional
     public void getAllGoalsByOwnerIsEqualToSomething() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-        User owner = UserResourceIT.createEntity(em);
-        em.persist(owner);
-        em.flush();
-        goal.setOwner(owner);
+        // Get already existing entity
+        User owner = goal.getOwner();
         goalRepository.saveAndFlush(goal);
         Long ownerId = owner.getId();
 
@@ -795,12 +809,8 @@ public class GoalResourceIT {
     @Test
     @Transactional
     public void getAllGoalsByThemeIsEqualToSomething() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-        Theme theme = ThemeResourceIT.createEntity(em);
-        em.persist(theme);
-        em.flush();
-        goal.setTheme(theme);
+        // Get already existing entity
+        Theme theme = goal.getTheme();
         goalRepository.saveAndFlush(goal);
         Long themeId = theme.getId();
 

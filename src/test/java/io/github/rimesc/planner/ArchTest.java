@@ -17,6 +17,7 @@ class ArchTest {
             .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
             .importPackages("io.github.rimesc.planner");
 
+        // @formatter:off
         noClasses()
             .that()
                 .resideInAnyPackage("..service..")
@@ -26,5 +27,6 @@ class ArchTest {
                 .resideInAnyPackage("..io.github.rimesc.planner.web..")
         .because("Services and repositories should not depend on web layer")
         .check(importedClasses);
+        // @formatter:on
     }
 }

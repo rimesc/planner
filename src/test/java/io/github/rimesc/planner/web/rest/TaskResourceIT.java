@@ -116,12 +116,18 @@ public class TaskResourceIT {
         em.flush();
         task.setOwner(user);
         // Add required entity
-        Goal goal = GoalResourceIT.createEntity(em);
-        em.persist(goal);
-        em.flush();
+        Goal goal;
+        if (TestUtil.findAll(em, Goal.class).isEmpty()) {
+            goal = GoalResourceIT.createEntity(em);
+            em.persist(goal);
+            em.flush();
+        } else {
+            goal = TestUtil.findAll(em, Goal.class).get(0);
+        }
         task.setGoal(goal);
         return task;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -133,6 +139,21 @@ public class TaskResourceIT {
             .summary(UPDATED_SUMMARY)
             .createdAt(UPDATED_CREATED_AT)
             .completedAt(UPDATED_COMPLETED_AT);
+        // Add required entity
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        task.setOwner(user);
+        // Add required entity
+        Goal goal;
+        if (TestUtil.findAll(em, Goal.class).isEmpty()) {
+            goal = GoalResourceIT.createUpdatedEntity(em);
+            em.persist(goal);
+            em.flush();
+        } else {
+            goal = TestUtil.findAll(em, Goal.class).get(0);
+        }
+        task.setGoal(goal);
         return task;
     }
 
@@ -181,7 +202,6 @@ public class TaskResourceIT {
         List<Task> taskList = taskRepository.findAll();
         assertThat(taskList).hasSize(databaseSizeBeforeCreate);
     }
-
 
     @Test
     @Transactional
@@ -255,6 +275,24 @@ public class TaskResourceIT {
 
     @Test
     @Transactional
+    public void getTasksByIdFiltering() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        Long id = task.getId();
+
+        defaultTaskShouldBeFound("id.equals=" + id);
+        defaultTaskShouldNotBeFound("id.notEquals=" + id);
+
+        defaultTaskShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultTaskShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultTaskShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultTaskShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
     public void getAllTasksBySummaryIsEqualToSomething() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
@@ -264,6 +302,19 @@ public class TaskResourceIT {
 
         // Get all the taskList where summary equals to UPDATED_SUMMARY
         defaultTaskShouldNotBeFound("summary.equals=" + UPDATED_SUMMARY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksBySummaryIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where summary not equals to DEFAULT_SUMMARY
+        defaultTaskShouldNotBeFound("summary.notEquals=" + DEFAULT_SUMMARY);
+
+        // Get all the taskList where summary not equals to UPDATED_SUMMARY
+        defaultTaskShouldBeFound("summary.notEquals=" + UPDATED_SUMMARY);
     }
 
     @Test
@@ -294,6 +345,32 @@ public class TaskResourceIT {
 
     @Test
     @Transactional
+    public void getAllTasksBySummaryContainsSomething() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where summary contains DEFAULT_SUMMARY
+        defaultTaskShouldBeFound("summary.contains=" + DEFAULT_SUMMARY);
+
+        // Get all the taskList where summary contains UPDATED_SUMMARY
+        defaultTaskShouldNotBeFound("summary.contains=" + UPDATED_SUMMARY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksBySummaryNotContainsSomething() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where summary does not contain DEFAULT_SUMMARY
+        defaultTaskShouldNotBeFound("summary.doesNotContain=" + DEFAULT_SUMMARY);
+
+        // Get all the taskList where summary does not contain UPDATED_SUMMARY
+        defaultTaskShouldBeFound("summary.doesNotContain=" + UPDATED_SUMMARY);
+    }
+
+    @Test
+    @Transactional
     public void getAllTasksByCreatedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
@@ -303,6 +380,19 @@ public class TaskResourceIT {
 
         // Get all the taskList where createdAt equals to UPDATED_CREATED_AT
         defaultTaskShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksByCreatedAtIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where createdAt not equals to DEFAULT_CREATED_AT
+        defaultTaskShouldNotBeFound("createdAt.notEquals=" + DEFAULT_CREATED_AT);
+
+        // Get all the taskList where createdAt not equals to UPDATED_CREATED_AT
+        defaultTaskShouldBeFound("createdAt.notEquals=" + UPDATED_CREATED_AT);
     }
 
     @Test
@@ -346,6 +436,19 @@ public class TaskResourceIT {
 
     @Test
     @Transactional
+    public void getAllTasksByCompletedAtIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where completedAt not equals to DEFAULT_COMPLETED_AT
+        defaultTaskShouldNotBeFound("completedAt.notEquals=" + DEFAULT_COMPLETED_AT);
+
+        // Get all the taskList where completedAt not equals to UPDATED_COMPLETED_AT
+        defaultTaskShouldBeFound("completedAt.notEquals=" + UPDATED_COMPLETED_AT);
+    }
+
+    @Test
+    @Transactional
     public void getAllTasksByCompletedAtIsInShouldWork() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
@@ -373,11 +476,8 @@ public class TaskResourceIT {
     @Test
     @Transactional
     public void getAllTasksByOwnerIsEqualToSomething() throws Exception {
-        // Initialize the database
-        User owner = UserResourceIT.createEntity(em);
-        em.persist(owner);
-        em.flush();
-        task.setOwner(owner);
+        // Get already existing entity
+        User owner = task.getOwner();
         taskRepository.saveAndFlush(task);
         Long ownerId = owner.getId();
 
@@ -391,11 +491,8 @@ public class TaskResourceIT {
     @Test
     @Transactional
     public void getAllTasksByGoalIsEqualToSomething() throws Exception {
-        // Initialize the database
-        Goal goal = GoalResourceIT.createEntity(em);
-        em.persist(goal);
-        em.flush();
-        task.setGoal(goal);
+        // Get already existing entity
+        Goal goal = task.getGoal();
         taskRepository.saveAndFlush(task);
         Long goalId = goal.getId();
 
@@ -407,7 +504,7 @@ public class TaskResourceIT {
     }
 
     /**
-     * Executes the search, and checks that the default entity is returned
+     * Executes the search, and checks that the default entity is returned.
      */
     private void defaultTaskShouldBeFound(String filter) throws Exception {
         restTaskMockMvc.perform(get("/api/tasks?sort=id,desc&" + filter))
@@ -426,7 +523,7 @@ public class TaskResourceIT {
     }
 
     /**
-     * Executes the search, and checks that the default entity is not returned
+     * Executes the search, and checks that the default entity is not returned.
      */
     private void defaultTaskShouldNotBeFound(String filter) throws Exception {
         restTaskMockMvc.perform(get("/api/tasks?sort=id,desc&" + filter))

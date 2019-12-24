@@ -52,7 +52,6 @@ public class ClientForwardControllerTest {
             .andExpect(forwardedUrl("/"));
     }
 
-
     @RestController
     public static class TestController {
 

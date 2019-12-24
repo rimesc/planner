@@ -39,9 +39,9 @@ export class GoalUpdateComponent implements OnInit {
     completedAt: [],
     order: [null, [Validators.required]],
     visibility: [null, [Validators.required]],
-    ownerId: [],
+    ownerId: [null, Validators.required],
     tags: [],
-    themeId: []
+    themeId: [null, Validators.required]
   });
 
   constructor(

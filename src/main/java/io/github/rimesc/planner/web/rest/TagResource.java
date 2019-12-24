@@ -94,7 +94,7 @@ public class TagResource {
     /**
      * {@code GET  /tags} : get all the tags.
      *
-     * @param criteria the criterias which the requested entities should match
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tags in body.
      */
     @GetMapping("/tags")
@@ -105,10 +105,10 @@ public class TagResource {
     }
 
     /**
-    * GET  /tags/count : count all the tags.
+    * {@code GET  /tags/count} : count all the tags.
     *
-    * @param criteria the criterias which the requested entities should match
-    * @return the ResponseEntity with status 200 (OK) and the count in body
+    * @param criteria the criteria which the requested entities should match.
+    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
     */
     @GetMapping("/tags/count")
     public ResponseEntity<Long> countTags(TagCriteria criteria) {

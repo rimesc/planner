@@ -99,9 +99,7 @@ public class ThemeResource {
     /**
      * {@code GET  /themes} : get all the themes.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of themes in body.
      */
