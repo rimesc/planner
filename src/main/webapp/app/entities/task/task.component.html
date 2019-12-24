@@ -20,8 +20,8 @@
             <tr>
             <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
             <th scope="col" ><span jhiTranslate="plannerApp.task.summary">Summary</span></th>
-            <th scope="col" ><span jhiTranslate="plannerApp.task.created">Created</span></th>
-            <th scope="col" ><span jhiTranslate="plannerApp.task.completed">Completed</span></th>
+            <th scope="col" ><span jhiTranslate="plannerApp.task.createdAt">Created At</span></th>
+            <th scope="col" ><span jhiTranslate="plannerApp.task.completedAt">Completed At</span></th>
             <th scope="col" ><span jhiTranslate="plannerApp.task.owner">Owner</span></th>
             <th scope="col" ><span jhiTranslate="plannerApp.task.goal">Goal</span></th>
             <th scope="col"></th>
@@ -31,8 +31,8 @@
             <tr *ngFor="let task of tasks ;trackBy: trackId">
                 <td><a [routerLink]="['/task', task.id, 'view' ]">{{task.id}}</a></td>
                 <td>{{task.summary}}</td>
-                <td>{{task.created | date:'medium'}}</td>
-                <td>{{task.completed | date:'medium'}}</td>
+                <td>{{task.createdAt | date:'medium'}}</td>
+                <td>{{task.completedAt | date:'medium'}}</td>
                 <td>
                     {{task.ownerId}}
                 </td>

@@ -29,7 +29,7 @@
             <column name="avatar_content_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="created" type="datetime">
+            <column name="created_at" type="datetime">
                 <constraints nullable="false" />
             </column>
             <column name="visibility" type="varchar(255)">
@@ -40,7 +40,7 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="theme" columnName="created" columnDataType="datetime"/>
+        <dropDefaultValue tableName="theme" columnName="created_at" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20190303200126-1-relations" author="jhipster">

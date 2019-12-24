@@ -7,8 +7,8 @@ import { Visibility } from 'app/shared/model/enumerations/visibility.model';
 export interface IGoal {
   id?: number;
   summary?: string;
-  created?: Moment;
-  completed?: Moment;
+  createdAt?: Moment;
+  completedAt?: Moment;
   order?: number;
   visibility?: Visibility;
   tasks?: ITask[];
@@ -22,8 +22,8 @@ export class Goal implements IGoal {
   constructor(
     public id?: number,
     public summary?: string,
-    public created?: Moment,
-    public completed?: Moment,
+    public createdAt?: Moment,
+    public completedAt?: Moment,
     public order?: number,
     public visibility?: Visibility,
     public tasks?: ITask[],

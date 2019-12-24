@@ -24,9 +24,9 @@ public class TaskCriteria implements Serializable {
 
     private StringFilter summary;
 
-    private InstantFilter created;
+    private InstantFilter createdAt;
 
-    private InstantFilter completed;
+    private InstantFilter completedAt;
 
     private LongFilter ownerId;
 
@@ -48,20 +48,20 @@ public class TaskCriteria implements Serializable {
         this.summary = summary;
     }
 
-    public InstantFilter getCreated() {
-        return created;
+    public InstantFilter getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(InstantFilter created) {
-        this.created = created;
+    public void setCreatedAt(InstantFilter createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public InstantFilter getCompleted() {
-        return completed;
+    public InstantFilter getCompletedAt() {
+        return completedAt;
     }
 
-    public void setCompleted(InstantFilter completed) {
-        this.completed = completed;
+    public void setCompletedAt(InstantFilter completedAt) {
+        this.completedAt = completedAt;
     }
 
     public LongFilter getOwnerId() {
@@ -91,8 +91,8 @@ public class TaskCriteria implements Serializable {
         final TaskCriteria that = (TaskCriteria) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(summary, that.summary) &&
-            Objects.equals(created, that.created) &&
-            Objects.equals(completed, that.completed) &&
+            Objects.equals(createdAt, that.createdAt) &&
+            Objects.equals(completedAt, that.completedAt) &&
             Objects.equals(ownerId, that.ownerId) &&
             Objects.equals(goalId, that.goalId);
     }
@@ -102,8 +102,8 @@ public class TaskCriteria implements Serializable {
         return Objects.hash(
             id,
             summary,
-            created,
-            completed,
+            createdAt,
+            completedAt,
             ownerId,
             goalId);
     }
@@ -113,8 +113,8 @@ public class TaskCriteria implements Serializable {
         return "TaskCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (summary != null ? "summary=" + summary + ", " : "") +
-            (created != null ? "created=" + created + ", " : "") +
-            (completed != null ? "completed=" + completed + ", " : "") +
+            (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
+            (completedAt != null ? "completedAt=" + completedAt + ", " : "") +
             (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
             (goalId != null ? "goalId=" + goalId + ", " : "") +
             "}";

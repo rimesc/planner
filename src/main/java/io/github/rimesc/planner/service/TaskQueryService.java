@@ -93,11 +93,11 @@ public class TaskQueryService extends QueryService<Task> {
             if (criteria.getSummary() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSummary(), Task_.summary));
             }
-            if (criteria.getCreated() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreated(), Task_.created));
+            if (criteria.getCreatedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Task_.createdAt));
             }
-            if (criteria.getCompleted() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCompleted(), Task_.completed));
+            if (criteria.getCompletedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCompletedAt(), Task_.completedAt));
             }
             if (criteria.getOwnerId() != null) {
                 specification = specification.and(buildSpecification(criteria.getOwnerId(),

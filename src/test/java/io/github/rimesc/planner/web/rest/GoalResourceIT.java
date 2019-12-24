@@ -61,11 +61,11 @@ public class GoalResourceIT {
     private static final String DEFAULT_SUMMARY = "AAAAAAAAAA";
     private static final String UPDATED_SUMMARY = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_CREATED = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Instant DEFAULT_COMPLETED = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_COMPLETED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant DEFAULT_COMPLETED_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_COMPLETED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final Long DEFAULT_ORDER = 1L;
     private static final Long UPDATED_ORDER = 2L;
@@ -132,8 +132,8 @@ public class GoalResourceIT {
     public static Goal createEntity(EntityManager em) {
         Goal goal = new Goal()
             .summary(DEFAULT_SUMMARY)
-            .created(DEFAULT_CREATED)
-            .completed(DEFAULT_COMPLETED)
+            .createdAt(DEFAULT_CREATED_AT)
+            .completedAt(DEFAULT_COMPLETED_AT)
             .order(DEFAULT_ORDER)
             .visibility(DEFAULT_VISIBILITY);
         // Add required entity
@@ -157,8 +157,8 @@ public class GoalResourceIT {
     public static Goal createUpdatedEntity(EntityManager em) {
         Goal goal = new Goal()
             .summary(UPDATED_SUMMARY)
-            .created(UPDATED_CREATED)
-            .completed(UPDATED_COMPLETED)
+            .createdAt(UPDATED_CREATED_AT)
+            .completedAt(UPDATED_COMPLETED_AT)
             .order(UPDATED_ORDER)
             .visibility(UPDATED_VISIBILITY);
         return goal;
@@ -186,8 +186,8 @@ public class GoalResourceIT {
         assertThat(goalList).hasSize(databaseSizeBeforeCreate + 1);
         Goal testGoal = goalList.get(goalList.size() - 1);
         assertThat(testGoal.getSummary()).isEqualTo(DEFAULT_SUMMARY);
-        assertThat(testGoal.getCreated()).isEqualTo(DEFAULT_CREATED);
-        assertThat(testGoal.getCompleted()).isEqualTo(DEFAULT_COMPLETED);
+        assertThat(testGoal.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testGoal.getCompletedAt()).isEqualTo(DEFAULT_COMPLETED_AT);
         assertThat(testGoal.getOrder()).isEqualTo(DEFAULT_ORDER);
         assertThat(testGoal.getVisibility()).isEqualTo(DEFAULT_VISIBILITY);
     }
@@ -234,10 +234,10 @@ public class GoalResourceIT {
 
     @Test
     @Transactional
-    public void checkCreatedIsRequired() throws Exception {
+    public void checkCreatedAtIsRequired() throws Exception {
         int databaseSizeBeforeTest = goalRepository.findAll().size();
         // set the field null
-        goal.setCreated(null);
+        goal.setCreatedAt(null);
 
         // Create the Goal, which fails.
         GoalDTO goalDTO = goalMapper.toDto(goal);
@@ -301,8 +301,8 @@ public class GoalResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(goal.getId().intValue())))
             .andExpect(jsonPath("$.[*].summary").value(hasItem(DEFAULT_SUMMARY)))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
-            .andExpect(jsonPath("$.[*].completed").value(hasItem(DEFAULT_COMPLETED.toString())))
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())))
             .andExpect(jsonPath("$.[*].order").value(hasItem(DEFAULT_ORDER.intValue())))
             .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
     }
@@ -352,8 +352,8 @@ public class GoalResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(goal.getId().intValue()))
             .andExpect(jsonPath("$.summary").value(DEFAULT_SUMMARY))
-            .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
-            .andExpect(jsonPath("$.completed").value(DEFAULT_COMPLETED.toString()))
+            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
+            .andExpect(jsonPath("$.completedAt").value(DEFAULT_COMPLETED_AT.toString()))
             .andExpect(jsonPath("$.order").value(DEFAULT_ORDER.intValue()))
             .andExpect(jsonPath("$.visibility").value(DEFAULT_VISIBILITY.toString()));
     }
@@ -458,15 +458,15 @@ public class GoalResourceIT {
 
     @Test
     @Transactional
-    public void getAllGoalsByCreatedIsEqualToSomething() throws Exception {
+    public void getAllGoalsByCreatedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where created equals to DEFAULT_CREATED
-        defaultGoalShouldBeFound("created.equals=" + DEFAULT_CREATED);
+        // Get all the goalList where createdAt equals to DEFAULT_CREATED_AT
+        defaultGoalShouldBeFound("createdAt.equals=" + DEFAULT_CREATED_AT);
 
-        // Get all the goalList where created equals to UPDATED_CREATED
-        defaultGoalShouldNotBeFound("created.equals=" + UPDATED_CREATED);
+        // Get all the goalList where createdAt equals to UPDATED_CREATED_AT
+        defaultGoalShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
     }
 
     @Test
@@ -475,50 +475,50 @@ public class GoalResourceIT {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where created not equals to DEFAULT_CREATED
-        defaultGoalShouldNotBeFound("created.notEquals=" + DEFAULT_CREATED);
+        // Get all the goalList where createdAt not equals to DEFAULT_CREATED_AT
+        defaultGoalShouldNotBeFound("createdAt.notEquals=" + DEFAULT_CREATED_AT);
 
-        // Get all the goalList where created not equals to UPDATED_CREATED
-        defaultGoalShouldBeFound("created.notEquals=" + UPDATED_CREATED);
+        // Get all the goalList where createdAt not equals to UPDATED_CREATED_AT
+        defaultGoalShouldBeFound("createdAt.notEquals=" + UPDATED_CREATED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllGoalsByCreatedIsInShouldWork() throws Exception {
+    public void getAllGoalsByCreatedAtIsInShouldWork() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where created in DEFAULT_CREATED or UPDATED_CREATED
-        defaultGoalShouldBeFound("created.in=" + DEFAULT_CREATED + "," + UPDATED_CREATED);
+        // Get all the goalList where createdAt in DEFAULT_CREATED_AT or UPDATED_CREATED_AT
+        defaultGoalShouldBeFound("createdAt.in=" + DEFAULT_CREATED_AT + "," + UPDATED_CREATED_AT);
 
-        // Get all the goalList where created equals to UPDATED_CREATED
-        defaultGoalShouldNotBeFound("created.in=" + UPDATED_CREATED);
+        // Get all the goalList where createdAt equals to UPDATED_CREATED_AT
+        defaultGoalShouldNotBeFound("createdAt.in=" + UPDATED_CREATED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllGoalsByCreatedIsNullOrNotNull() throws Exception {
+    public void getAllGoalsByCreatedAtIsNullOrNotNull() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where created is not null
-        defaultGoalShouldBeFound("created.specified=true");
+        // Get all the goalList where createdAt is not null
+        defaultGoalShouldBeFound("createdAt.specified=true");
 
-        // Get all the goalList where created is null
-        defaultGoalShouldNotBeFound("created.specified=false");
+        // Get all the goalList where createdAt is null
+        defaultGoalShouldNotBeFound("createdAt.specified=false");
     }
 
     @Test
     @Transactional
-    public void getAllGoalsByCompletedIsEqualToSomething() throws Exception {
+    public void getAllGoalsByCompletedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where completed equals to DEFAULT_COMPLETED
-        defaultGoalShouldBeFound("completed.equals=" + DEFAULT_COMPLETED);
+        // Get all the goalList where completedAt equals to DEFAULT_COMPLETED_AT
+        defaultGoalShouldBeFound("completedAt.equals=" + DEFAULT_COMPLETED_AT);
 
-        // Get all the goalList where completed equals to UPDATED_COMPLETED
-        defaultGoalShouldNotBeFound("completed.equals=" + UPDATED_COMPLETED);
+        // Get all the goalList where completedAt equals to UPDATED_COMPLETED_AT
+        defaultGoalShouldNotBeFound("completedAt.equals=" + UPDATED_COMPLETED_AT);
     }
 
     @Test
@@ -527,37 +527,37 @@ public class GoalResourceIT {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where completed not equals to DEFAULT_COMPLETED
-        defaultGoalShouldNotBeFound("completed.notEquals=" + DEFAULT_COMPLETED);
+        // Get all the goalList where completedAt not equals to DEFAULT_COMPLETED_AT
+        defaultGoalShouldNotBeFound("completedAt.notEquals=" + DEFAULT_COMPLETED_AT);
 
-        // Get all the goalList where completed not equals to UPDATED_COMPLETED
-        defaultGoalShouldBeFound("completed.notEquals=" + UPDATED_COMPLETED);
+        // Get all the goalList where completedAt not equals to UPDATED_COMPLETED_AT
+        defaultGoalShouldBeFound("completedAt.notEquals=" + UPDATED_COMPLETED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllGoalsByCompletedIsInShouldWork() throws Exception {
+    public void getAllGoalsByCompletedAtIsInShouldWork() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where completed in DEFAULT_COMPLETED or UPDATED_COMPLETED
-        defaultGoalShouldBeFound("completed.in=" + DEFAULT_COMPLETED + "," + UPDATED_COMPLETED);
+        // Get all the goalList where completedAt in DEFAULT_COMPLETED_AT or UPDATED_COMPLETED_AT
+        defaultGoalShouldBeFound("completedAt.in=" + DEFAULT_COMPLETED_AT + "," + UPDATED_COMPLETED_AT);
 
-        // Get all the goalList where completed equals to UPDATED_COMPLETED
-        defaultGoalShouldNotBeFound("completed.in=" + UPDATED_COMPLETED);
+        // Get all the goalList where completedAt equals to UPDATED_COMPLETED_AT
+        defaultGoalShouldNotBeFound("completedAt.in=" + UPDATED_COMPLETED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllGoalsByCompletedIsNullOrNotNull() throws Exception {
+    public void getAllGoalsByCompletedAtIsNullOrNotNull() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where completed is not null
-        defaultGoalShouldBeFound("completed.specified=true");
+        // Get all the goalList where completedAt is not null
+        defaultGoalShouldBeFound("completedAt.specified=true");
 
-        // Get all the goalList where completed is null
-        defaultGoalShouldNotBeFound("completed.specified=false");
+        // Get all the goalList where completedAt is null
+        defaultGoalShouldNotBeFound("completedAt.specified=false");
     }
 
     @Test
@@ -820,8 +820,8 @@ public class GoalResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(goal.getId().intValue())))
             .andExpect(jsonPath("$.[*].summary").value(hasItem(DEFAULT_SUMMARY)))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
-            .andExpect(jsonPath("$.[*].completed").value(hasItem(DEFAULT_COMPLETED.toString())))
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())))
             .andExpect(jsonPath("$.[*].order").value(hasItem(DEFAULT_ORDER.intValue())))
             .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
 
@@ -871,8 +871,8 @@ public class GoalResourceIT {
         em.detach(updatedGoal);
         updatedGoal
             .summary(UPDATED_SUMMARY)
-            .created(UPDATED_CREATED)
-            .completed(UPDATED_COMPLETED)
+            .createdAt(UPDATED_CREATED_AT)
+            .completedAt(UPDATED_COMPLETED_AT)
             .order(UPDATED_ORDER)
             .visibility(UPDATED_VISIBILITY);
         GoalDTO goalDTO = goalMapper.toDto(updatedGoal);
@@ -887,8 +887,8 @@ public class GoalResourceIT {
         assertThat(goalList).hasSize(databaseSizeBeforeUpdate);
         Goal testGoal = goalList.get(goalList.size() - 1);
         assertThat(testGoal.getSummary()).isEqualTo(UPDATED_SUMMARY);
-        assertThat(testGoal.getCreated()).isEqualTo(UPDATED_CREATED);
-        assertThat(testGoal.getCompleted()).isEqualTo(UPDATED_COMPLETED);
+        assertThat(testGoal.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testGoal.getCompletedAt()).isEqualTo(UPDATED_COMPLETED_AT);
         assertThat(testGoal.getOrder()).isEqualTo(UPDATED_ORDER);
         assertThat(testGoal.getVisibility()).isEqualTo(UPDATED_VISIBILITY);
     }

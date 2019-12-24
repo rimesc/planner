@@ -52,14 +52,14 @@ export class ThemeService {
 
   protected convertDateFromClient(theme: ITheme): ITheme {
     const copy: ITheme = Object.assign({}, theme, {
-      created: theme.created && theme.created.isValid() ? theme.created.toJSON() : undefined
+      createdAt: theme.createdAt && theme.createdAt.isValid() ? theme.createdAt.toJSON() : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.created = res.body.created ? moment(res.body.created) : undefined;
+      res.body.createdAt = res.body.createdAt ? moment(res.body.createdAt) : undefined;
     }
     return res;
   }
@@ -67,7 +67,7 @@ export class ThemeService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((theme: ITheme) => {
-        theme.created = theme.created ? moment(theme.created) : undefined;
+        theme.createdAt = theme.createdAt ? moment(theme.createdAt) : undefined;
       });
     }
     return res;

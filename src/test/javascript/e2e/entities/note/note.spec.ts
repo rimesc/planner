@@ -41,16 +41,16 @@ describe('Note e2e test', () => {
     await promise.all([
       noteUpdatePage.setMarkdownInput('markdown'),
       noteUpdatePage.setHtmlInput('html'),
-      noteUpdatePage.setCreatedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-      noteUpdatePage.setEditedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      noteUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      noteUpdatePage.setEditedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       noteUpdatePage.visibilitySelectLastOption(),
       noteUpdatePage.ownerSelectLastOption(),
       noteUpdatePage.goalSelectLastOption()
     ]);
     expect(await noteUpdatePage.getMarkdownInput()).to.eq('markdown', 'Expected Markdown value to be equals to markdown');
     expect(await noteUpdatePage.getHtmlInput()).to.eq('html', 'Expected Html value to be equals to html');
-    expect(await noteUpdatePage.getCreatedInput()).to.contain('2001-01-01T02:30', 'Expected created value to be equals to 2000-12-31');
-    expect(await noteUpdatePage.getEditedInput()).to.contain('2001-01-01T02:30', 'Expected edited value to be equals to 2000-12-31');
+    expect(await noteUpdatePage.getCreatedAtInput()).to.contain('2001-01-01T02:30', 'Expected createdAt value to be equals to 2000-12-31');
+    expect(await noteUpdatePage.getEditedAtInput()).to.contain('2001-01-01T02:30', 'Expected editedAt value to be equals to 2000-12-31');
     await noteUpdatePage.save();
     expect(await noteUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

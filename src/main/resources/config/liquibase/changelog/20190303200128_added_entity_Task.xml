@@ -19,10 +19,10 @@
             <column name="summary" type="varchar(128)">
                 <constraints nullable="false" />
             </column>
-            <column name="created" type="datetime">
+            <column name="created_at" type="datetime">
                 <constraints nullable="false" />
             </column>
-            <column name="completed" type="datetime">
+            <column name="completed_at" type="datetime">
                 <constraints nullable="true" />
             </column>
             <column name="owner_id" type="bigint">
@@ -33,8 +33,8 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="task" columnName="created" columnDataType="datetime"/>
-        <dropDefaultValue tableName="task" columnName="completed" columnDataType="datetime"/>
+        <dropDefaultValue tableName="task" columnName="created_at" columnDataType="datetime"/>
+        <dropDefaultValue tableName="task" columnName="completed_at" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20190303200128-1-relations" author="jhipster">

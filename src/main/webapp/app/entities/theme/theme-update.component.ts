@@ -31,7 +31,7 @@ export class ThemeUpdateComponent implements OnInit {
     shortName: [null, [Validators.required, Validators.maxLength(32)]],
     avatar: [null, []],
     avatarContentType: [],
-    created: [null, [Validators.required]],
+    createdAt: [null, [Validators.required]],
     visibility: [null, [Validators.required]],
     ownerId: []
   });
@@ -69,7 +69,7 @@ export class ThemeUpdateComponent implements OnInit {
       shortName: theme.shortName,
       avatar: theme.avatar,
       avatarContentType: theme.avatarContentType,
-      created: theme.created != null ? theme.created.format(DATE_TIME_FORMAT) : null,
+      createdAt: theme.createdAt != null ? theme.createdAt.format(DATE_TIME_FORMAT) : null,
       visibility: theme.visibility,
       ownerId: theme.ownerId
     });
@@ -124,7 +124,8 @@ export class ThemeUpdateComponent implements OnInit {
       shortName: this.editForm.get(['shortName'])!.value,
       avatarContentType: this.editForm.get(['avatarContentType'])!.value,
       avatar: this.editForm.get(['avatar'])!.value,
-      created: this.editForm.get(['created'])!.value != null ? moment(this.editForm.get(['created'])!.value, DATE_TIME_FORMAT) : undefined,
+      createdAt:
+        this.editForm.get(['createdAt'])!.value != null ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
       visibility: this.editForm.get(['visibility'])!.value,
       ownerId: this.editForm.get(['ownerId'])!.value
     };

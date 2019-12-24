@@ -34,8 +34,8 @@ export class NoteUpdateComponent implements OnInit {
     id: [],
     markdown: [null, [Validators.required]],
     html: [null, [Validators.required]],
-    created: [null, [Validators.required]],
-    edited: [],
+    createdAt: [null, [Validators.required]],
+    editedAt: [],
     visibility: [null, [Validators.required]],
     ownerId: [],
     goalId: []
@@ -80,8 +80,8 @@ export class NoteUpdateComponent implements OnInit {
       id: note.id,
       markdown: note.markdown,
       html: note.html,
-      created: note.created != null ? note.created.format(DATE_TIME_FORMAT) : null,
-      edited: note.edited != null ? note.edited.format(DATE_TIME_FORMAT) : null,
+      createdAt: note.createdAt != null ? note.createdAt.format(DATE_TIME_FORMAT) : null,
+      editedAt: note.editedAt != null ? note.editedAt.format(DATE_TIME_FORMAT) : null,
       visibility: note.visibility,
       ownerId: note.ownerId,
       goalId: note.goalId
@@ -124,8 +124,10 @@ export class NoteUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       markdown: this.editForm.get(['markdown'])!.value,
       html: this.editForm.get(['html'])!.value,
-      created: this.editForm.get(['created'])!.value != null ? moment(this.editForm.get(['created'])!.value, DATE_TIME_FORMAT) : undefined,
-      edited: this.editForm.get(['edited'])!.value != null ? moment(this.editForm.get(['edited'])!.value, DATE_TIME_FORMAT) : undefined,
+      createdAt:
+        this.editForm.get(['createdAt'])!.value != null ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
+      editedAt:
+        this.editForm.get(['editedAt'])!.value != null ? moment(this.editForm.get(['editedAt'])!.value, DATE_TIME_FORMAT) : undefined,
       visibility: this.editForm.get(['visibility'])!.value,
       ownerId: this.editForm.get(['ownerId'])!.value,
       goalId: this.editForm.get(['goalId'])!.value

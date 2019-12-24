@@ -27,8 +27,8 @@ export class GoalUpdatePage {
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
   summaryInput = element(by.id('field_summary'));
-  createdInput = element(by.id('field_created'));
-  completedInput = element(by.id('field_completed'));
+  createdAtInput = element(by.id('field_createdAt'));
+  completedAtInput = element(by.id('field_completedAt'));
   orderInput = element(by.id('field_order'));
   visibilitySelect = element(by.id('field_visibility'));
   ownerSelect = element(by.id('field_owner'));
@@ -47,20 +47,20 @@ export class GoalUpdatePage {
     return await this.summaryInput.getAttribute('value');
   }
 
-  async setCreatedInput(created: string): Promise<void> {
-    await this.createdInput.sendKeys(created);
+  async setCreatedAtInput(createdAt: string): Promise<void> {
+    await this.createdAtInput.sendKeys(createdAt);
   }
 
-  async getCreatedInput(): Promise<string> {
-    return await this.createdInput.getAttribute('value');
+  async getCreatedAtInput(): Promise<string> {
+    return await this.createdAtInput.getAttribute('value');
   }
 
-  async setCompletedInput(completed: string): Promise<void> {
-    await this.completedInput.sendKeys(completed);
+  async setCompletedAtInput(completedAt: string): Promise<void> {
+    await this.completedAtInput.sendKeys(completedAt);
   }
 
-  async getCompletedInput(): Promise<string> {
-    return await this.completedInput.getAttribute('value');
+  async getCompletedAtInput(): Promise<string> {
+    return await this.completedAtInput.getAttribute('value');
   }
 
   async setOrderInput(order: string): Promise<void> {

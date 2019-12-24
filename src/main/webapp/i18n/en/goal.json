@@ -17,8 +17,8 @@
         "title": "Goal"
       },
       "summary": "Summary",
-      "created": "Created",
-      "completed": "Completed",
+      "createdAt": "Created At",
+      "completedAt": "Completed At",
       "order": "Order",
       "visibility": "Visibility",
       "task": "Task",

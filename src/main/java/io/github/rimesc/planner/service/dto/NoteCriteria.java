@@ -27,9 +27,9 @@ public class NoteCriteria implements Serializable {
 
     private LongFilter id;
 
-    private InstantFilter created;
+    private InstantFilter createdAt;
 
-    private InstantFilter edited;
+    private InstantFilter editedAt;
 
     private VisibilityFilter visibility;
 
@@ -45,20 +45,20 @@ public class NoteCriteria implements Serializable {
         this.id = id;
     }
 
-    public InstantFilter getCreated() {
-        return created;
+    public InstantFilter getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(InstantFilter created) {
-        this.created = created;
+    public void setCreatedAt(InstantFilter createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public InstantFilter getEdited() {
-        return edited;
+    public InstantFilter getEditedAt() {
+        return editedAt;
     }
 
-    public void setEdited(InstantFilter edited) {
-        this.edited = edited;
+    public void setEditedAt(InstantFilter editedAt) {
+        this.editedAt = editedAt;
     }
 
     public VisibilityFilter getVisibility() {
@@ -95,8 +95,8 @@ public class NoteCriteria implements Serializable {
         }
         final NoteCriteria that = (NoteCriteria) o;
         return Objects.equals(id, that.id) &&
-            Objects.equals(created, that.created) &&
-            Objects.equals(edited, that.edited) &&
+            Objects.equals(createdAt, that.createdAt) &&
+            Objects.equals(editedAt, that.editedAt) &&
             Objects.equals(visibility, that.visibility) &&
             Objects.equals(ownerId, that.ownerId) &&
             Objects.equals(goalId, that.goalId);
@@ -106,8 +106,8 @@ public class NoteCriteria implements Serializable {
     public int hashCode() {
         return Objects.hash(
             id,
-            created,
-            edited,
+            createdAt,
+            editedAt,
             visibility,
             ownerId,
             goalId);
@@ -117,8 +117,8 @@ public class NoteCriteria implements Serializable {
     public String toString() {
         return "NoteCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
-            (created != null ? "created=" + created + ", " : "") +
-            (edited != null ? "edited=" + edited + ", " : "") +
+            (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
+            (editedAt != null ? "editedAt=" + editedAt + ", " : "") +
             (visibility != null ? "visibility=" + visibility + ", " : "") +
             (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
             (goalId != null ? "goalId=" + goalId + ", " : "") +

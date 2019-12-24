@@ -31,8 +31,8 @@ export class TaskUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     summary: [null, [Validators.required, Validators.maxLength(128)]],
-    created: [null, [Validators.required]],
-    completed: [],
+    createdAt: [null, [Validators.required]],
+    completedAt: [],
     ownerId: [],
     goalId: []
   });
@@ -73,8 +73,8 @@ export class TaskUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: task.id,
       summary: task.summary,
-      created: task.created != null ? task.created.format(DATE_TIME_FORMAT) : null,
-      completed: task.completed != null ? task.completed.format(DATE_TIME_FORMAT) : null,
+      createdAt: task.createdAt != null ? task.createdAt.format(DATE_TIME_FORMAT) : null,
+      completedAt: task.completedAt != null ? task.completedAt.format(DATE_TIME_FORMAT) : null,
       ownerId: task.ownerId,
       goalId: task.goalId
     });
@@ -99,9 +99,10 @@ export class TaskUpdateComponent implements OnInit {
       ...new Task(),
       id: this.editForm.get(['id'])!.value,
       summary: this.editForm.get(['summary'])!.value,
-      created: this.editForm.get(['created'])!.value != null ? moment(this.editForm.get(['created'])!.value, DATE_TIME_FORMAT) : undefined,
-      completed:
-        this.editForm.get(['completed'])!.value != null ? moment(this.editForm.get(['completed'])!.value, DATE_TIME_FORMAT) : undefined,
+      createdAt:
+        this.editForm.get(['createdAt'])!.value != null ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
+      completedAt:
+        this.editForm.get(['completedAt'])!.value != null ? moment(this.editForm.get(['completedAt'])!.value, DATE_TIME_FORMAT) : undefined,
       ownerId: this.editForm.get(['ownerId'])!.value,
       goalId: this.editForm.get(['goalId'])!.value
     };

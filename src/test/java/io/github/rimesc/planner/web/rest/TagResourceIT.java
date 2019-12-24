@@ -301,7 +301,7 @@ public class TagResourceIT {
     @Transactional
     public void getAllTagsByThemeIsEqualToSomething() throws Exception {
         // Initialize the database
-        Theme theme = ThemeResourceIntTest.createEntity(em);
+        Theme theme = ThemeResourceIT.createEntity(em);
         em.persist(theme);
         em.flush();
         tag.setTheme(theme);
@@ -319,7 +319,7 @@ public class TagResourceIT {
     @Transactional
     public void getAllTagsByGoalIsEqualToSomething() throws Exception {
         // Initialize the database
-        Goal goal = GoalResourceIntTest.createEntity(em);
+        Goal goal = GoalResourceIT.createEntity(em);
         em.persist(goal);
         em.flush();
         tag.addGoal(goal);

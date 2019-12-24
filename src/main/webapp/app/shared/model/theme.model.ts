@@ -9,7 +9,7 @@ export interface ITheme {
   description?: string;
   avatarContentType?: string;
   avatar?: any;
-  created?: Moment;
+  createdAt?: Moment;
   visibility?: Visibility;
   tags?: ITag[];
   goals?: IGoal[];
@@ -23,7 +23,7 @@ export class Theme implements ITheme {
     public description?: string,
     public avatarContentType?: string,
     public avatar?: any,
-    public created?: Moment,
+    public createdAt?: Moment,
     public visibility?: Visibility,
     public tags?: ITag[],
     public goals?: IGoal[],

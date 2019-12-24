@@ -61,8 +61,8 @@ public class ThemeResourceIT {
     private static final String DEFAULT_AVATAR_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_AVATAR_CONTENT_TYPE = "image/png";
 
-    private static final Instant DEFAULT_CREATED = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final Visibility DEFAULT_VISIBILITY = Visibility.PUBLIC;
     private static final Visibility UPDATED_VISIBILITY = Visibility.PRIVATE;
@@ -122,7 +122,7 @@ public class ThemeResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .avatar(DEFAULT_AVATAR)
             .avatarContentType(DEFAULT_AVATAR_CONTENT_TYPE)
-            .created(DEFAULT_CREATED)
+            .createdAt(DEFAULT_CREATED_AT)
             .visibility(DEFAULT_VISIBILITY);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
@@ -143,7 +143,7 @@ public class ThemeResourceIT {
             .description(UPDATED_DESCRIPTION)
             .avatar(UPDATED_AVATAR)
             .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE)
-            .created(UPDATED_CREATED)
+            .createdAt(UPDATED_CREATED_AT)
             .visibility(UPDATED_VISIBILITY);
         return theme;
     }
@@ -173,7 +173,7 @@ public class ThemeResourceIT {
         assertThat(testTheme.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testTheme.getAvatar()).isEqualTo(DEFAULT_AVATAR);
         assertThat(testTheme.getAvatarContentType()).isEqualTo(DEFAULT_AVATAR_CONTENT_TYPE);
-        assertThat(testTheme.getCreated()).isEqualTo(DEFAULT_CREATED);
+        assertThat(testTheme.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
         assertThat(testTheme.getVisibility()).isEqualTo(DEFAULT_VISIBILITY);
     }
 
@@ -238,10 +238,10 @@ public class ThemeResourceIT {
 
     @Test
     @Transactional
-    public void checkCreatedIsRequired() throws Exception {
+    public void checkCreatedAtIsRequired() throws Exception {
         int databaseSizeBeforeTest = themeRepository.findAll().size();
         // set the field null
-        theme.setCreated(null);
+        theme.setCreatedAt(null);
 
         // Create the Theme, which fails.
         ThemeDTO themeDTO = themeMapper.toDto(theme);
@@ -289,7 +289,7 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].avatarContentType").value(hasItem(DEFAULT_AVATAR_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64Utils.encodeToString(DEFAULT_AVATAR))))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
             .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
     }
 
@@ -308,7 +308,7 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.avatarContentType").value(DEFAULT_AVATAR_CONTENT_TYPE))
             .andExpect(jsonPath("$.avatar").value(Base64Utils.encodeToString(DEFAULT_AVATAR)))
-            .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
+            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
             .andExpect(jsonPath("$.visibility").value(DEFAULT_VISIBILITY.toString()));
     }
 
@@ -490,15 +490,15 @@ public class ThemeResourceIT {
 
     @Test
     @Transactional
-    public void getAllThemesByCreatedIsEqualToSomething() throws Exception {
+    public void getAllThemesByCreatedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         themeRepository.saveAndFlush(theme);
 
-        // Get all the themeList where created equals to DEFAULT_CREATED
-        defaultThemeShouldBeFound("created.equals=" + DEFAULT_CREATED);
+        // Get all the themeList where createdAt equals to DEFAULT_CREATED_AT
+        defaultThemeShouldBeFound("createdAt.equals=" + DEFAULT_CREATED_AT);
 
-        // Get all the themeList where created equals to UPDATED_CREATED
-        defaultThemeShouldNotBeFound("created.equals=" + UPDATED_CREATED);
+        // Get all the themeList where createdAt equals to UPDATED_CREATED_AT
+        defaultThemeShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
     }
 
     @Test
@@ -507,37 +507,37 @@ public class ThemeResourceIT {
         // Initialize the database
         themeRepository.saveAndFlush(theme);
 
-        // Get all the themeList where created not equals to DEFAULT_CREATED
-        defaultThemeShouldNotBeFound("created.notEquals=" + DEFAULT_CREATED);
+        // Get all the themeList where createdAt not equals to DEFAULT_CREATED_AT
+        defaultThemeShouldNotBeFound("createdAt.notEquals=" + DEFAULT_CREATED_AT);
 
-        // Get all the themeList where created not equals to UPDATED_CREATED
-        defaultThemeShouldBeFound("created.notEquals=" + UPDATED_CREATED);
+        // Get all the themeList where createdAt not equals to UPDATED_CREATED_AT
+        defaultThemeShouldBeFound("createdAt.notEquals=" + UPDATED_CREATED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllThemesByCreatedIsInShouldWork() throws Exception {
+    public void getAllThemesByCreatedAtIsInShouldWork() throws Exception {
         // Initialize the database
         themeRepository.saveAndFlush(theme);
 
-        // Get all the themeList where created in DEFAULT_CREATED or UPDATED_CREATED
-        defaultThemeShouldBeFound("created.in=" + DEFAULT_CREATED + "," + UPDATED_CREATED);
+        // Get all the themeList where createdAt in DEFAULT_CREATED_AT or UPDATED_CREATED_AT
+        defaultThemeShouldBeFound("createdAt.in=" + DEFAULT_CREATED_AT + "," + UPDATED_CREATED_AT);
 
-        // Get all the themeList where created equals to UPDATED_CREATED
-        defaultThemeShouldNotBeFound("created.in=" + UPDATED_CREATED);
+        // Get all the themeList where createdAt equals to UPDATED_CREATED_AT
+        defaultThemeShouldNotBeFound("createdAt.in=" + UPDATED_CREATED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllThemesByCreatedIsNullOrNotNull() throws Exception {
+    public void getAllThemesByCreatedAtIsNullOrNotNull() throws Exception {
         // Initialize the database
         themeRepository.saveAndFlush(theme);
 
-        // Get all the themeList where created is not null
-        defaultThemeShouldBeFound("created.specified=true");
+        // Get all the themeList where createdAt is not null
+        defaultThemeShouldBeFound("createdAt.specified=true");
 
-        // Get all the themeList where created is null
-        defaultThemeShouldNotBeFound("created.specified=false");
+        // Get all the themeList where createdAt is null
+        defaultThemeShouldNotBeFound("createdAt.specified=false");
     }
 
     @Test
@@ -661,7 +661,7 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].avatarContentType").value(hasItem(DEFAULT_AVATAR_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64Utils.encodeToString(DEFAULT_AVATAR))))
-            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
+            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
             .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
 
         // Check, that the count call also returns 1
@@ -713,7 +713,7 @@ public class ThemeResourceIT {
             .description(UPDATED_DESCRIPTION)
             .avatar(UPDATED_AVATAR)
             .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE)
-            .created(UPDATED_CREATED)
+            .createdAt(UPDATED_CREATED_AT)
             .visibility(UPDATED_VISIBILITY);
         ThemeDTO themeDTO = themeMapper.toDto(updatedTheme);
 
@@ -730,7 +730,7 @@ public class ThemeResourceIT {
         assertThat(testTheme.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testTheme.getAvatar()).isEqualTo(UPDATED_AVATAR);
         assertThat(testTheme.getAvatarContentType()).isEqualTo(UPDATED_AVATAR_CONTENT_TYPE);
-        assertThat(testTheme.getCreated()).isEqualTo(UPDATED_CREATED);
+        assertThat(testTheme.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testTheme.getVisibility()).isEqualTo(UPDATED_VISIBILITY);
     }
 

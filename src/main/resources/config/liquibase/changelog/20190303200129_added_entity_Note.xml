@@ -22,10 +22,10 @@
             <column name="html" type="${clobType}">
                 <constraints nullable="false" />
             </column>
-            <column name="created" type="datetime">
+            <column name="created_at" type="datetime">
                 <constraints nullable="false" />
             </column>
-            <column name="edited" type="datetime">
+            <column name="edited_at" type="datetime">
                 <constraints nullable="true" />
             </column>
             <column name="visibility" type="varchar(255)">
@@ -39,8 +39,8 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="note" columnName="created" columnDataType="datetime"/>
-        <dropDefaultValue tableName="note" columnName="edited" columnDataType="datetime"/>
+        <dropDefaultValue tableName="note" columnName="created_at" columnDataType="datetime"/>
+        <dropDefaultValue tableName="note" columnName="edited_at" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20190303200129-1-relations" author="jhipster">

@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.github.jhipster.service.QueryService;
 import io.github.rimesc.planner.domain.Goal;
-// for static metamodels
 import io.github.rimesc.planner.domain.Goal_;
 import io.github.rimesc.planner.domain.Note_;
 import io.github.rimesc.planner.domain.Tag_;
@@ -99,11 +98,11 @@ public class GoalQueryService extends QueryService<Goal> {
             if (criteria.getSummary() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSummary(), Goal_.summary));
             }
-            if (criteria.getCreated() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreated(), Goal_.created));
+            if (criteria.getCreatedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Goal_.createdAt));
             }
-            if (criteria.getCompleted() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCompleted(), Goal_.completed));
+            if (criteria.getCompletedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCompletedAt(), Goal_.completedAt));
             }
             if (criteria.getOrder() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getOrder(), Goal_.order));

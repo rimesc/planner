@@ -30,7 +30,7 @@ public class ThemeDTO implements Serializable {
 
     private String avatarContentType;
     @NotNull
-    private Instant created;
+    private Instant createdAt;
 
     @NotNull
     private Visibility visibility;
@@ -77,12 +77,12 @@ public class ThemeDTO implements Serializable {
         this.avatarContentType = avatarContentType;
     }
 
-    public Instant getCreated() {
-        return created;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Visibility getVisibility() {
@@ -129,7 +129,7 @@ public class ThemeDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", avatar='" + getAvatar() + "'" +
-            ", created='" + getCreated() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
             ", visibility='" + getVisibility() + "'" +
             ", ownerId=" + getOwnerId() +
             "}";

@@ -46,7 +46,7 @@ describe('Theme e2e test', () => {
       themeUpdatePage.setNameInput('name'),
       themeUpdatePage.setDescriptionInput('description'),
       themeUpdatePage.setAvatarInput(absolutePath),
-      themeUpdatePage.setCreatedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+      themeUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       themeUpdatePage.visibilitySelectLastOption(),
       themeUpdatePage.ownerSelectLastOption()
     ]);
@@ -56,7 +56,7 @@ describe('Theme e2e test', () => {
       fileNameToUpload,
       'Expected Avatar value to be end with ' + fileNameToUpload
     );
-    expect(await themeUpdatePage.getCreatedInput()).to.contain('2001-01-01T02:30', 'Expected created value to be equals to 2000-12-31');
+    expect(await themeUpdatePage.getCreatedAtInput()).to.contain('2001-01-01T02:30', 'Expected createdAt value to be equals to 2000-12-31');
     await themeUpdatePage.save();
     expect(await themeUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

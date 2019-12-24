@@ -52,16 +52,16 @@ export class GoalService {
 
   protected convertDateFromClient(goal: IGoal): IGoal {
     const copy: IGoal = Object.assign({}, goal, {
-      created: goal.created && goal.created.isValid() ? goal.created.toJSON() : undefined,
-      completed: goal.completed && goal.completed.isValid() ? goal.completed.toJSON() : undefined
+      createdAt: goal.createdAt && goal.createdAt.isValid() ? goal.createdAt.toJSON() : undefined,
+      completedAt: goal.completedAt && goal.completedAt.isValid() ? goal.completedAt.toJSON() : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.created = res.body.created ? moment(res.body.created) : undefined;
-      res.body.completed = res.body.completed ? moment(res.body.completed) : undefined;
+      res.body.createdAt = res.body.createdAt ? moment(res.body.createdAt) : undefined;
+      res.body.completedAt = res.body.completedAt ? moment(res.body.completedAt) : undefined;
     }
     return res;
   }
@@ -69,8 +69,8 @@ export class GoalService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((goal: IGoal) => {
-        goal.created = goal.created ? moment(goal.created) : undefined;
-        goal.completed = goal.completed ? moment(goal.completed) : undefined;
+        goal.createdAt = goal.createdAt ? moment(goal.createdAt) : undefined;
+        goal.completedAt = goal.completedAt ? moment(goal.completedAt) : undefined;
       });
     }
     return res;

@@ -54,8 +54,8 @@ public class Theme implements Serializable {
     private String avatarContentType;
 
     @NotNull
-    @Column(name = "created", nullable = false)
-    private Instant created;
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -134,17 +134,17 @@ public class Theme implements Serializable {
         this.avatarContentType = avatarContentType;
     }
 
-    public Instant getCreated() {
-        return created;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public Theme created(Instant created) {
-        this.created = created;
+    public Theme createdAt(Instant createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Visibility getVisibility() {
@@ -248,7 +248,7 @@ public class Theme implements Serializable {
             ", description='" + getDescription() + "'" +
             ", avatar='" + getAvatar() + "'" +
             ", avatarContentType='" + getAvatarContentType() + "'" +
-            ", created='" + getCreated() + "'" +
+            ", createdAt='" + getCreatedAt() + "'" +
             ", visibility='" + getVisibility() + "'" +
             "}";
     }

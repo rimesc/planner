@@ -19,10 +19,10 @@
             <column name="summary" type="varchar(128)">
                 <constraints nullable="false" />
             </column>
-            <column name="created" type="datetime">
+            <column name="created_at" type="datetime">
                 <constraints nullable="false" />
             </column>
-            <column name="completed" type="datetime">
+            <column name="completed_at" type="datetime">
                 <constraints nullable="true" />
             </column>
             <column name="jhi_order" type="bigint">
@@ -39,8 +39,8 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="goal" columnName="created" columnDataType="datetime"/>
-        <dropDefaultValue tableName="goal" columnName="completed" columnDataType="datetime"/>
+        <dropDefaultValue tableName="goal" columnName="created_at" columnDataType="datetime"/>
+        <dropDefaultValue tableName="goal" columnName="completed_at" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20190303200127-1-relations" author="jhipster">

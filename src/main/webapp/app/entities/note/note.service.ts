@@ -52,16 +52,16 @@ export class NoteService {
 
   protected convertDateFromClient(note: INote): INote {
     const copy: INote = Object.assign({}, note, {
-      created: note.created && note.created.isValid() ? note.created.toJSON() : undefined,
-      edited: note.edited && note.edited.isValid() ? note.edited.toJSON() : undefined
+      createdAt: note.createdAt && note.createdAt.isValid() ? note.createdAt.toJSON() : undefined,
+      editedAt: note.editedAt && note.editedAt.isValid() ? note.editedAt.toJSON() : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.created = res.body.created ? moment(res.body.created) : undefined;
-      res.body.edited = res.body.edited ? moment(res.body.edited) : undefined;
+      res.body.createdAt = res.body.createdAt ? moment(res.body.createdAt) : undefined;
+      res.body.editedAt = res.body.editedAt ? moment(res.body.editedAt) : undefined;
     }
     return res;
   }
@@ -69,8 +69,8 @@ export class NoteService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((note: INote) => {
-        note.created = note.created ? moment(note.created) : undefined;
-        note.edited = note.edited ? moment(note.edited) : undefined;
+        note.createdAt = note.createdAt ? moment(note.createdAt) : undefined;
+        note.editedAt = note.editedAt ? moment(note.editedAt) : undefined;
       });
     }
     return res;
