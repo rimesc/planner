@@ -55,9 +55,6 @@ public class ThemeResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_SHORT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_SHORT_NAME = "BBBBBBBBBB";
-
     private static final byte[] DEFAULT_AVATAR = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_AVATAR = TestUtil.createByteArray(1, "1");
     private static final String DEFAULT_AVATAR_CONTENT_TYPE = "image/jpg";
@@ -122,7 +119,6 @@ public class ThemeResourceIT {
         Theme theme = new Theme()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
-            .shortName(DEFAULT_SHORT_NAME)
             .avatar(DEFAULT_AVATAR)
             .avatarContentType(DEFAULT_AVATAR_CONTENT_TYPE)
             .created(DEFAULT_CREATED)
@@ -144,7 +140,6 @@ public class ThemeResourceIT {
         Theme theme = new Theme()
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
-            .shortName(UPDATED_SHORT_NAME)
             .avatar(UPDATED_AVATAR)
             .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE)
             .created(UPDATED_CREATED)
@@ -175,7 +170,6 @@ public class ThemeResourceIT {
         Theme testTheme = themeList.get(themeList.size() - 1);
         assertThat(testTheme.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testTheme.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testTheme.getShortName()).isEqualTo(DEFAULT_SHORT_NAME);
         assertThat(testTheme.getAvatar()).isEqualTo(DEFAULT_AVATAR);
         assertThat(testTheme.getAvatarContentType()).isEqualTo(DEFAULT_AVATAR_CONTENT_TYPE);
         assertThat(testTheme.getCreated()).isEqualTo(DEFAULT_CREATED);
@@ -243,25 +237,6 @@ public class ThemeResourceIT {
 
     @Test
     @Transactional
-    public void checkShortNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = themeRepository.findAll().size();
-        // set the field null
-        theme.setShortName(null);
-
-        // Create the Theme, which fails.
-        ThemeDTO themeDTO = themeMapper.toDto(theme);
-
-        restThemeMockMvc.perform(post("/api/themes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(themeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Theme> themeList = themeRepository.findAll();
-        assertThat(themeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkCreatedIsRequired() throws Exception {
         int databaseSizeBeforeTest = themeRepository.findAll().size();
         // set the field null
@@ -311,7 +286,6 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(theme.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)))
             .andExpect(jsonPath("$.[*].avatarContentType").value(hasItem(DEFAULT_AVATAR_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64Utils.encodeToString(DEFAULT_AVATAR))))
             .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
@@ -331,7 +305,6 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.id").value(theme.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.shortName").value(DEFAULT_SHORT_NAME))
             .andExpect(jsonPath("$.avatarContentType").value(DEFAULT_AVATAR_CONTENT_TYPE))
             .andExpect(jsonPath("$.avatar").value(Base64Utils.encodeToString(DEFAULT_AVATAR)))
             .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
@@ -516,84 +489,6 @@ public class ThemeResourceIT {
 
     @Test
     @Transactional
-    public void getAllThemesByShortNameIsEqualToSomething() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where shortName equals to DEFAULT_SHORT_NAME
-        defaultThemeShouldBeFound("shortName.equals=" + DEFAULT_SHORT_NAME);
-
-        // Get all the themeList where shortName equals to UPDATED_SHORT_NAME
-        defaultThemeShouldNotBeFound("shortName.equals=" + UPDATED_SHORT_NAME);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByShortNameIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where shortName not equals to DEFAULT_SHORT_NAME
-        defaultThemeShouldNotBeFound("shortName.notEquals=" + DEFAULT_SHORT_NAME);
-
-        // Get all the themeList where shortName not equals to UPDATED_SHORT_NAME
-        defaultThemeShouldBeFound("shortName.notEquals=" + UPDATED_SHORT_NAME);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByShortNameIsInShouldWork() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where shortName in DEFAULT_SHORT_NAME or UPDATED_SHORT_NAME
-        defaultThemeShouldBeFound("shortName.in=" + DEFAULT_SHORT_NAME + "," + UPDATED_SHORT_NAME);
-
-        // Get all the themeList where shortName equals to UPDATED_SHORT_NAME
-        defaultThemeShouldNotBeFound("shortName.in=" + UPDATED_SHORT_NAME);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByShortNameIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where shortName is not null
-        defaultThemeShouldBeFound("shortName.specified=true");
-
-        // Get all the themeList where shortName is null
-        defaultThemeShouldNotBeFound("shortName.specified=false");
-    }
-                @Test
-    @Transactional
-    public void getAllThemesByShortNameContainsSomething() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where shortName contains DEFAULT_SHORT_NAME
-        defaultThemeShouldBeFound("shortName.contains=" + DEFAULT_SHORT_NAME);
-
-        // Get all the themeList where shortName contains UPDATED_SHORT_NAME
-        defaultThemeShouldNotBeFound("shortName.contains=" + UPDATED_SHORT_NAME);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByShortNameNotContainsSomething() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where shortName does not contain DEFAULT_SHORT_NAME
-        defaultThemeShouldNotBeFound("shortName.doesNotContain=" + DEFAULT_SHORT_NAME);
-
-        // Get all the themeList where shortName does not contain UPDATED_SHORT_NAME
-        defaultThemeShouldBeFound("shortName.doesNotContain=" + UPDATED_SHORT_NAME);
-    }
-
-
-    @Test
-    @Transactional
     public void getAllThemesByCreatedIsEqualToSomething() throws Exception {
         // Initialize the database
         themeRepository.saveAndFlush(theme);
@@ -765,7 +660,6 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(theme.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].shortName").value(hasItem(DEFAULT_SHORT_NAME)))
             .andExpect(jsonPath("$.[*].avatarContentType").value(hasItem(DEFAULT_AVATAR_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64Utils.encodeToString(DEFAULT_AVATAR))))
             .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
@@ -819,7 +713,6 @@ public class ThemeResourceIT {
         updatedTheme
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
-            .shortName(UPDATED_SHORT_NAME)
             .avatar(UPDATED_AVATAR)
             .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE)
             .created(UPDATED_CREATED)
@@ -837,7 +730,6 @@ public class ThemeResourceIT {
         Theme testTheme = themeList.get(themeList.size() - 1);
         assertThat(testTheme.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testTheme.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testTheme.getShortName()).isEqualTo(UPDATED_SHORT_NAME);
         assertThat(testTheme.getAvatar()).isEqualTo(UPDATED_AVATAR);
         assertThat(testTheme.getAvatarContentType()).isEqualTo(UPDATED_AVATAR_CONTENT_TYPE);
         assertThat(testTheme.getCreated()).isEqualTo(UPDATED_CREATED);

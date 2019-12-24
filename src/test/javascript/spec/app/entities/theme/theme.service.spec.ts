@@ -25,7 +25,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Theme(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA', currentDate, Visibility.PUBLIC);
+      elemDefault = new Theme(0, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA', currentDate, Visibility.PUBLIC);
     });
 
     describe('Service methods', () => {
@@ -74,7 +74,6 @@ describe('Service Tests', () => {
           {
             name: 'BBBBBB',
             description: 'BBBBBB',
-            shortName: 'BBBBBB',
             avatar: 'BBBBBB',
             created: currentDate.format(DATE_TIME_FORMAT),
             visibility: 'BBBBBB'
@@ -102,7 +101,6 @@ describe('Service Tests', () => {
           {
             name: 'BBBBBB',
             description: 'BBBBBB',
-            shortName: 'BBBBBB',
             avatar: 'BBBBBB',
             created: currentDate.format(DATE_TIME_FORMAT),
             visibility: 'BBBBBB'

@@ -18,7 +18,6 @@
       },
       "name": "Name",
       "description": "Description",
-      "shortName": "Short Name",
       "avatar": "Avatar",
       "created": "Created",
       "visibility": "Visibility",

@@ -100,9 +100,6 @@ public class ThemeQueryService extends QueryService<Theme> {
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), Theme_.description));
             }
-            if (criteria.getShortName() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getShortName(), Theme_.shortName));
-            }
             if (criteria.getCreated() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getCreated(), Theme_.created));
             }

@@ -45,11 +45,6 @@ public class Theme implements Serializable {
     @Column(name = "description", length = 512, nullable = false)
     private String description;
 
-    @NotNull
-    @Size(max = 32)
-    @Column(name = "short_name", length = 32, nullable = false, unique = true)
-    private String shortName;
-
     
     @Lob
     @Column(name = "avatar")
@@ -111,19 +106,6 @@ public class Theme implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public Theme shortName(String shortName) {
-        this.shortName = shortName;
-        return this;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
     }
 
     public byte[] getAvatar() {
@@ -264,7 +246,6 @@ public class Theme implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", shortName='" + getShortName() + "'" +
             ", avatar='" + getAvatar() + "'" +
             ", avatarContentType='" + getAvatarContentType() + "'" +
             ", created='" + getCreated() + "'" +

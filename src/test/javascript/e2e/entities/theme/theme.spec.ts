@@ -45,7 +45,6 @@ describe('Theme e2e test', () => {
     await promise.all([
       themeUpdatePage.setNameInput('name'),
       themeUpdatePage.setDescriptionInput('description'),
-      themeUpdatePage.setShortNameInput('shortName'),
       themeUpdatePage.setAvatarInput(absolutePath),
       themeUpdatePage.setCreatedInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
       themeUpdatePage.visibilitySelectLastOption(),
@@ -53,7 +52,6 @@ describe('Theme e2e test', () => {
     ]);
     expect(await themeUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     expect(await themeUpdatePage.getDescriptionInput()).to.eq('description', 'Expected Description value to be equals to description');
-    expect(await themeUpdatePage.getShortNameInput()).to.eq('shortName', 'Expected ShortName value to be equals to shortName');
     expect(await themeUpdatePage.getAvatarInput()).to.endsWith(
       fileNameToUpload,
       'Expected Avatar value to be end with ' + fileNameToUpload

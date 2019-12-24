@@ -7,7 +7,6 @@ export interface ITheme {
   id?: number;
   name?: string;
   description?: string;
-  shortName?: string;
   avatarContentType?: string;
   avatar?: any;
   created?: Moment;
@@ -22,7 +21,6 @@ export class Theme implements ITheme {
     public id?: number,
     public name?: string,
     public description?: string,
-    public shortName?: string,
     public avatarContentType?: string,
     public avatar?: any,
     public created?: Moment,

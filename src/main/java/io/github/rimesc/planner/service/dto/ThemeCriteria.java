@@ -47,8 +47,6 @@ public class ThemeCriteria implements Serializable, Criteria {
 
     private StringFilter description;
 
-    private StringFilter shortName;
-
     private InstantFilter created;
 
     private VisibilityFilter visibility;
@@ -66,7 +64,6 @@ public class ThemeCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.description = other.description == null ? null : other.description.copy();
-        this.shortName = other.shortName == null ? null : other.shortName.copy();
         this.created = other.created == null ? null : other.created.copy();
         this.visibility = other.visibility == null ? null : other.visibility.copy();
         this.tagId = other.tagId == null ? null : other.tagId.copy();
@@ -101,14 +98,6 @@ public class ThemeCriteria implements Serializable, Criteria {
 
     public void setDescription(StringFilter description) {
         this.description = description;
-    }
-
-    public StringFilter getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(StringFilter shortName) {
-        this.shortName = shortName;
     }
 
     public InstantFilter getCreated() {
@@ -165,7 +154,6 @@ public class ThemeCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(shortName, that.shortName) &&
             Objects.equals(created, that.created) &&
             Objects.equals(visibility, that.visibility) &&
             Objects.equals(tagId, that.tagId) &&
@@ -179,7 +167,6 @@ public class ThemeCriteria implements Serializable, Criteria {
         id,
         name,
         description,
-        shortName,
         created,
         visibility,
         tagId,
@@ -194,7 +181,6 @@ public class ThemeCriteria implements Serializable, Criteria {
                 (id != null ? "id=" + id + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
                 (description != null ? "description=" + description + ", " : "") +
-                (shortName != null ? "shortName=" + shortName + ", " : "") +
                 (created != null ? "created=" + created + ", " : "") +
                 (visibility != null ? "visibility=" + visibility + ", " : "") +
                 (tagId != null ? "tagId=" + tagId + ", " : "") +

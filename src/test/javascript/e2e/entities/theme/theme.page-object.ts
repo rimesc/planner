@@ -28,7 +28,6 @@ export class ThemeUpdatePage {
   cancelButton = element(by.id('cancel-save'));
   nameInput = element(by.id('field_name'));
   descriptionInput = element(by.id('field_description'));
-  shortNameInput = element(by.id('field_shortName'));
   avatarInput = element(by.id('file_avatar'));
   createdInput = element(by.id('field_created'));
   visibilitySelect = element(by.id('field_visibility'));
@@ -52,14 +51,6 @@ export class ThemeUpdatePage {
 
   async getDescriptionInput(): Promise<string> {
     return await this.descriptionInput.getAttribute('value');
-  }
-
-  async setShortNameInput(shortName: string): Promise<void> {
-    await this.shortNameInput.sendKeys(shortName);
-  }
-
-  async getShortNameInput(): Promise<string> {
-    return await this.shortNameInput.getAttribute('value');
   }
 
   async setAvatarInput(avatar: string): Promise<void> {

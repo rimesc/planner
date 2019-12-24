@@ -21,7 +21,6 @@
             <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="name"><span jhiTranslate="plannerApp.theme.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="description"><span jhiTranslate="plannerApp.theme.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="shortName"><span jhiTranslate="plannerApp.theme.shortName">Short Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="avatar"><span jhiTranslate="plannerApp.theme.avatar">Avatar</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="created"><span jhiTranslate="plannerApp.theme.created">Created</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="visibility"><span jhiTranslate="plannerApp.theme.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -34,7 +33,6 @@
                 <td><a [routerLink]="['/theme', theme.id, 'view' ]">{{theme.id}}</a></td>
                 <td>{{theme.name}}</td>
                 <td>{{theme.description}}</td>
-                <td>{{theme.shortName}}</td>
                 <td>
                     <a *ngIf="theme.avatar" (click)="openFile(theme.avatarContentType, theme.avatar)">
                         <img [src]="'data:' + theme.avatarContentType + ';base64,' + theme.avatar" style="max-height: 30px;" alt="theme image"/>

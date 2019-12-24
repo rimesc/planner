@@ -1,4 +1,5 @@
 package io.github.rimesc.planner.service.dto;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -23,10 +24,6 @@ public class ThemeDTO implements Serializable {
     @NotNull
     @Size(max = 512)
     private String description;
-
-    @NotNull
-    @Size(max = 32)
-    private String shortName;
 
     
     @Lob
@@ -64,14 +61,6 @@ public class ThemeDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
     }
 
     public byte[] getAvatar() {
@@ -141,7 +130,6 @@ public class ThemeDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", shortName='" + getShortName() + "'" +
             ", avatar='" + getAvatar() + "'" +
             ", created='" + getCreated() + "'" +
             ", visibility='" + getVisibility() + "'" +
