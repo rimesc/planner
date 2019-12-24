@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { ThemeService } from 'app/entities/theme';
+import { ThemeService } from 'app/entities/theme/theme.service';
 import { ITheme } from 'app/shared/model/theme.model';
 
 @Component({
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadThemes() {
+  loadThemes(): void {
     this.themeService
       .query({
         page: 0,
@@ -60,12 +60,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         sort: ['id,asc']
       })
       .subscribe(
-        (res: HttpResponse<ITheme[]>) => (this.themes = res.body),
+        (res: HttpResponse<ITheme[]>) => (this.themes = res.body ? res.body : []),
         (res: HttpErrorResponse) => this.onError(res.message)
       );
   }
 
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
+  protected onError(errorMessage: string): void {
+    this.jhiAlertService.error(errorMessage);
   }
 }
