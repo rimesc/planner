@@ -136,6 +136,7 @@ public class NoteResourceIT {
         note.setGoal(goal);
         return note;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -214,7 +215,6 @@ public class NoteResourceIT {
         List<Note> noteList = noteRepository.findAll();
         assertThat(noteList).hasSize(databaseSizeBeforeCreate);
     }
-
 
     @Test
     @Transactional
@@ -307,7 +307,6 @@ public class NoteResourceIT {
         defaultNoteShouldBeFound("id.lessThanOrEqual=" + id);
         defaultNoteShouldNotBeFound("id.lessThan=" + id);
     }
-
 
     @Test
     @Transactional

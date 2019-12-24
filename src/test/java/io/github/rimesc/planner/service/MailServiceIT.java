@@ -229,7 +229,8 @@ public class MailServiceIT {
 
             String emailTitle = (String) properties.get("email.test.title");
             assertThat(message.getSubject()).isEqualTo(emailTitle);
-            assertThat(message.getContent().toString()).isEqualToNormalizingNewlines("<html>" + emailTitle + ", http://127.0.0.1:8080, john</html>\n");
+            assertThat(message.getContent().toString())
+                .isEqualToNormalizingNewlines("<html>" + emailTitle + ", http://127.0.0.1:8080, john</html>\n");
         }
     }
 
@@ -240,7 +241,7 @@ public class MailServiceIT {
         String javaLangKey = langKey;
         Matcher matcher2 = PATTERN_LOCALE_2.matcher(langKey);
         if (matcher2.matches()) {
-            javaLangKey = matcher2.group(1) + "_"+ matcher2.group(2).toUpperCase();
+            javaLangKey = matcher2.group(1) + "_" + matcher2.group(2).toUpperCase();
         }
         Matcher matcher3 = PATTERN_LOCALE_3.matcher(langKey);
         if (matcher3.matches()) {

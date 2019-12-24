@@ -131,6 +131,7 @@ public class ThemeResourceIT {
         theme.setOwner(user);
         return theme;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -196,7 +197,6 @@ public class ThemeResourceIT {
         List<Theme> themeList = themeRepository.findAll();
         assertThat(themeList).hasSize(databaseSizeBeforeCreate);
     }
-
 
     @Test
     @Transactional
@@ -312,7 +312,6 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.visibility").value(DEFAULT_VISIBILITY.toString()));
     }
 
-
     @Test
     @Transactional
     public void getThemesByIdFiltering() throws Exception {
@@ -330,7 +329,6 @@ public class ThemeResourceIT {
         defaultThemeShouldBeFound("id.lessThanOrEqual=" + id);
         defaultThemeShouldNotBeFound("id.lessThan=" + id);
     }
-
 
     @Test
     @Transactional
@@ -383,7 +381,8 @@ public class ThemeResourceIT {
         // Get all the themeList where name is null
         defaultThemeShouldNotBeFound("name.specified=false");
     }
-                @Test
+
+    @Test
     @Transactional
     public void getAllThemesByNameContainsSomething() throws Exception {
         // Initialize the database
@@ -408,7 +407,6 @@ public class ThemeResourceIT {
         // Get all the themeList where name does not contain UPDATED_NAME
         defaultThemeShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
     }
-
 
     @Test
     @Transactional
@@ -461,7 +459,8 @@ public class ThemeResourceIT {
         // Get all the themeList where description is null
         defaultThemeShouldNotBeFound("description.specified=false");
     }
-                @Test
+
+    @Test
     @Transactional
     public void getAllThemesByDescriptionContainsSomething() throws Exception {
         // Initialize the database
@@ -486,7 +485,6 @@ public class ThemeResourceIT {
         // Get all the themeList where description does not contain UPDATED_DESCRIPTION
         defaultThemeShouldBeFound("description.doesNotContain=" + UPDATED_DESCRIPTION);
     }
-
 
     @Test
     @Transactional

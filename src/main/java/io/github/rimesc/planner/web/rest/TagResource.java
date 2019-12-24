@@ -94,7 +94,6 @@ public class TagResource {
     /**
      * {@code GET  /tags} : get all the tags.
      *
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tags in body.
      */

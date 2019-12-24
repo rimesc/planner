@@ -31,10 +31,10 @@ public class TagCriteria implements Serializable, Criteria {
 
     private LongFilter goalId;
 
-    public TagCriteria(){
+    public TagCriteria() {
     }
 
-    public TagCriteria(TagCriteria other){
+    public TagCriteria(TagCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.icon = other.icon == null ? null : other.icon.copy();

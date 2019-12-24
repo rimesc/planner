@@ -57,10 +57,10 @@ public class ThemeCriteria implements Serializable, Criteria {
 
     private LongFilter ownerId;
 
-    public ThemeCriteria(){
+    public ThemeCriteria() {
     }
 
-    public ThemeCriteria(ThemeCriteria other){
+    public ThemeCriteria(ThemeCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.description = other.description == null ? null : other.description.copy();

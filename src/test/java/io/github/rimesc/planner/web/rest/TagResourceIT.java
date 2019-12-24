@@ -116,6 +116,7 @@ public class TagResourceIT {
         tag.setTheme(theme);
         return tag;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -184,7 +185,6 @@ public class TagResourceIT {
         assertThat(tagList).hasSize(databaseSizeBeforeCreate);
     }
 
-
     @Test
     @Transactional
     public void checkNameIsRequired() throws Exception {
@@ -234,7 +234,6 @@ public class TagResourceIT {
             .andExpect(jsonPath("$.icon").value(DEFAULT_ICON));
     }
 
-
     @Test
     @Transactional
     public void getTagsByIdFiltering() throws Exception {
@@ -252,7 +251,6 @@ public class TagResourceIT {
         defaultTagShouldBeFound("id.lessThanOrEqual=" + id);
         defaultTagShouldNotBeFound("id.lessThan=" + id);
     }
-
 
     @Test
     @Transactional
@@ -305,7 +303,8 @@ public class TagResourceIT {
         // Get all the tagList where name is null
         defaultTagShouldNotBeFound("name.specified=false");
     }
-                @Test
+
+    @Test
     @Transactional
     public void getAllTagsByNameContainsSomething() throws Exception {
         // Initialize the database
@@ -330,7 +329,6 @@ public class TagResourceIT {
         // Get all the tagList where name does not contain UPDATED_NAME
         defaultTagShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
     }
-
 
     @Test
     @Transactional
@@ -383,7 +381,8 @@ public class TagResourceIT {
         // Get all the tagList where icon is null
         defaultTagShouldNotBeFound("icon.specified=false");
     }
-                @Test
+
+    @Test
     @Transactional
     public void getAllTagsByIconContainsSomething() throws Exception {
         // Initialize the database
@@ -408,7 +407,6 @@ public class TagResourceIT {
         // Get all the tagList where icon does not contain UPDATED_ICON
         defaultTagShouldBeFound("icon.doesNotContain=" + UPDATED_ICON);
     }
-
 
     @Test
     @Transactional

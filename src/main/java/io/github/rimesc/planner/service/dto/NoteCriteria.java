@@ -52,10 +52,10 @@ public class NoteCriteria implements Serializable, Criteria {
 
     private LongFilter goalId;
 
-    public NoteCriteria(){
+    public NoteCriteria() {
     }
 
-    public NoteCriteria(NoteCriteria other){
+    public NoteCriteria(NoteCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
         this.editedAt = other.editedAt == null ? null : other.editedAt.copy();

@@ -34,10 +34,10 @@ public class TaskCriteria implements Serializable, Criteria {
 
     private LongFilter goalId;
 
-    public TaskCriteria(){
+    public TaskCriteria() {
     }
 
-    public TaskCriteria(TaskCriteria other){
+    public TaskCriteria(TaskCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.summary = other.summary == null ? null : other.summary.copy();
         this.createdAt = other.createdAt == null ? null : other.createdAt.copy();

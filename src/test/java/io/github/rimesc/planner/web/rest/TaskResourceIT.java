@@ -127,6 +127,7 @@ public class TaskResourceIT {
         task.setGoal(goal);
         return task;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -202,7 +203,6 @@ public class TaskResourceIT {
         assertThat(taskList).hasSize(databaseSizeBeforeCreate);
     }
 
-
     @Test
     @Transactional
     public void checkSummaryIsRequired() throws Exception {
@@ -273,7 +273,6 @@ public class TaskResourceIT {
             .andExpect(jsonPath("$.completedAt").value(DEFAULT_COMPLETED_AT.toString()));
     }
 
-
     @Test
     @Transactional
     public void getTasksByIdFiltering() throws Exception {
@@ -291,7 +290,6 @@ public class TaskResourceIT {
         defaultTaskShouldBeFound("id.lessThanOrEqual=" + id);
         defaultTaskShouldNotBeFound("id.lessThan=" + id);
     }
-
 
     @Test
     @Transactional
@@ -344,7 +342,8 @@ public class TaskResourceIT {
         // Get all the taskList where summary is null
         defaultTaskShouldNotBeFound("summary.specified=false");
     }
-                @Test
+
+    @Test
     @Transactional
     public void getAllTasksBySummaryContainsSomething() throws Exception {
         // Initialize the database
@@ -369,7 +368,6 @@ public class TaskResourceIT {
         // Get all the taskList where summary does not contain UPDATED_SUMMARY
         defaultTaskShouldBeFound("summary.doesNotContain=" + UPDATED_SUMMARY);
     }
-
 
     @Test
     @Transactional

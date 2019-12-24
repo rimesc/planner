@@ -51,6 +51,7 @@ import io.github.rimesc.planner.service.GoalService;
 import io.github.rimesc.planner.service.dto.GoalDTO;
 import io.github.rimesc.planner.service.mapper.GoalMapper;
 import io.github.rimesc.planner.web.rest.errors.ExceptionTranslator;
+
 /**
  * Integration tests for the {@link GoalResource} REST controller.
  */
@@ -152,6 +153,7 @@ public class GoalResourceIT {
         goal.setTheme(theme);
         return goal;
     }
+
     /**
      * Create an updated entity for this test.
      *
@@ -230,7 +232,6 @@ public class GoalResourceIT {
         List<Goal> goalList = goalRepository.findAll();
         assertThat(goalList).hasSize(databaseSizeBeforeCreate);
     }
-
 
     @Test
     @Transactional
@@ -346,8 +347,8 @@ public class GoalResourceIT {
     @SuppressWarnings({ "unchecked" })
     public void getAllGoalsWithEagerRelationshipsIsNotEnabled() throws Exception {
         GoalResource goalResource = new GoalResource(goalServiceMock, goalQueryService);
-            when(goalServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-            MockMvc restGoalMockMvc = MockMvcBuilders.standaloneSetup(goalResource)
+        when(goalServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        MockMvc restGoalMockMvc = MockMvcBuilders.standaloneSetup(goalResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
@@ -377,7 +378,6 @@ public class GoalResourceIT {
             .andExpect(jsonPath("$.visibility").value(DEFAULT_VISIBILITY.toString()));
     }
 
-
     @Test
     @Transactional
     public void getGoalsByIdFiltering() throws Exception {
@@ -395,7 +395,6 @@ public class GoalResourceIT {
         defaultGoalShouldBeFound("id.lessThanOrEqual=" + id);
         defaultGoalShouldNotBeFound("id.lessThan=" + id);
     }
-
 
     @Test
     @Transactional
@@ -448,7 +447,8 @@ public class GoalResourceIT {
         // Get all the goalList where summary is null
         defaultGoalShouldNotBeFound("summary.specified=false");
     }
-                @Test
+
+    @Test
     @Transactional
     public void getAllGoalsBySummaryContainsSomething() throws Exception {
         // Initialize the database
@@ -473,7 +473,6 @@ public class GoalResourceIT {
         // Get all the goalList where summary does not contain UPDATED_SUMMARY
         defaultGoalShouldBeFound("summary.doesNotContain=" + UPDATED_SUMMARY);
     }
-
 
     @Test
     @Transactional
