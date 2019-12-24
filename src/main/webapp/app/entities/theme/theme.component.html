@@ -1,72 +1,74 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="plannerApp.theme.home.title">Themes</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-theme" [routerLink]="['/theme/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span  jhiTranslate="plannerApp.theme.home.createLabel">
-            Create a new Theme
-            </span>
-        </button>
-    </h2>
-    <jhi-alert-error></jhi-alert-error>
-    <jhi-alert></jhi-alert>
-    <br/>
-    <div class="alert alert-warning" *ngIf="themes?.length === 0">
-        <span jhiTranslate="plannerApp.theme.home.notFound">No themes found</span>
-    </div>
-    <div class="table-responsive" *ngIf="themes?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="name"><span jhiTranslate="plannerApp.theme.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="description"><span jhiTranslate="plannerApp.theme.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="avatar"><span jhiTranslate="plannerApp.theme.avatar">Avatar</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="created"><span jhiTranslate="plannerApp.theme.createdAt">Created At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="visibility"><span jhiTranslate="plannerApp.theme.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="ownerId"><span jhiTranslate="plannerApp.theme.owner">Owner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-            <tr *ngFor="let theme of themes ;trackBy: trackId">
-                <td><a [routerLink]="['/theme', theme.id, 'view' ]">{{theme.id}}</a></td>
-                <td>{{theme.name}}</td>
-                <td>{{theme.description}}</td>
-                <td>
-                    <a *ngIf="theme.avatar" (click)="openFile(theme.avatarContentType, theme.avatar)">
-                        <img [src]="'data:' + theme.avatarContentType + ';base64,' + theme.avatar" style="max-height: 30px;" alt="theme image"/>
-                    </a>
-                    <span *ngIf="theme.avatar">{{theme.avatarContentType}}, {{byteSize(theme.avatar)}}</span>
-                </td>
-                <td>{{theme.createdAt | date:'medium'}}</td>
-                <td jhiTranslate="{{'plannerApp.Visibility.' + theme.visibility}}">{{theme.visibility}}</td>
-                <td>
-                    {{theme.ownerId}}
-                </td>
-                <td class="text-right">
-                    <div class="btn-group">
-                        <button type="submit"
-                                [routerLink]="['/theme', theme.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/theme', theme.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit" (click)="delete(theme)"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<div class="card jh-card">
+    <div>
+        <h2 id="page-heading">
+            <span jhiTranslate="plannerApp.theme.home.title">Themes</span>
+            <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-theme" [routerLink]="['/theme/new']">
+                <fa-icon [icon]="'plus'"></fa-icon>
+                <span  jhiTranslate="plannerApp.theme.home.createLabel">
+                Create a new Theme
+                </span>
+            </button>
+        </h2>
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+        <br/>
+        <div class="alert alert-warning" *ngIf="themes?.length === 0">
+            <span jhiTranslate="plannerApp.theme.home.notFound">No themes found</span>
+        </div>
+        <div class="table-responsive" *ngIf="themes?.length > 0">
+            <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"  jhiSortBy="name"><span jhiTranslate="plannerApp.theme.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"  jhiSortBy="description"><span jhiTranslate="plannerApp.theme.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"  jhiSortBy="avatar"><span jhiTranslate="plannerApp.theme.avatar">Avatar</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"  jhiSortBy="created"><span jhiTranslate="plannerApp.theme.createdAt">Created At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"  jhiSortBy="visibility"><span jhiTranslate="plannerApp.theme.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"  jhiSortBy="ownerId"><span jhiTranslate="plannerApp.theme.owner">Owner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let theme of themes ;trackBy: trackId">
+                    <td><a [routerLink]="['/theme', theme.id, 'view' ]">{{theme.id}}</a></td>
+                    <td>{{theme.name}}</td>
+                    <td>{{theme.description}}</td>
+                    <td>
+                        <a *ngIf="theme.avatar" (click)="openFile(theme.avatarContentType, theme.avatar)">
+                            <img [src]="'data:' + theme.avatarContentType + ';base64,' + theme.avatar" style="max-height: 30px;" alt="theme image"/>
+                        </a>
+                        <span *ngIf="theme.avatar">{{theme.avatarContentType}}, {{byteSize(theme.avatar)}}</span>
+                    </td>
+                    <td>{{theme.createdAt | date:'medium'}}</td>
+                    <td jhiTranslate="{{'plannerApp.Visibility.' + theme.visibility}}">{{theme.visibility}}</td>
+                    <td>
+                        {{theme.ownerId}}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/theme', theme.id, 'view' ]"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon [icon]="'eye'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/theme', theme.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit" (click)="delete(theme)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

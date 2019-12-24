@@ -1,52 +1,54 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="theme">
-            <h2><span jhiTranslate="plannerApp.theme.detail.title">Theme</span> {{theme.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="plannerApp.theme.name">Name</span></dt>
-                <dd>
-                    <span>{{theme.name}}</span>
-                </dd>
-                <dt><span jhiTranslate="plannerApp.theme.description">Description</span></dt>
-                <dd>
-                    <span>{{theme.description}}</span>
-                </dd>
-                <dt><span jhiTranslate="plannerApp.theme.avatar">Avatar</span></dt>
-                <dd>
-                    <div *ngIf="theme.avatar">
-                        <a (click)="openFile(theme.avatarContentType!, theme.avatar)">
-                            <img [src]="'data:' + theme.avatarContentType + ';base64,' + theme.avatar" style="max-width: 100%;" alt="theme image"/>
-                        </a>
-                        {{theme.avatarContentType}}, {{byteSize(theme.avatar)}}
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="plannerApp.theme.createdAt">Created At</span></dt>
-                <dd>
-                    <span>{{theme.createdAt}}</span>
-                </dd>
-                <dt><span jhiTranslate="plannerApp.theme.visibility">Visibility</span></dt>
-                <dd>
-                    <span jhiTranslate="{{'plannerApp.Visibility.' + theme.visibility}}">{{theme.visibility}}</span>
-                </dd>
-                <dt><span jhiTranslate="plannerApp.theme.owner">Owner</span></dt>
-                <dd>
-                    {{theme.ownerId}}
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/theme', theme.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-            </button>
+<div class="card jh-card">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div *ngIf="theme">
+                <h2><span jhiTranslate="plannerApp.theme.detail.title">Theme</span> {{theme.id}}</h2>
+                <hr>
+                <jhi-alert-error></jhi-alert-error>
+                <dl class="row-md jh-entity-details">
+                    <dt><span jhiTranslate="plannerApp.theme.name">Name</span></dt>
+                    <dd>
+                        <span>{{theme.name}}</span>
+                    </dd>
+                    <dt><span jhiTranslate="plannerApp.theme.description">Description</span></dt>
+                    <dd>
+                        <span>{{theme.description}}</span>
+                    </dd>
+                    <dt><span jhiTranslate="plannerApp.theme.avatar">Avatar</span></dt>
+                    <dd>
+                        <div *ngIf="theme.avatar">
+                            <a (click)="openFile(theme.avatarContentType!, theme.avatar)">
+                                <img [src]="'data:' + theme.avatarContentType + ';base64,' + theme.avatar" style="max-width: 100%;" alt="theme image"/>
+                            </a>
+                            {{theme.avatarContentType}}, {{byteSize(theme.avatar)}}
+                        </div>
+                    </dd>
+                    <dt><span jhiTranslate="plannerApp.theme.createdAt">Created At</span></dt>
+                    <dd>
+                        <span>{{theme.createdAt}}</span>
+                    </dd>
+                    <dt><span jhiTranslate="plannerApp.theme.visibility">Visibility</span></dt>
+                    <dd>
+                        <span jhiTranslate="{{'plannerApp.Visibility.' + theme.visibility}}">{{theme.visibility}}</span>
+                    </dd>
+                    <dt><span jhiTranslate="plannerApp.theme.owner">Owner</span></dt>
+                    <dd>
+                        {{theme.ownerId}}
+                    </dd>
+                </dl>
+    
+                <button type="submit"
+                        (click)="previousState()"
+                        class="btn btn-info">
+                    <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                </button>
+    
+                <button type="button"
+                        [routerLink]="['/theme', theme.id, 'edit']"
+                        class="btn btn-primary">
+                    <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
