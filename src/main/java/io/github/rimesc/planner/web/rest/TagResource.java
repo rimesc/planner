@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.github.rimesc.planner.service.TagQueryService;
 import io.github.rimesc.planner.service.TagService;
+import io.github.rimesc.planner.service.dto.TagCriteria;
 import io.github.rimesc.planner.service.dto.TagDTO;
 import io.github.rimesc.planner.web.rest.errors.BadRequestAlertException;
 
@@ -42,8 +44,11 @@ public class TagResource {
 
     private final TagService tagService;
 
-    public TagResource(TagService tagService) {
+    private final TagQueryService tagQueryService;
+
+    public TagResource(TagService tagService, TagQueryService tagQueryService) {
         this.tagService = tagService;
+        this.tagQueryService = tagQueryService;
     }
 
     /**
@@ -89,13 +94,26 @@ public class TagResource {
     /**
      * {@code GET  /tags} : get all the tags.
      *
-
+     * @param criteria the criterias which the requested entities should match
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tags in body.
      */
     @GetMapping("/tags")
-    public List<TagDTO> getAllTags() {
-        log.debug("REST request to get all Tags");
-        return tagService.findAll();
+    public ResponseEntity<List<TagDTO>> getAllTags(TagCriteria criteria) {
+        log.debug("REST request to get Tags by criteria: {}", criteria);
+        List<TagDTO> entityList = tagQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+    * GET  /tags/count : count all the tags.
+    *
+    * @param criteria the criterias which the requested entities should match
+    * @return the ResponseEntity with status 200 (OK) and the count in body
+    */
+    @GetMapping("/tags/count")
+    public ResponseEntity<Long> countTags(TagCriteria criteria) {
+        log.debug("REST request to count Tags by criteria: {}", criteria);
+        return ResponseEntity.ok().body(tagQueryService.countByCriteria(criteria));
     }
 
     /**

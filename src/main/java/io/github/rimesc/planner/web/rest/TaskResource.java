@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.github.rimesc.planner.service.TaskQueryService;
 import io.github.rimesc.planner.service.TaskService;
+import io.github.rimesc.planner.service.dto.TaskCriteria;
 import io.github.rimesc.planner.service.dto.TaskDTO;
 import io.github.rimesc.planner.web.rest.errors.BadRequestAlertException;
 
@@ -42,8 +44,11 @@ public class TaskResource {
 
     private final TaskService taskService;
 
-    public TaskResource(TaskService taskService) {
+    private final TaskQueryService taskQueryService;
+
+    public TaskResource(TaskService taskService, TaskQueryService taskQueryService) {
         this.taskService = taskService;
+        this.taskQueryService = taskQueryService;
     }
 
     /**
@@ -89,13 +94,26 @@ public class TaskResource {
     /**
      * {@code GET  /tasks} : get all the tasks.
      *
-
+     * @param criteria the criterias which the requested entities should match
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tasks in body.
      */
     @GetMapping("/tasks")
-    public List<TaskDTO> getAllTasks() {
-        log.debug("REST request to get all Tasks");
-        return taskService.findAll();
+    public ResponseEntity<List<TaskDTO>> getAllTasks(TaskCriteria criteria) {
+        log.debug("REST request to get Tasks by criteria: {}", criteria);
+        List<TaskDTO> entityList = taskQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+    * GET  /tasks/count : count all the tasks.
+    *
+    * @param criteria the criterias which the requested entities should match
+    * @return the ResponseEntity with status 200 (OK) and the count in body
+    */
+    @GetMapping("/tasks/count")
+    public ResponseEntity<Long> countTasks(TaskCriteria criteria) {
+        log.debug("REST request to count Tasks by criteria: {}", criteria);
+        return ResponseEntity.ok().body(taskQueryService.countByCriteria(criteria));
     }
 
     /**

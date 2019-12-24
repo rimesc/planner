@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.github.rimesc.planner.service.NoteQueryService;
 import io.github.rimesc.planner.service.NoteService;
+import io.github.rimesc.planner.service.dto.NoteCriteria;
 import io.github.rimesc.planner.service.dto.NoteDTO;
 import io.github.rimesc.planner.web.rest.errors.BadRequestAlertException;
 
@@ -42,8 +44,11 @@ public class NoteResource {
 
     private final NoteService noteService;
 
-    public NoteResource(NoteService noteService) {
+    private final NoteQueryService noteQueryService;
+
+    public NoteResource(NoteService noteService, NoteQueryService noteQueryService) {
         this.noteService = noteService;
+        this.noteQueryService = noteQueryService;
     }
 
     /**
@@ -89,13 +94,26 @@ public class NoteResource {
     /**
      * {@code GET  /notes} : get all the notes.
      *
-
+     * @param criteria the criterias which the requested entities should match
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of notes in body.
      */
     @GetMapping("/notes")
-    public List<NoteDTO> getAllNotes() {
-        log.debug("REST request to get all Notes");
-        return noteService.findAll();
+    public ResponseEntity<List<NoteDTO>> getAllNotes(NoteCriteria criteria) {
+        log.debug("REST request to get Notes by criteria: {}", criteria);
+        List<NoteDTO> entityList = noteQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+    * GET  /notes/count : count all the notes.
+    *
+    * @param criteria the criterias which the requested entities should match
+    * @return the ResponseEntity with status 200 (OK) and the count in body
+    */
+    @GetMapping("/notes/count")
+    public ResponseEntity<Long> countNotes(NoteCriteria criteria) {
+        log.debug("REST request to count Notes by criteria: {}", criteria);
+        return ResponseEntity.ok().body(noteQueryService.countByCriteria(criteria));
     }
 
     /**

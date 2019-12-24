@@ -35,6 +35,7 @@ import io.github.rimesc.planner.domain.Goal;
 import io.github.rimesc.planner.domain.Task;
 import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.repository.TaskRepository;
+import io.github.rimesc.planner.service.TaskQueryService;
 import io.github.rimesc.planner.service.TaskService;
 import io.github.rimesc.planner.service.dto.TaskDTO;
 import io.github.rimesc.planner.service.mapper.TaskMapper;
@@ -65,6 +66,9 @@ public class TaskResourceIT {
     private TaskService taskService;
 
     @Autowired
+    private TaskQueryService taskQueryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -86,7 +90,7 @@ public class TaskResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TaskResource taskResource = new TaskResource(taskService);
+        final TaskResource taskResource = new TaskResource(taskService, taskQueryService);
         this.restTaskMockMvc = MockMvcBuilders.standaloneSetup(taskResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -247,6 +251,195 @@ public class TaskResourceIT {
             .andExpect(jsonPath("$.summary").value(DEFAULT_SUMMARY))
             .andExpect(jsonPath("$.created").value(DEFAULT_CREATED.toString()))
             .andExpect(jsonPath("$.completed").value(DEFAULT_COMPLETED.toString()));
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksBySummaryIsEqualToSomething() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where summary equals to DEFAULT_SUMMARY
+        defaultTaskShouldBeFound("summary.equals=" + DEFAULT_SUMMARY);
+
+        // Get all the taskList where summary equals to UPDATED_SUMMARY
+        defaultTaskShouldNotBeFound("summary.equals=" + UPDATED_SUMMARY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksBySummaryIsInShouldWork() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where summary in DEFAULT_SUMMARY or UPDATED_SUMMARY
+        defaultTaskShouldBeFound("summary.in=" + DEFAULT_SUMMARY + "," + UPDATED_SUMMARY);
+
+        // Get all the taskList where summary equals to UPDATED_SUMMARY
+        defaultTaskShouldNotBeFound("summary.in=" + UPDATED_SUMMARY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksBySummaryIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where summary is not null
+        defaultTaskShouldBeFound("summary.specified=true");
+
+        // Get all the taskList where summary is null
+        defaultTaskShouldNotBeFound("summary.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksByCreatedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where created equals to DEFAULT_CREATED
+        defaultTaskShouldBeFound("created.equals=" + DEFAULT_CREATED);
+
+        // Get all the taskList where created equals to UPDATED_CREATED
+        defaultTaskShouldNotBeFound("created.equals=" + UPDATED_CREATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksByCreatedIsInShouldWork() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where created in DEFAULT_CREATED or UPDATED_CREATED
+        defaultTaskShouldBeFound("created.in=" + DEFAULT_CREATED + "," + UPDATED_CREATED);
+
+        // Get all the taskList where created equals to UPDATED_CREATED
+        defaultTaskShouldNotBeFound("created.in=" + UPDATED_CREATED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksByCreatedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where created is not null
+        defaultTaskShouldBeFound("created.specified=true");
+
+        // Get all the taskList where created is null
+        defaultTaskShouldNotBeFound("created.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksByCompletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where completed equals to DEFAULT_COMPLETED
+        defaultTaskShouldBeFound("completed.equals=" + DEFAULT_COMPLETED);
+
+        // Get all the taskList where completed equals to UPDATED_COMPLETED
+        defaultTaskShouldNotBeFound("completed.equals=" + UPDATED_COMPLETED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksByCompletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where completed in DEFAULT_COMPLETED or UPDATED_COMPLETED
+        defaultTaskShouldBeFound("completed.in=" + DEFAULT_COMPLETED + "," + UPDATED_COMPLETED);
+
+        // Get all the taskList where completed equals to UPDATED_COMPLETED
+        defaultTaskShouldNotBeFound("completed.in=" + UPDATED_COMPLETED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksByCompletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        taskRepository.saveAndFlush(task);
+
+        // Get all the taskList where completed is not null
+        defaultTaskShouldBeFound("completed.specified=true");
+
+        // Get all the taskList where completed is null
+        defaultTaskShouldNotBeFound("completed.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksByOwnerIsEqualToSomething() throws Exception {
+        // Initialize the database
+        User owner = UserResourceIntTest.createEntity(em);
+        em.persist(owner);
+        em.flush();
+        task.setOwner(owner);
+        taskRepository.saveAndFlush(task);
+        Long ownerId = owner.getId();
+
+        // Get all the taskList where owner equals to ownerId
+        defaultTaskShouldBeFound("ownerId.equals=" + ownerId);
+
+        // Get all the taskList where owner equals to ownerId + 1
+        defaultTaskShouldNotBeFound("ownerId.equals=" + (ownerId + 1));
+    }
+
+    @Test
+    @Transactional
+    public void getAllTasksByGoalIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Goal goal = GoalResourceIntTest.createEntity(em);
+        em.persist(goal);
+        em.flush();
+        task.setGoal(goal);
+        taskRepository.saveAndFlush(task);
+        Long goalId = goal.getId();
+
+        // Get all the taskList where goal equals to goalId
+        defaultTaskShouldBeFound("goalId.equals=" + goalId);
+
+        // Get all the taskList where goal equals to goalId + 1
+        defaultTaskShouldNotBeFound("goalId.equals=" + (goalId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultTaskShouldBeFound(String filter) throws Exception {
+        restTaskMockMvc.perform(get("/api/tasks?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
+            .andExpect(jsonPath("$.[*].summary").value(hasItem(DEFAULT_SUMMARY)))
+            .andExpect(jsonPath("$.[*].created").value(hasItem(DEFAULT_CREATED.toString())))
+            .andExpect(jsonPath("$.[*].completed").value(hasItem(DEFAULT_COMPLETED.toString())));
+
+        // Check, that the count call also returns 1
+        restTaskMockMvc.perform(get("/api/tasks/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultTaskShouldNotBeFound(String filter) throws Exception {
+        restTaskMockMvc.perform(get("/api/tasks?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restTaskMockMvc.perform(get("/api/tasks/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test
