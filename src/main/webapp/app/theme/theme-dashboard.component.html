@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-3 sidebar" style="background-color: white">
         <div class="sidebar-sticky">
-            <div class="list-group" *ngIf="goals">
+            <div infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0" class="list-group" *ngIf="goals">
                 <a *ngFor="let goal of goals" class="list-group-item list-group-item-action" [routerLink]="['goal', goal.id]" routerLinkActive="active" style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
                     {{goal.summary}}
                 </a>
