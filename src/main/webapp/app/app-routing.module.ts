@@ -26,7 +26,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         {
           path: 'entities',
-          loadChildren: './entities/entity.module#PlannerEntityModule'
+          loadChildren: () => import('./entities/entity.module').then(m => m.PlannerEntityModule)
         },
         ...LAYOUT_ROUTES
       ],
