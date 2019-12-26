@@ -1,6 +1,5 @@
 package io.github.rimesc.planner.domain;
 
-import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Column;
@@ -20,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "task")
-public class Task implements Serializable {
+public class Task extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 

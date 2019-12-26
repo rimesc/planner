@@ -1,6 +1,5 @@
 package io.github.rimesc.planner.domain;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +19,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "theme")
-public class Theme implements Serializable {
+public class Theme extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 

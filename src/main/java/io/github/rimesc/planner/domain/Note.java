@@ -1,7 +1,5 @@
 package io.github.rimesc.planner.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "note")
-public class Note implements Serializable {
+public class Note extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
