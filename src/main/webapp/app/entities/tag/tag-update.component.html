@@ -41,7 +41,7 @@
                         <label class="form-control-label" jhiTranslate="plannerApp.tag.theme" for="field_theme">Theme</label>
                         <select class="form-control" id="field_theme" name="theme" formControlName="themeId">
                             <option *ngIf="!editForm.get('themeId')!.value" [ngValue]="null" selected></option>
-                            <option [ngValue]="themeOption.id" *ngFor="let themeOption of themes; trackBy: trackById">{{themeOption.id}}</option>
+                            <option [ngValue]="themeOption.id" *ngFor="let themeOption of themes; trackBy: trackById">{{themeOption.name}}</option>
                         </select>
                     </div>
                     <div *ngIf="editForm.get('themeId')!.invalid && (editForm.get('themeId')!.dirty || editForm.get('themeId')!.touched)">

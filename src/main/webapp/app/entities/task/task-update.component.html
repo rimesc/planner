@@ -36,7 +36,7 @@
                         <label class="form-control-label" jhiTranslate="plannerApp.task.goal" for="field_goal">Goal</label>
                         <select class="form-control" id="field_goal" name="goal" formControlName="goalId">
                             <option *ngIf="!editForm.get('goalId')!.value" [ngValue]="null" selected></option>
-                            <option [ngValue]="goalOption.id" *ngFor="let goalOption of goals; trackBy: trackById">{{goalOption.id}}</option>
+                            <option [ngValue]="goalOption.id" *ngFor="let goalOption of goals; trackBy: trackById">{{goalOption.summary}}</option>
                         </select>
                     </div>
                     <div *ngIf="editForm.get('goalId')!.invalid && (editForm.get('goalId')!.dirty || editForm.get('goalId')!.touched)">
