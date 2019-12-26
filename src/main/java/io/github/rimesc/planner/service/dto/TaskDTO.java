@@ -18,12 +18,7 @@ public class TaskDTO implements Serializable {
     @Size(max = 128)
     private String summary;
 
-    @NotNull
-    private Instant createdAt;
-
     private Instant completedAt;
-
-    private Long ownerId;
 
     private Long goalId;
 
@@ -43,28 +38,12 @@ public class TaskDTO implements Serializable {
         this.summary = summary;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Instant getCompletedAt() {
         return completedAt;
     }
 
     public void setCompletedAt(Instant completedAt) {
         this.completedAt = completedAt;
-    }
-
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(Long userId) {
-        this.ownerId = userId;
     }
 
     public Long getGoalId() {
@@ -101,9 +80,7 @@ public class TaskDTO implements Serializable {
         return "TaskDTO{" +
             "id=" + getId() +
             ", summary='" + getSummary() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
             ", completedAt='" + getCompletedAt() + "'" +
-            ", ownerId=" + getOwnerId() +
             ", goalId=" + getGoalId() +
             "}";
     }

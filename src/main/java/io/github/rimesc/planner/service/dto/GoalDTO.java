@@ -9,8 +9,6 @@ import java.util.Set;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import io.github.rimesc.planner.domain.enumeration.Visibility;
-
 /**
  * A DTO for the {@link io.github.rimesc.planner.domain.Goal} entity.
  */
@@ -23,17 +21,9 @@ public class GoalDTO implements Serializable {
     private String summary;
 
     @NotNull
-    private Instant createdAt;
-
-    private Instant completedAt;
-
-    @NotNull
     private Long order;
 
-    @NotNull
-    private Visibility visibility;
-
-    private Long ownerId;
+    private Instant completedAt;
 
     private Set<TagDTO> tags = new HashSet<>();
 
@@ -55,22 +45,6 @@ public class GoalDTO implements Serializable {
         this.summary = summary;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getCompletedAt() {
-        return completedAt;
-    }
-
-    public void setCompletedAt(Instant completedAt) {
-        this.completedAt = completedAt;
-    }
-
     public Long getOrder() {
         return order;
     }
@@ -79,20 +53,12 @@ public class GoalDTO implements Serializable {
         this.order = order;
     }
 
-    public Visibility getVisibility() {
-        return visibility;
+    public Instant getCompletedAt() {
+        return completedAt;
     }
 
-    public void setVisibility(Visibility visibility) {
-        this.visibility = visibility;
-    }
-
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(Long userId) {
-        this.ownerId = userId;
+    public void setCompletedAt(Instant completedAt) {
+        this.completedAt = completedAt;
     }
 
     public Set<TagDTO> getTags() {
@@ -137,11 +103,8 @@ public class GoalDTO implements Serializable {
         return "GoalDTO{" +
             "id=" + getId() +
             ", summary='" + getSummary() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", completedAt='" + getCompletedAt() + "'" +
             ", order=" + getOrder() +
-            ", visibility='" + getVisibility() + "'" +
-            ", ownerId=" + getOwnerId() +
+            ", completedAt='" + getCompletedAt() + "'" +
             ", themeId=" + getThemeId() +
             "}";
     }

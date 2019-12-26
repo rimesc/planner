@@ -19,9 +19,6 @@ import io.github.rimesc.planner.domain.Goal;
 @Repository
 public interface GoalRepository extends JpaRepository<Goal, Long>, JpaSpecificationExecutor<Goal> {
 
-    @Query("select goal from Goal goal where goal.owner.login = ?#{principal.username}")
-    List<Goal> findByOwnerIsCurrentUser();
-
     @Query(value = "select distinct goal from Goal goal left join fetch goal.tags",
            countQuery = "select count(distinct goal) from Goal goal")
     Page<Goal> findAllWithEagerRelationships(Pageable pageable);

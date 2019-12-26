@@ -11,26 +11,11 @@
             "fieldValidateRulesMaxlength": 128
         },
         {
-            "fieldName": "createdAt",
-            "fieldType": "Instant",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "completedAt",
             "fieldType": "Instant"
         }
     ],
     "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user",
-            "otherEntityRelationshipName": "task",
-            "relationshipValidateRules": "required",
-            "relationshipName": "owner",
-            "otherEntityField": "id"
-        },
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "goal",
@@ -48,5 +33,6 @@
     "jpaMetamodelFiltering": true,
     "fluentMethods": true,
     "clientRootFolder": "",
-    "applications": "*"
+    "applications": "*",
+    "readOnly": false
 }

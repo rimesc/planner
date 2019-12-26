@@ -11,17 +11,6 @@
             "fieldValidateRulesMaxlength": 128
         },
         {
-            "fieldName": "createdAt",
-            "fieldType": "Instant",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "completedAt",
-            "fieldType": "Instant"
-        },
-        {
             "fieldName": "order",
             "fieldType": "Long",
             "fieldValidateRules": [
@@ -29,12 +18,8 @@
             ]
         },
         {
-            "fieldName": "visibility",
-            "fieldType": "Visibility",
-            "fieldValues": "PUBLIC,PRIVATE",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldName": "completedAt",
+            "fieldType": "Instant"
         }
     ],
     "relationships": [
@@ -49,14 +34,6 @@
             "otherEntityName": "note",
             "otherEntityRelationshipName": "goal",
             "relationshipName": "note"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user",
-            "otherEntityRelationshipName": "goal",
-            "relationshipValidateRules": "required",
-            "relationshipName": "owner",
-            "otherEntityField": "id"
         },
         {
             "relationshipType": "many-to-many",
@@ -83,5 +60,6 @@
     "jpaMetamodelFiltering": true,
     "fluentMethods": true,
     "clientRootFolder": "",
-    "applications": "*"
+    "applications": "*",
+    "readOnly": false
 }

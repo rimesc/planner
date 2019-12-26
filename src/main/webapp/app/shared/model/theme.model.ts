@@ -1,7 +1,5 @@
-import { Moment } from 'moment';
 import { ITag } from 'app/shared/model/tag.model';
 import { IGoal } from 'app/shared/model/goal.model';
-import { Visibility } from 'app/shared/model/enumerations/visibility.model';
 
 export interface ITheme {
   id?: number;
@@ -9,11 +7,8 @@ export interface ITheme {
   description?: string;
   avatarContentType?: string;
   avatar?: any;
-  createdAt?: Moment;
-  visibility?: Visibility;
   tags?: ITag[];
   goals?: IGoal[];
-  ownerId?: number;
 }
 
 export class Theme implements ITheme {
@@ -23,10 +18,7 @@ export class Theme implements ITheme {
     public description?: string,
     public avatarContentType?: string,
     public avatar?: any,
-    public createdAt?: Moment,
-    public visibility?: Visibility,
     public tags?: ITag[],
-    public goals?: IGoal[],
-    public ownerId?: number
+    public goals?: IGoal[]
   ) {}
 }

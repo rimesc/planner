@@ -19,11 +19,8 @@
       "name": "Name",
       "description": "Description",
       "avatar": "Avatar",
-      "createdAt": "Created At",
-      "visibility": "Visibility",
       "tag": "Tag",
-      "goal": "Goal",
-      "owner": "Owner"
+      "goal": "Goal"
     }
   }
 }

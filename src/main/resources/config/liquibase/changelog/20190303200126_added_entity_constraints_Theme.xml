@@ -8,11 +8,5 @@
     -->
     <changeSet id="20190303200126-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="owner_id"
-                                 baseTableName="theme"
-                                 constraintName="fk_theme_owner_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
     </changeSet>
 </databaseChangeLog>

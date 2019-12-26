@@ -18,7 +18,6 @@ import io.github.rimesc.planner.domain.Goal_;
 import io.github.rimesc.planner.domain.Tag_;
 import io.github.rimesc.planner.domain.Theme;
 import io.github.rimesc.planner.domain.Theme_;
-import io.github.rimesc.planner.domain.User_;
 import io.github.rimesc.planner.repository.ThemeRepository;
 import io.github.rimesc.planner.service.dto.ThemeCriteria;
 import io.github.rimesc.planner.service.dto.ThemeDTO;
@@ -100,12 +99,6 @@ public class ThemeQueryService extends QueryService<Theme> {
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), Theme_.description));
             }
-            if (criteria.getCreatedAt() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Theme_.createdAt));
-            }
-            if (criteria.getVisibility() != null) {
-                specification = specification.and(buildSpecification(criteria.getVisibility(), Theme_.visibility));
-            }
             if (criteria.getTagId() != null) {
                 specification = specification.and(buildSpecification(criteria.getTagId(),
                     root -> root.join(Theme_.tags, JoinType.LEFT).get(Tag_.id)));
@@ -113,10 +106,6 @@ public class ThemeQueryService extends QueryService<Theme> {
             if (criteria.getGoalId() != null) {
                 specification = specification.and(buildSpecification(criteria.getGoalId(),
                     root -> root.join(Theme_.goals, JoinType.LEFT).get(Goal_.id)));
-            }
-            if (criteria.getOwnerId() != null) {
-                specification = specification.and(buildSpecification(criteria.getOwnerId(),
-                    root -> root.join(Theme_.owner, JoinType.LEFT).get(User_.id)));
             }
         }
         return specification;

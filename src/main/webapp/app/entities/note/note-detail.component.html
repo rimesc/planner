@@ -10,26 +10,6 @@
                     <dd>
                         <span>{{note.markdown}}</span>
                     </dd>
-                    <dt><span jhiTranslate="plannerApp.note.html">Html</span></dt>
-                    <dd>
-                        <span>{{note.html}}</span>
-                    </dd>
-                    <dt><span jhiTranslate="plannerApp.note.createdAt">Created At</span></dt>
-                    <dd>
-                        <span>{{note.createdAt}}</span>
-                    </dd>
-                    <dt><span jhiTranslate="plannerApp.note.editedAt">Edited At</span></dt>
-                    <dd>
-                        <span>{{note.editedAt}}</span>
-                    </dd>
-                    <dt><span jhiTranslate="plannerApp.note.visibility">Visibility</span></dt>
-                    <dd>
-                        <span jhiTranslate="{{'plannerApp.Visibility.' + note.visibility}}">{{note.visibility}}</span>
-                    </dd>
-                    <dt><span jhiTranslate="plannerApp.note.owner">Owner</span></dt>
-                    <dd>
-                        {{note.ownerId}}
-                    </dd>
                     <dt><span jhiTranslate="plannerApp.note.goal">Goal</span></dt>
                     <dd>
                         <div *ngIf="note.goalId">

@@ -8,7 +8,6 @@ import io.github.jhipster.service.filter.Filter;
 import io.github.jhipster.service.filter.InstantFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
-import io.github.rimesc.planner.domain.enumeration.Visibility;
 
 /**
  * Criteria class for the {@link io.github.rimesc.planner.domain.Goal} entity. This class is used
@@ -20,24 +19,6 @@ import io.github.rimesc.planner.domain.enumeration.Visibility;
  * fix type specific filters.
  */
 public class GoalCriteria implements Serializable, Criteria {
-    /**
-     * Class for filtering Visibility
-     */
-    public static class VisibilityFilter extends Filter<Visibility> {
-
-        public VisibilityFilter() {
-        }
-
-        public VisibilityFilter(VisibilityFilter filter) {
-            super(filter);
-        }
-
-        @Override
-        public VisibilityFilter copy() {
-            return new VisibilityFilter(this);
-        }
-
-    }
 
     private static final long serialVersionUID = 1L;
 
@@ -45,19 +26,13 @@ public class GoalCriteria implements Serializable, Criteria {
 
     private StringFilter summary;
 
-    private InstantFilter createdAt;
-
-    private InstantFilter completedAt;
-
     private LongFilter order;
 
-    private VisibilityFilter visibility;
+    private InstantFilter completedAt;
 
     private LongFilter taskId;
 
     private LongFilter noteId;
-
-    private LongFilter ownerId;
 
     private LongFilter tagId;
 
@@ -69,13 +44,10 @@ public class GoalCriteria implements Serializable, Criteria {
     public GoalCriteria(GoalCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.summary = other.summary == null ? null : other.summary.copy();
-        this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
-        this.completedAt = other.completedAt == null ? null : other.completedAt.copy();
         this.order = other.order == null ? null : other.order.copy();
-        this.visibility = other.visibility == null ? null : other.visibility.copy();
+        this.completedAt = other.completedAt == null ? null : other.completedAt.copy();
         this.taskId = other.taskId == null ? null : other.taskId.copy();
         this.noteId = other.noteId == null ? null : other.noteId.copy();
-        this.ownerId = other.ownerId == null ? null : other.ownerId.copy();
         this.tagId = other.tagId == null ? null : other.tagId.copy();
         this.themeId = other.themeId == null ? null : other.themeId.copy();
     }
@@ -101,22 +73,6 @@ public class GoalCriteria implements Serializable, Criteria {
         this.summary = summary;
     }
 
-    public InstantFilter getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(InstantFilter createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public InstantFilter getCompletedAt() {
-        return completedAt;
-    }
-
-    public void setCompletedAt(InstantFilter completedAt) {
-        this.completedAt = completedAt;
-    }
-
     public LongFilter getOrder() {
         return order;
     }
@@ -125,12 +81,12 @@ public class GoalCriteria implements Serializable, Criteria {
         this.order = order;
     }
 
-    public VisibilityFilter getVisibility() {
-        return visibility;
+    public InstantFilter getCompletedAt() {
+        return completedAt;
     }
 
-    public void setVisibility(VisibilityFilter visibility) {
-        this.visibility = visibility;
+    public void setCompletedAt(InstantFilter completedAt) {
+        this.completedAt = completedAt;
     }
 
     public LongFilter getTaskId() {
@@ -147,14 +103,6 @@ public class GoalCriteria implements Serializable, Criteria {
 
     public void setNoteId(LongFilter noteId) {
         this.noteId = noteId;
-    }
-
-    public LongFilter getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(LongFilter ownerId) {
-        this.ownerId = ownerId;
     }
 
     public LongFilter getTagId() {
@@ -184,13 +132,10 @@ public class GoalCriteria implements Serializable, Criteria {
         final GoalCriteria that = (GoalCriteria) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(summary, that.summary) &&
-            Objects.equals(createdAt, that.createdAt) &&
-            Objects.equals(completedAt, that.completedAt) &&
             Objects.equals(order, that.order) &&
-            Objects.equals(visibility, that.visibility) &&
+            Objects.equals(completedAt, that.completedAt) &&
             Objects.equals(taskId, that.taskId) &&
             Objects.equals(noteId, that.noteId) &&
-            Objects.equals(ownerId, that.ownerId) &&
             Objects.equals(tagId, that.tagId) &&
             Objects.equals(themeId, that.themeId);
     }
@@ -200,13 +145,10 @@ public class GoalCriteria implements Serializable, Criteria {
         return Objects.hash(
             id,
             summary,
-            createdAt,
-            completedAt,
             order,
-            visibility,
+            completedAt,
             taskId,
             noteId,
-            ownerId,
             tagId,
             themeId);
     }
@@ -216,13 +158,10 @@ public class GoalCriteria implements Serializable, Criteria {
         return "GoalCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (summary != null ? "summary=" + summary + ", " : "") +
-            (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
-            (completedAt != null ? "completedAt=" + completedAt + ", " : "") +
             (order != null ? "order=" + order + ", " : "") +
-            (visibility != null ? "visibility=" + visibility + ", " : "") +
+            (completedAt != null ? "completedAt=" + completedAt + ", " : "") +
             (taskId != null ? "taskId=" + taskId + ", " : "") +
             (noteId != null ? "noteId=" + noteId + ", " : "") +
-            (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
             (tagId != null ? "tagId=" + tagId + ", " : "") +
             (themeId != null ? "themeId=" + themeId + ", " : "") +
             "}";

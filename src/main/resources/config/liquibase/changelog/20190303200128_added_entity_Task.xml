@@ -19,21 +19,14 @@
             <column name="summary" type="varchar(128)">
                 <constraints nullable="false" />
             </column>
-            <column name="created_at" type="datetime">
-                <constraints nullable="false" />
-            </column>
             <column name="completed_at" type="datetime">
                 <constraints nullable="true" />
-            </column>
-            <column name="owner_id" type="bigint">
-                <constraints nullable="false" />
             </column>
             <column name="goal_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="task" columnName="created_at" columnDataType="datetime"/>
         <dropDefaultValue tableName="task" columnName="completed_at" columnDataType="datetime"/>
     </changeSet>
 
@@ -57,9 +50,7 @@
                   tableName="task">
             <column name="id" type="numeric"/>
             <column name="summary" type="string"/>
-            <column name="created_at" type="datetime"/>
             <column name="completed_at" type="datetime"/>
-            <column name="owner_id" type="numeric"/>
             <column name="goal_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

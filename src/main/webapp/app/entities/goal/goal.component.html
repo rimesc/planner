@@ -21,11 +21,8 @@
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
                 <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"  jhiSortBy="summary"><span jhiTranslate="plannerApp.goal.summary">Summary</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="createdAt"><span jhiTranslate="plannerApp.goal.createdAt">Created At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="completedAt"><span jhiTranslate="plannerApp.goal.completedAt">Completed At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"  jhiSortBy="order"><span jhiTranslate="plannerApp.goal.order">Order</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="visibility"><span jhiTranslate="plannerApp.goal.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="ownerId"><span jhiTranslate="plannerApp.goal.owner">Owner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"  jhiSortBy="completedAt"><span jhiTranslate="plannerApp.goal.completedAt">Completed At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"  jhiSortBy="themeId"><span jhiTranslate="plannerApp.goal.theme">Theme</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"></th>
                 </tr>
@@ -34,13 +31,8 @@
                 <tr *ngFor="let goal of goals ;trackBy: trackId">
                     <td><a [routerLink]="['/goal', goal.id, 'view' ]">{{goal.id}}</a></td>
                     <td>{{goal.summary}}</td>
-                    <td>{{goal.createdAt | date:'medium'}}</td>
-                    <td>{{goal.completedAt | date:'medium'}}</td>
                     <td>{{goal.order}}</td>
-                    <td jhiTranslate="{{'plannerApp.Visibility.' + goal.visibility}}">{{goal.visibility}}</td>
-                    <td>
-                        {{goal.ownerId}}
-                    </td>
+                    <td>{{goal.completedAt | date:'medium'}}</td>
                     <td>
                         <div *ngIf="goal.themeId">
                             <a [routerLink]="['/theme', goal.themeId , 'view' ]" >{{goal.themeId}}</a>

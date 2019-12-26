@@ -24,14 +24,13 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Task(0, 'AAAAAAA', currentDate, currentDate);
+      elemDefault = new Task(0, 'AAAAAAA', currentDate);
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
             completedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
@@ -50,14 +49,12 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
             completedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            createdAt: currentDate,
             completedAt: currentDate
           },
           returnedFromService
@@ -75,7 +72,6 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             summary: 'BBBBBB',
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
             completedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
@@ -83,7 +79,6 @@ describe('Service Tests', () => {
 
         const expected = Object.assign(
           {
-            createdAt: currentDate,
             completedAt: currentDate
           },
           returnedFromService
@@ -101,14 +96,12 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             summary: 'BBBBBB',
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
             completedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            createdAt: currentDate,
             completedAt: currentDate
           },
           returnedFromService

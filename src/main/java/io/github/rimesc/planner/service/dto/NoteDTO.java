@@ -1,13 +1,9 @@
 package io.github.rimesc.planner.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 import javax.persistence.Lob;
-import javax.validation.constraints.NotNull;
-
-import io.github.rimesc.planner.domain.enumeration.Visibility;
 
 /**
  * A DTO for the {@link io.github.rimesc.planner.domain.Note} entity.
@@ -18,19 +14,6 @@ public class NoteDTO implements Serializable {
 
     @Lob
     private String markdown;
-
-    @Lob
-    private String html;
-
-    @NotNull
-    private Instant createdAt;
-
-    private Instant editedAt;
-
-    @NotNull
-    private Visibility visibility;
-
-    private Long ownerId;
 
     private Long goalId;
 
@@ -48,46 +31,6 @@ public class NoteDTO implements Serializable {
 
     public void setMarkdown(String markdown) {
         this.markdown = markdown;
-    }
-
-    public String getHtml() {
-        return html;
-    }
-
-    public void setHtml(String html) {
-        this.html = html;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getEditedAt() {
-        return editedAt;
-    }
-
-    public void setEditedAt(Instant editedAt) {
-        this.editedAt = editedAt;
-    }
-
-    public Visibility getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(Visibility visibility) {
-        this.visibility = visibility;
-    }
-
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(Long userId) {
-        this.ownerId = userId;
     }
 
     public Long getGoalId() {
@@ -124,11 +67,6 @@ public class NoteDTO implements Serializable {
         return "NoteDTO{" +
             "id=" + getId() +
             ", markdown='" + getMarkdown() + "'" +
-            ", html='" + getHtml() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", editedAt='" + getEditedAt() + "'" +
-            ", visibility='" + getVisibility() + "'" +
-            ", ownerId=" + getOwnerId() +
             ", goalId=" + getGoalId() +
             "}";
     }

@@ -17,9 +17,7 @@
         "title": "Task"
       },
       "summary": "Summary",
-      "createdAt": "Created At",
       "completedAt": "Completed At",
-      "owner": "Owner",
       "goal": "Goal"
     }
   }

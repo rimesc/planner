@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions as ec /* , protractor, promise */ } from 'protractor';
+import { browser, ExpectedConditions as ec /* , promise */ } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
 import {
@@ -44,17 +44,9 @@ describe('Note e2e test', () => {
         await noteComponentsPage.clickOnCreateButton();
         await promise.all([
             noteUpdatePage.setMarkdownInput('markdown'),
-            noteUpdatePage.setHtmlInput('html'),
-            noteUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-            noteUpdatePage.setEditedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-            noteUpdatePage.visibilitySelectLastOption(),
-            noteUpdatePage.ownerSelectLastOption(),
             noteUpdatePage.goalSelectLastOption(),
         ]);
         expect(await noteUpdatePage.getMarkdownInput()).to.eq('markdown', 'Expected Markdown value to be equals to markdown');
-        expect(await noteUpdatePage.getHtmlInput()).to.eq('html', 'Expected Html value to be equals to html');
-        expect(await noteUpdatePage.getCreatedAtInput()).to.contain('2001-01-01T02:30', 'Expected createdAt value to be equals to 2000-12-31');
-        expect(await noteUpdatePage.getEditedAtInput()).to.contain('2001-01-01T02:30', 'Expected editedAt value to be equals to 2000-12-31');
         await noteUpdatePage.save();
         expect(await noteUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 

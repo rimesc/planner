@@ -27,21 +27,6 @@
                 "maxbytes"
             ],
             "fieldValidateRulesMaxbytes": 262144
-        },
-        {
-            "fieldName": "createdAt",
-            "fieldType": "Instant",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "visibility",
-            "fieldType": "Visibility",
-            "fieldValues": "PUBLIC,PRIVATE",
-            "fieldValidateRules": [
-                "required"
-            ]
         }
     ],
     "relationships": [
@@ -56,14 +41,6 @@
             "otherEntityName": "goal",
             "otherEntityRelationshipName": "theme",
             "relationshipName": "goal"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user",
-            "otherEntityRelationshipName": "theme",
-            "relationshipValidateRules": "required",
-            "relationshipName": "owner",
-            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190303200126",
@@ -74,5 +51,6 @@
     "jpaMetamodelFiltering": true,
     "fluentMethods": true,
     "clientRootFolder": "",
-    "applications": "*"
+    "applications": "*",
+    "readOnly": false
 }

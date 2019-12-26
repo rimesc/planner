@@ -33,7 +33,6 @@ import org.springframework.validation.Validator;
 import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.domain.Goal;
 import io.github.rimesc.planner.domain.Task;
-import io.github.rimesc.planner.domain.User;
 import io.github.rimesc.planner.repository.TaskRepository;
 import io.github.rimesc.planner.service.TaskQueryService;
 import io.github.rimesc.planner.service.TaskService;
@@ -49,9 +48,6 @@ public class TaskResourceIT {
 
     private static final String DEFAULT_SUMMARY = "AAAAAAAAAA";
     private static final String UPDATED_SUMMARY = "BBBBBBBBBB";
-
-    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final Instant DEFAULT_COMPLETED_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_COMPLETED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
@@ -108,13 +104,7 @@ public class TaskResourceIT {
     public static Task createEntity(EntityManager em) {
         Task task = new Task()
             .summary(DEFAULT_SUMMARY)
-            .createdAt(DEFAULT_CREATED_AT)
             .completedAt(DEFAULT_COMPLETED_AT);
-        // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        task.setOwner(user);
         // Add required entity
         Goal goal;
         if (TestUtil.findAll(em, Goal.class).isEmpty()) {
@@ -137,13 +127,7 @@ public class TaskResourceIT {
     public static Task createUpdatedEntity(EntityManager em) {
         Task task = new Task()
             .summary(UPDATED_SUMMARY)
-            .createdAt(UPDATED_CREATED_AT)
             .completedAt(UPDATED_COMPLETED_AT);
-        // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        task.setOwner(user);
         // Add required entity
         Goal goal;
         if (TestUtil.findAll(em, Goal.class).isEmpty()) {
@@ -179,7 +163,6 @@ public class TaskResourceIT {
         assertThat(taskList).hasSize(databaseSizeBeforeCreate + 1);
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getSummary()).isEqualTo(DEFAULT_SUMMARY);
-        assertThat(testTask.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
         assertThat(testTask.getCompletedAt()).isEqualTo(DEFAULT_COMPLETED_AT);
     }
 
@@ -224,25 +207,6 @@ public class TaskResourceIT {
 
     @Test
     @Transactional
-    public void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = taskRepository.findAll().size();
-        // set the field null
-        task.setCreatedAt(null);
-
-        // Create the Task, which fails.
-        TaskDTO taskDTO = taskMapper.toDto(task);
-
-        restTaskMockMvc.perform(post("/api/tasks")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Task> taskList = taskRepository.findAll();
-        assertThat(taskList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllTasks() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
@@ -253,7 +217,6 @@ public class TaskResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
             .andExpect(jsonPath("$.[*].summary").value(hasItem(DEFAULT_SUMMARY)))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
             .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())));
     }
 
@@ -269,7 +232,6 @@ public class TaskResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(task.getId().intValue()))
             .andExpect(jsonPath("$.summary").value(DEFAULT_SUMMARY))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
             .andExpect(jsonPath("$.completedAt").value(DEFAULT_COMPLETED_AT.toString()));
     }
 
@@ -371,58 +333,6 @@ public class TaskResourceIT {
 
     @Test
     @Transactional
-    public void getAllTasksByCreatedAtIsEqualToSomething() throws Exception {
-        // Initialize the database
-        taskRepository.saveAndFlush(task);
-
-        // Get all the taskList where createdAt equals to DEFAULT_CREATED_AT
-        defaultTaskShouldBeFound("createdAt.equals=" + DEFAULT_CREATED_AT);
-
-        // Get all the taskList where createdAt equals to UPDATED_CREATED_AT
-        defaultTaskShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllTasksByCreatedAtIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        taskRepository.saveAndFlush(task);
-
-        // Get all the taskList where createdAt not equals to DEFAULT_CREATED_AT
-        defaultTaskShouldNotBeFound("createdAt.notEquals=" + DEFAULT_CREATED_AT);
-
-        // Get all the taskList where createdAt not equals to UPDATED_CREATED_AT
-        defaultTaskShouldBeFound("createdAt.notEquals=" + UPDATED_CREATED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllTasksByCreatedAtIsInShouldWork() throws Exception {
-        // Initialize the database
-        taskRepository.saveAndFlush(task);
-
-        // Get all the taskList where createdAt in DEFAULT_CREATED_AT or UPDATED_CREATED_AT
-        defaultTaskShouldBeFound("createdAt.in=" + DEFAULT_CREATED_AT + "," + UPDATED_CREATED_AT);
-
-        // Get all the taskList where createdAt equals to UPDATED_CREATED_AT
-        defaultTaskShouldNotBeFound("createdAt.in=" + UPDATED_CREATED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllTasksByCreatedAtIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        taskRepository.saveAndFlush(task);
-
-        // Get all the taskList where createdAt is not null
-        defaultTaskShouldBeFound("createdAt.specified=true");
-
-        // Get all the taskList where createdAt is null
-        defaultTaskShouldNotBeFound("createdAt.specified=false");
-    }
-
-    @Test
-    @Transactional
     public void getAllTasksByCompletedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         taskRepository.saveAndFlush(task);
@@ -475,21 +385,6 @@ public class TaskResourceIT {
 
     @Test
     @Transactional
-    public void getAllTasksByOwnerIsEqualToSomething() throws Exception {
-        // Get already existing entity
-        User owner = task.getOwner();
-        taskRepository.saveAndFlush(task);
-        Long ownerId = owner.getId();
-
-        // Get all the taskList where owner equals to ownerId
-        defaultTaskShouldBeFound("ownerId.equals=" + ownerId);
-
-        // Get all the taskList where owner equals to ownerId + 1
-        defaultTaskShouldNotBeFound("ownerId.equals=" + (ownerId + 1));
-    }
-
-    @Test
-    @Transactional
     public void getAllTasksByGoalIsEqualToSomething() throws Exception {
         // Get already existing entity
         Goal goal = task.getGoal();
@@ -512,7 +407,6 @@ public class TaskResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(task.getId().intValue())))
             .andExpect(jsonPath("$.[*].summary").value(hasItem(DEFAULT_SUMMARY)))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
             .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())));
 
         // Check, that the count call also returns 1
@@ -561,7 +455,6 @@ public class TaskResourceIT {
         em.detach(updatedTask);
         updatedTask
             .summary(UPDATED_SUMMARY)
-            .createdAt(UPDATED_CREATED_AT)
             .completedAt(UPDATED_COMPLETED_AT);
         TaskDTO taskDTO = taskMapper.toDto(updatedTask);
 
@@ -575,7 +468,6 @@ public class TaskResourceIT {
         assertThat(taskList).hasSize(databaseSizeBeforeUpdate);
         Task testTask = taskList.get(taskList.size() - 1);
         assertThat(testTask.getSummary()).isEqualTo(UPDATED_SUMMARY);
-        assertThat(testTask.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
         assertThat(testTask.getCompletedAt()).isEqualTo(UPDATED_COMPLETED_AT);
     }
 

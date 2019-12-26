@@ -27,11 +27,6 @@ export class NoteUpdatePage {
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
   markdownInput = element(by.id('field_markdown'));
-  htmlInput = element(by.id('field_html'));
-  createdAtInput = element(by.id('field_createdAt'));
-  editedAtInput = element(by.id('field_editedAt'));
-  visibilitySelect = element(by.id('field_visibility'));
-  ownerSelect = element(by.id('field_owner'));
   goalSelect = element(by.id('field_goal'));
 
   async getPageTitle(): Promise<string> {
@@ -44,64 +39,6 @@ export class NoteUpdatePage {
 
   async getMarkdownInput(): Promise<string> {
     return await this.markdownInput.getAttribute('value');
-  }
-
-  async setHtmlInput(html: string): Promise<void> {
-    await this.htmlInput.sendKeys(html);
-  }
-
-  async getHtmlInput(): Promise<string> {
-    return await this.htmlInput.getAttribute('value');
-  }
-
-  async setCreatedAtInput(createdAt: string): Promise<void> {
-    await this.createdAtInput.sendKeys(createdAt);
-  }
-
-  async getCreatedAtInput(): Promise<string> {
-    return await this.createdAtInput.getAttribute('value');
-  }
-
-  async setEditedAtInput(editedAt: string): Promise<void> {
-    await this.editedAtInput.sendKeys(editedAt);
-  }
-
-  async getEditedAtInput(): Promise<string> {
-    return await this.editedAtInput.getAttribute('value');
-  }
-
-  async setVisibilitySelect(visibility: string): Promise<void> {
-    await this.visibilitySelect.sendKeys(visibility);
-  }
-
-  async getVisibilitySelect(): Promise<string> {
-    return await this.visibilitySelect.element(by.css('option:checked')).getText();
-  }
-
-  async visibilitySelectLastOption(): Promise<void> {
-    await this.visibilitySelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async ownerSelectLastOption(): Promise<void> {
-    await this.ownerSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async ownerSelectOption(option: string): Promise<void> {
-    await this.ownerSelect.sendKeys(option);
-  }
-
-  getOwnerSelect(): ElementFinder {
-    return this.ownerSelect;
-  }
-
-  async getOwnerSelectedOption(): Promise<string> {
-    return await this.ownerSelect.element(by.css('option:checked')).getText();
   }
 
   async goalSelectLastOption(): Promise<void> {

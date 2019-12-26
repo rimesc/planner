@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as moment from 'moment';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { ITheme } from 'app/shared/model/theme.model';
@@ -20,56 +16,23 @@ export class ThemeService {
   constructor(protected http: HttpClient) {}
 
   create(theme: ITheme): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(theme);
-    return this.http
-      .post<ITheme>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    return this.http.post<ITheme>(this.resourceUrl, theme, { observe: 'response' });
   }
 
   update(theme: ITheme): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(theme);
-    return this.http
-      .put<ITheme>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    return this.http.put<ITheme>(this.resourceUrl, theme, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http
-      .get<ITheme>(`${this.resourceUrl}/${id}`, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    return this.http.get<ITheme>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http
-      .get<ITheme[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    return this.http.get<ITheme[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
-  }
-
-  protected convertDateFromClient(theme: ITheme): ITheme {
-    const copy: ITheme = Object.assign({}, theme, {
-      createdAt: theme.createdAt && theme.createdAt.isValid() ? theme.createdAt.toJSON() : undefined
-    });
-    return copy;
-  }
-
-  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
-    if (res.body) {
-      res.body.createdAt = res.body.createdAt ? moment(res.body.createdAt) : undefined;
-    }
-    return res;
-  }
-
-  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
-    if (res.body) {
-      res.body.forEach((theme: ITheme) => {
-        theme.createdAt = theme.createdAt ? moment(theme.createdAt) : undefined;
-      });
-    }
-    return res;
   }
 }

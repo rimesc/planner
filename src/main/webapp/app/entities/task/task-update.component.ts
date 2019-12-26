@@ -10,12 +10,8 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { ITask, Task } from 'app/shared/model/task.model';
 import { TaskService } from './task.service';
-import { IUser } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
 import { IGoal } from 'app/shared/model/goal.model';
 import { GoalService } from 'app/entities/goal/goal.service';
-
-type SelectableEntity = IUser | IGoal;
 
 @Component({
   selector: 'jhi-task-update',
@@ -24,22 +20,17 @@ type SelectableEntity = IUser | IGoal;
 export class TaskUpdateComponent implements OnInit {
   isSaving = false;
 
-  users: IUser[] = [];
-
   goals: IGoal[] = [];
 
   editForm = this.fb.group({
     id: [],
     summary: [null, [Validators.required, Validators.maxLength(128)]],
-    createdAt: [null, [Validators.required]],
     completedAt: [],
-    ownerId: [null, Validators.required],
     goalId: [null, Validators.required]
   });
 
   constructor(
     protected taskService: TaskService,
-    protected userService: UserService,
     protected goalService: GoalService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -48,15 +39,6 @@ export class TaskUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ task }) => {
       this.updateForm(task);
-
-      this.userService
-        .query()
-        .pipe(
-          map((res: HttpResponse<IUser[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IUser[]) => (this.users = resBody));
 
       this.goalService
         .query()
@@ -73,9 +55,7 @@ export class TaskUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: task.id,
       summary: task.summary,
-      createdAt: task.createdAt != null ? task.createdAt.format(DATE_TIME_FORMAT) : null,
       completedAt: task.completedAt != null ? task.completedAt.format(DATE_TIME_FORMAT) : null,
-      ownerId: task.ownerId,
       goalId: task.goalId
     });
   }
@@ -99,11 +79,8 @@ export class TaskUpdateComponent implements OnInit {
       ...new Task(),
       id: this.editForm.get(['id'])!.value,
       summary: this.editForm.get(['summary'])!.value,
-      createdAt:
-        this.editForm.get(['createdAt'])!.value != null ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
       completedAt:
         this.editForm.get(['completedAt'])!.value != null ? moment(this.editForm.get(['completedAt'])!.value, DATE_TIME_FORMAT) : undefined,
-      ownerId: this.editForm.get(['ownerId'])!.value,
       goalId: this.editForm.get(['goalId'])!.value
     };
   }
@@ -124,7 +101,7 @@ export class TaskUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: SelectableEntity): any {
+  trackById(index: number, item: IGoal): any {
     return item.id;
   }
 }

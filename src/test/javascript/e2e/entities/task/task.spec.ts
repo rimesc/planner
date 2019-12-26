@@ -44,13 +44,10 @@ describe('Task e2e test', () => {
         await taskComponentsPage.clickOnCreateButton();
         await promise.all([
             taskUpdatePage.setSummaryInput('summary'),
-            taskUpdatePage.setCreatedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             taskUpdatePage.setCompletedAtInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
-            taskUpdatePage.ownerSelectLastOption(),
             taskUpdatePage.goalSelectLastOption(),
         ]);
         expect(await taskUpdatePage.getSummaryInput()).to.eq('summary', 'Expected Summary value to be equals to summary');
-        expect(await taskUpdatePage.getCreatedAtInput()).to.contain('2001-01-01T02:30', 'Expected createdAt value to be equals to 2000-12-31');
         expect(await taskUpdatePage.getCompletedAtInput()).to.contain('2001-01-01T02:30', 'Expected completedAt value to be equals to 2000-12-31');
         await taskUpdatePage.save();
         expect(await taskUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

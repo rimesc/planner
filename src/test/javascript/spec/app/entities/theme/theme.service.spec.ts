@@ -1,11 +1,8 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { take, map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { ThemeService } from 'app/entities/theme/theme.service';
 import { ITheme, Theme } from 'app/shared/model/theme.model';
-import { Visibility } from 'app/shared/model/enumerations/visibility.model';
 
 describe('Service Tests', () => {
   describe('Theme Service', () => {
@@ -14,7 +11,6 @@ describe('Service Tests', () => {
     let httpMock: HttpTestingController;
     let elemDefault: ITheme;
     let expectedResult: ITheme | ITheme[] | boolean | null;
-    let currentDate: moment.Moment;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
@@ -23,19 +19,13 @@ describe('Service Tests', () => {
       injector = getTestBed();
       service = injector.get(ThemeService);
       httpMock = injector.get(HttpTestingController);
-      currentDate = moment();
 
-      elemDefault = new Theme(0, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA', currentDate, Visibility.PUBLIC);
+      elemDefault = new Theme(0, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
-        const returnedFromService = Object.assign(
-          {
-            createdAt: currentDate.format(DATE_TIME_FORMAT)
-          },
-          elemDefault
-        );
+        const returnedFromService = Object.assign({}, elemDefault);
         service
           .find(123)
           .pipe(take(1))
@@ -49,17 +39,11 @@ describe('Service Tests', () => {
       it('should create a Theme', () => {
         const returnedFromService = Object.assign(
           {
-            id: 0,
-            createdAt: currentDate.format(DATE_TIME_FORMAT)
+            id: 0
           },
           elemDefault
         );
-        const expected = Object.assign(
-          {
-            createdAt: currentDate
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
         service
           .create(new Theme())
           .pipe(take(1))
@@ -74,19 +58,12 @@ describe('Service Tests', () => {
           {
             name: 'BBBBBB',
             description: 'BBBBBB',
-            avatar: 'BBBBBB',
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
-            visibility: 'BBBBBB'
+            avatar: 'BBBBBB'
           },
           elemDefault
         );
 
-        const expected = Object.assign(
-          {
-            createdAt: currentDate
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
         service
           .update(expected)
           .pipe(take(1))
@@ -101,18 +78,11 @@ describe('Service Tests', () => {
           {
             name: 'BBBBBB',
             description: 'BBBBBB',
-            avatar: 'BBBBBB',
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
-            visibility: 'BBBBBB'
+            avatar: 'BBBBBB'
           },
           elemDefault
         );
-        const expected = Object.assign(
-          {
-            createdAt: currentDate
-          },
-          returnedFromService
-        );
+        const expected = Object.assign({}, returnedFromService);
         service
           .query()
           .pipe(

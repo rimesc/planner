@@ -1,12 +1,9 @@
 package io.github.rimesc.planner.domain;
 
 import java.io.Serializable;
-import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +13,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.github.rimesc.planner.domain.enumeration.Visibility;
 
 /**
  * A Note.
@@ -35,27 +30,6 @@ public class Note implements Serializable {
     @Lob
     @Column(name = "markdown", nullable = false)
     private String markdown;
-
-    @Lob
-    @Column(name = "html", nullable = false)
-    private String html;
-
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
-
-    @Column(name = "edited_at")
-    private Instant editedAt;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "visibility", nullable = false)
-    private Visibility visibility;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("notes")
-    private User owner;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -82,71 +56,6 @@ public class Note implements Serializable {
 
     public void setMarkdown(String markdown) {
         this.markdown = markdown;
-    }
-
-    public String getHtml() {
-        return html;
-    }
-
-    public Note html(String html) {
-        this.html = html;
-        return this;
-    }
-
-    public void setHtml(String html) {
-        this.html = html;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Note createdAt(Instant createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getEditedAt() {
-        return editedAt;
-    }
-
-    public Note editedAt(Instant editedAt) {
-        this.editedAt = editedAt;
-        return this;
-    }
-
-    public void setEditedAt(Instant editedAt) {
-        this.editedAt = editedAt;
-    }
-
-    public Visibility getVisibility() {
-        return visibility;
-    }
-
-    public Note visibility(Visibility visibility) {
-        this.visibility = visibility;
-        return this;
-    }
-
-    public void setVisibility(Visibility visibility) {
-        this.visibility = visibility;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public Note owner(User user) {
-        this.owner = user;
-        return this;
-    }
-
-    public void setOwner(User user) {
-        this.owner = user;
     }
 
     public Goal getGoal() {
@@ -184,10 +93,6 @@ public class Note implements Serializable {
         return "Note{" +
             "id=" + getId() +
             ", markdown='" + getMarkdown() + "'" +
-            ", html='" + getHtml() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", editedAt='" + getEditedAt() + "'" +
-            ", visibility='" + getVisibility() + "'" +
             "}";
     }
 }

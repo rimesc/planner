@@ -9,11 +9,10 @@ import io.github.rimesc.planner.service.dto.GoalDTO;
 /**
  * Mapper for the entity {@link Goal} and its DTO {@link GoalDTO}.
  */
-@Mapper(componentModel = "spring", uses = { UserMapper.class, TagMapper.class, ThemeMapper.class })
+@Mapper(componentModel = "spring", uses = { TagMapper.class, ThemeMapper.class })
 public interface GoalMapper extends EntityMapper<GoalDTO, Goal> {
 
     @Override
-    @Mapping(source = "owner.id", target = "ownerId")
     @Mapping(source = "theme.id", target = "themeId")
     GoalDTO toDto(Goal goal);
 
@@ -22,7 +21,6 @@ public interface GoalMapper extends EntityMapper<GoalDTO, Goal> {
     @Mapping(target = "removeTask", ignore = true)
     @Mapping(target = "notes", ignore = true)
     @Mapping(target = "removeNote", ignore = true)
-    @Mapping(source = "ownerId", target = "owner")
     @Mapping(target = "removeTag", ignore = true)
     @Mapping(source = "themeId", target = "theme")
     Goal toEntity(GoalDTO goalDTO);

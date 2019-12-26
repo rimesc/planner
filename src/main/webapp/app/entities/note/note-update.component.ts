@@ -5,19 +5,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { INote, Note } from 'app/shared/model/note.model';
 import { NoteService } from './note.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
-import { IUser } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
 import { IGoal } from 'app/shared/model/goal.model';
 import { GoalService } from 'app/entities/goal/goal.service';
-
-type SelectableEntity = IUser | IGoal;
 
 @Component({
   selector: 'jhi-note-update',
@@ -26,18 +20,11 @@ type SelectableEntity = IUser | IGoal;
 export class NoteUpdateComponent implements OnInit {
   isSaving = false;
 
-  users: IUser[] = [];
-
   goals: IGoal[] = [];
 
   editForm = this.fb.group({
     id: [],
     markdown: [null, [Validators.required]],
-    html: [null, [Validators.required]],
-    createdAt: [null, [Validators.required]],
-    editedAt: [],
-    visibility: [null, [Validators.required]],
-    ownerId: [null, Validators.required],
     goalId: [null, Validators.required]
   });
 
@@ -45,7 +32,6 @@ export class NoteUpdateComponent implements OnInit {
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
     protected noteService: NoteService,
-    protected userService: UserService,
     protected goalService: GoalService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -54,15 +40,6 @@ export class NoteUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ note }) => {
       this.updateForm(note);
-
-      this.userService
-        .query()
-        .pipe(
-          map((res: HttpResponse<IUser[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IUser[]) => (this.users = resBody));
 
       this.goalService
         .query()
@@ -79,11 +56,6 @@ export class NoteUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: note.id,
       markdown: note.markdown,
-      html: note.html,
-      createdAt: note.createdAt != null ? note.createdAt.format(DATE_TIME_FORMAT) : null,
-      editedAt: note.editedAt != null ? note.editedAt.format(DATE_TIME_FORMAT) : null,
-      visibility: note.visibility,
-      ownerId: note.ownerId,
       goalId: note.goalId
     });
   }
@@ -123,13 +95,6 @@ export class NoteUpdateComponent implements OnInit {
       ...new Note(),
       id: this.editForm.get(['id'])!.value,
       markdown: this.editForm.get(['markdown'])!.value,
-      html: this.editForm.get(['html'])!.value,
-      createdAt:
-        this.editForm.get(['createdAt'])!.value != null ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
-      editedAt:
-        this.editForm.get(['editedAt'])!.value != null ? moment(this.editForm.get(['editedAt'])!.value, DATE_TIME_FORMAT) : undefined,
-      visibility: this.editForm.get(['visibility'])!.value,
-      ownerId: this.editForm.get(['ownerId'])!.value,
       goalId: this.editForm.get(['goalId'])!.value
     };
   }
@@ -150,7 +115,7 @@ export class NoteUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: SelectableEntity): any {
+  trackById(index: number, item: IGoal): any {
     return item.id;
   }
 }
