@@ -47,7 +47,7 @@ describe('Component Tests', () => {
       comp.ngOnInit();
 
       // THEN
-      expect(service.query).toHaveBeenCalledWith({ 'themeId.equals': 123, sort: ['order,asc'] });
+      expect(service.query).toHaveBeenCalledWith({ 'themeId.equals': 123, page: 0, size: 20, sort: ['order,asc'] });
       expect(comp.goals[0]).toEqual(jasmine.objectContaining({ id: 123 }));
     });
   });
