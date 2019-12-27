@@ -13,11 +13,10 @@ import io.github.rimesc.planner.service.dto.TaskDTO;
 public interface TaskMapper extends EntityMapper<TaskDTO, Task> {
 
     @Override
-    @Mapping(source = "goal.id", target = "goalId")
+    @Mapping(source = "goal", target = "goal", qualifiedBy = Summary.class)
     TaskDTO toDto(Task task);
 
     @Override
-    @Mapping(source = "goalId", target = "goal")
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "lastModifiedBy", ignore = true)

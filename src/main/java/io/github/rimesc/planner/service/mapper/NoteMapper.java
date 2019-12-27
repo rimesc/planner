@@ -13,11 +13,10 @@ import io.github.rimesc.planner.service.dto.NoteDTO;
 public interface NoteMapper extends EntityMapper<NoteDTO, Note> {
 
     @Override
-    @Mapping(source = "goal.id", target = "goalId")
+    @Mapping(source = "goal", target = "goal", qualifiedBy = Summary.class)
     NoteDTO toDto(Note note);
 
     @Override
-    @Mapping(source = "goalId", target = "goal")
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "lastModifiedBy", ignore = true)

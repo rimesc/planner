@@ -1,9 +1,11 @@
+import { IGoal } from './goal.model';
+
 export interface INote {
   id?: number;
   markdown?: any;
-  goalId?: number;
+  goal?: IGoal;
 }
 
 export class Note implements INote {
-  constructor(public id?: number, public markdown?: any, public goalId?: number) {}
+  constructor(public id?: number, public markdown?: any, public goal?: IGoal) {}
 }

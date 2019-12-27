@@ -56,7 +56,7 @@ export class TaskUpdateComponent implements OnInit {
       id: task.id,
       summary: task.summary,
       completedAt: task.completedAt != null ? task.completedAt.format(DATE_TIME_FORMAT) : null,
-      goalId: task.goalId
+      goalId: task.goal != null ? task.goal.id : null
     });
   }
 
@@ -81,7 +81,7 @@ export class TaskUpdateComponent implements OnInit {
       summary: this.editForm.get(['summary'])!.value,
       completedAt:
         this.editForm.get(['completedAt'])!.value != null ? moment(this.editForm.get(['completedAt'])!.value, DATE_TIME_FORMAT) : undefined,
-      goalId: this.editForm.get(['goalId'])!.value
+      goal: this.goals.find(g => g.id === this.editForm.get(['goalId'])!.value)
     };
   }
 

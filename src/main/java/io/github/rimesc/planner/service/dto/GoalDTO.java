@@ -2,7 +2,6 @@ package io.github.rimesc.planner.service.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -25,9 +24,9 @@ public class GoalDTO implements Serializable {
 
     private Instant completedAt;
 
-    private Set<TagDTO> tags = new HashSet<>();
+    private Set<TagDTO> tags;
 
-    private Long themeId;
+    private ThemeDTO theme;
 
     public Long getId() {
         return id;
@@ -69,12 +68,12 @@ public class GoalDTO implements Serializable {
         this.tags = tags;
     }
 
-    public Long getThemeId() {
-        return themeId;
+    public ThemeDTO getTheme() {
+        return theme;
     }
 
-    public void setThemeId(Long themeId) {
-        this.themeId = themeId;
+    public void setTheme(ThemeDTO theme) {
+        this.theme = theme;
     }
 
     @Override
@@ -105,7 +104,7 @@ public class GoalDTO implements Serializable {
             ", summary='" + getSummary() + "'" +
             ", order=" + getOrder() +
             ", completedAt='" + getCompletedAt() + "'" +
-            ", themeId=" + getThemeId() +
+            ", theme=" + getTheme() +
             "}";
     }
 }

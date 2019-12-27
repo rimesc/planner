@@ -1,5 +1,6 @@
 package io.github.rimesc.planner.service.mapper;
 
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -13,8 +14,14 @@ import io.github.rimesc.planner.service.dto.GoalDTO;
 public interface GoalMapper extends EntityMapper<GoalDTO, Goal> {
 
     @Override
-    @Mapping(source = "theme.id", target = "themeId")
+    @Mapping(source = "theme", target = "theme", qualifiedBy = Summary.class)
     GoalDTO toDto(Goal goal);
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "summary", target = "summary")
+    @Summary
+    GoalDTO toSummaryDTO(Goal goal);
 
     @Override
     @Mapping(target = "tasks", ignore = true)
@@ -22,7 +29,7 @@ public interface GoalMapper extends EntityMapper<GoalDTO, Goal> {
     @Mapping(target = "notes", ignore = true)
     @Mapping(target = "removeNote", ignore = true)
     @Mapping(target = "removeTag", ignore = true)
-    @Mapping(source = "themeId", target = "theme")
+    @Mapping(source = "theme", target = "theme")
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "lastModifiedBy", ignore = true)
@@ -37,4 +44,5 @@ public interface GoalMapper extends EntityMapper<GoalDTO, Goal> {
         goal.setId(id);
         return goal;
     }
+
 }

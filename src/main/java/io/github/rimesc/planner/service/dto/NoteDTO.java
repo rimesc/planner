@@ -15,7 +15,7 @@ public class NoteDTO implements Serializable {
     @Lob
     private String markdown;
 
-    private Long goalId;
+    private GoalDTO goal;
 
     public Long getId() {
         return id;
@@ -33,12 +33,12 @@ public class NoteDTO implements Serializable {
         this.markdown = markdown;
     }
 
-    public Long getGoalId() {
-        return goalId;
+    public GoalDTO getGoal() {
+        return goal;
     }
 
-    public void setGoalId(Long goalId) {
-        this.goalId = goalId;
+    public void setGoal(GoalDTO goal) {
+        this.goal = goal;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class NoteDTO implements Serializable {
         return "NoteDTO{" +
             "id=" + getId() +
             ", markdown='" + getMarkdown() + "'" +
-            ", goalId=" + getGoalId() +
+            ", goal=" + getGoal() +
             "}";
     }
 }

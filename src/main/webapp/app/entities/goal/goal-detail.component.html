@@ -26,8 +26,8 @@
                     </dd>
                     <dt><span jhiTranslate="plannerApp.goal.theme">Theme</span></dt>
                     <dd>
-                        <div *ngIf="goal.themeId">
-                            <a [routerLink]="['/theme', goal.themeId, 'view']">{{goal.themeId}}</a>
+                        <div *ngIf="goal.theme">
+                            <a [routerLink]="['/theme', goal.theme.id, 'view']">{{goal.theme.name}}</a>
                         </div>
                     </dd>
                 </dl>

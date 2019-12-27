@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 import { ITask } from 'app/shared/model/task.model';
 import { INote } from 'app/shared/model/note.model';
 import { ITag } from 'app/shared/model/tag.model';
+import { ITheme } from 'app/shared/model/theme.model';
 
 export interface IGoal {
   id?: number;
@@ -11,7 +12,7 @@ export interface IGoal {
   tasks?: ITask[];
   notes?: INote[];
   tags?: ITag[];
-  themeId?: number;
+  theme?: ITheme;
 }
 
 export class Goal implements IGoal {
@@ -23,6 +24,6 @@ export class Goal implements IGoal {
     public tasks?: ITask[],
     public notes?: INote[],
     public tags?: ITag[],
-    public themeId?: number
+    public theme?: ITheme
   ) {}
 }

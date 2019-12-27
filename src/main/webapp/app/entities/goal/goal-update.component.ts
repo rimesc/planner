@@ -76,7 +76,7 @@ export class GoalUpdateComponent implements OnInit {
       order: goal.order,
       completedAt: goal.completedAt != null ? goal.completedAt.format(DATE_TIME_FORMAT) : null,
       tags: goal.tags,
-      themeId: goal.themeId
+      themeId: goal.theme != null ? goal.theme.id : null
     });
   }
 
@@ -103,7 +103,7 @@ export class GoalUpdateComponent implements OnInit {
       completedAt:
         this.editForm.get(['completedAt'])!.value != null ? moment(this.editForm.get(['completedAt'])!.value, DATE_TIME_FORMAT) : undefined,
       tags: this.editForm.get(['tags'])!.value,
-      themeId: this.editForm.get(['themeId'])!.value
+      theme: this.themes.find(t => t.id === this.editForm.get(['themeId'])!.value)
     };
   }
 

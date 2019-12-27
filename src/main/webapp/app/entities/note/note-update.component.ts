@@ -56,7 +56,7 @@ export class NoteUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: note.id,
       markdown: note.markdown,
-      goalId: note.goalId
+      goalId: note.goal != null ? note.goal.id : null
     });
   }
 
@@ -95,7 +95,7 @@ export class NoteUpdateComponent implements OnInit {
       ...new Note(),
       id: this.editForm.get(['id'])!.value,
       markdown: this.editForm.get(['markdown'])!.value,
-      goalId: this.editForm.get(['goalId'])!.value
+      goal: this.goals.find(g => g.id === this.editForm.get(['goalId'])!.value)
     };
   }
 

@@ -1,5 +1,6 @@
 package io.github.rimesc.planner.service.mapper;
 
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -31,4 +32,11 @@ public interface ThemeMapper extends EntityMapper<ThemeDTO, Theme> {
         theme.setId(id);
         return theme;
     }
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "avatar", target = "avatar")
+    @Summary
+    ThemeDTO toSummaryDTO(Theme theme);
 }

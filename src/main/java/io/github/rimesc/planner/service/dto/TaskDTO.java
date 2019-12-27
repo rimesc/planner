@@ -20,7 +20,7 @@ public class TaskDTO implements Serializable {
 
     private Instant completedAt;
 
-    private Long goalId;
+    private GoalDTO goal;
 
     public Long getId() {
         return id;
@@ -46,12 +46,12 @@ public class TaskDTO implements Serializable {
         this.completedAt = completedAt;
     }
 
-    public Long getGoalId() {
-        return goalId;
+    public GoalDTO getGoal() {
+        return goal;
     }
 
-    public void setGoalId(Long goalId) {
-        this.goalId = goalId;
+    public void setGoal(GoalDTO goal) {
+        this.goal = goal;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class TaskDTO implements Serializable {
             "id=" + getId() +
             ", summary='" + getSummary() + "'" +
             ", completedAt='" + getCompletedAt() + "'" +
-            ", goalId=" + getGoalId() +
+            ", goal=" + getGoal() +
             "}";
     }
 }

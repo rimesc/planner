@@ -12,8 +12,8 @@
                     </dd>
                     <dt><span jhiTranslate="plannerApp.note.goal">Goal</span></dt>
                     <dd>
-                        <div *ngIf="note.goalId">
-                            <a [routerLink]="['/goal', note.goalId, 'view']">{{note.goalId}}</a>
+                        <div *ngIf="note.goal">
+                            <a [routerLink]="['/goal', note.goal.id, 'view']">{{note.goal.summary}}</a>
                         </div>
                     </dd>
                 </dl>

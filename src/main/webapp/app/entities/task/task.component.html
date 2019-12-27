@@ -32,8 +32,8 @@
                     <td>{{task.summary}}</td>
                     <td>{{task.completedAt | date:'medium'}}</td>
                     <td>
-                        <div *ngIf="task.goalId">
-                            <a [routerLink]="['/goal', task.goalId , 'view' ]" >{{task.goalId}}</a>
+                        <div *ngIf="task.goal">
+                            <a [routerLink]="['/goal', task.goal.id , 'view' ]" >{{task.goal.summary}}</a>
                         </div>
                     </td>
                     <td class="text-right">
