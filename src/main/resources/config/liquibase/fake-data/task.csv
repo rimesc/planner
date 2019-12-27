@@ -1,11 +1,11 @@
-id;summary;created_at;completed_at;owner_id;goal_id
-1;withdrawal Moldovan Leu Intelligent;2019-03-03T11:49:34;2019-03-02T20:17:05;1;1
-2;payment Gloves Washington;2019-03-03T04:32:38;2019-03-03T05:36:59;1;2
-3;methodologies;2019-03-03T19:28:05;2019-03-03T04:42:28;1;3
-4;morph Rubber;2019-03-03T00:37:27;2019-03-03T13:15:31;2;4
-5;Architect;2019-03-02T22:30:37;2019-03-03T08:50:53;2;5
-6;Human transmit Usability;2019-03-03T06:35:15;2019-03-02T20:59:01;2;6
-7;proactive reboot;2019-03-03T19:33:14;2019-03-03T13:16:16;2;7
-8;hacking;2019-03-02T23:48:34;2019-03-03T01:39:00;1;8
-9;optical web-enabled back-end;2019-03-03T00:37:56;2019-03-02T23:41:45;1;9
-10;Uganda Shilling driver;2019-03-03T18:31:48;2019-03-03T14:13:01;2;10
+id;summary;completed_at;goal_id;created_by;last_modified_by
+1;withdrawal Moldovan Leu Intelligent;2019-03-03T11:49:34;1;system;system
+2;Walk payment Gloves;2019-03-03T05:53:35;2;system;system
+3;payment Chair methodologies;2019-03-03T19:28:05;3;system;system
+4;Baby morph;2019-03-03T16:30:39;4;system;system
+5;virtual back-end;2019-03-02T20:04:05;5;system;system
+6;Central calculating;2019-03-02T22:28:58;6;system;system
+7;transmit Usability Wisconsin;2019-03-03T03:15:17;7;system;system
+8;proactive reboot;2019-03-03T19:33:14;8;system;system
+9;Officer;2019-03-02T23:44:21;9;system;system
+10;synthesizing;2019-03-03T19:15:58;10;system;system

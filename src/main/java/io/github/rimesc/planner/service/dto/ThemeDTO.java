@@ -1,14 +1,11 @@
 package io.github.rimesc.planner.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import io.github.rimesc.planner.domain.enumeration.Visibility;
 
 /**
  * A DTO for the {@link io.github.rimesc.planner.domain.Theme} entity.
@@ -29,13 +26,6 @@ public class ThemeDTO implements Serializable {
     private byte[] avatar;
 
     private String avatarContentType;
-    @NotNull
-    private Instant createdAt;
-
-    @NotNull
-    private Visibility visibility;
-
-    private Long ownerId;
 
     public Long getId() {
         return id;
@@ -77,30 +67,6 @@ public class ThemeDTO implements Serializable {
         this.avatarContentType = avatarContentType;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Visibility getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(Visibility visibility) {
-        this.visibility = visibility;
-    }
-
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(Long userId) {
-        this.ownerId = userId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -129,9 +95,6 @@ public class ThemeDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", avatar='" + getAvatar() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", visibility='" + getVisibility() + "'" +
-            ", ownerId=" + getOwnerId() +
             "}";
     }
 }

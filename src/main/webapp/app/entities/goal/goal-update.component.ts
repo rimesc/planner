@@ -10,14 +10,12 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IGoal, Goal } from 'app/shared/model/goal.model';
 import { GoalService } from './goal.service';
-import { IUser } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
 import { ITag } from 'app/shared/model/tag.model';
 import { TagService } from 'app/entities/tag/tag.service';
 import { ITheme } from 'app/shared/model/theme.model';
 import { ThemeService } from 'app/entities/theme/theme.service';
 
-type SelectableEntity = IUser | ITag | ITheme;
+type SelectableEntity = ITag | ITheme;
 
 @Component({
   selector: 'jhi-goal-update',
@@ -26,8 +24,6 @@ type SelectableEntity = IUser | ITag | ITheme;
 export class GoalUpdateComponent implements OnInit {
   isSaving = false;
 
-  users: IUser[] = [];
-
   tags: ITag[] = [];
 
   themes: ITheme[] = [];
@@ -35,18 +31,14 @@ export class GoalUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     summary: [null, [Validators.required, Validators.maxLength(128)]],
-    createdAt: [null, [Validators.required]],
-    completedAt: [],
     order: [null, [Validators.required]],
-    visibility: [null, [Validators.required]],
-    ownerId: [null, Validators.required],
+    completedAt: [],
     tags: [],
     themeId: [null, Validators.required]
   });
 
   constructor(
     protected goalService: GoalService,
-    protected userService: UserService,
     protected tagService: TagService,
     protected themeService: ThemeService,
     protected activatedRoute: ActivatedRoute,
@@ -56,15 +48,6 @@ export class GoalUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ goal }) => {
       this.updateForm(goal);
-
-      this.userService
-        .query()
-        .pipe(
-          map((res: HttpResponse<IUser[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IUser[]) => (this.users = resBody));
 
       this.tagService
         .query()
@@ -90,13 +73,10 @@ export class GoalUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: goal.id,
       summary: goal.summary,
-      createdAt: goal.createdAt != null ? goal.createdAt.format(DATE_TIME_FORMAT) : null,
-      completedAt: goal.completedAt != null ? goal.completedAt.format(DATE_TIME_FORMAT) : null,
       order: goal.order,
-      visibility: goal.visibility,
-      ownerId: goal.ownerId,
+      completedAt: goal.completedAt != null ? goal.completedAt.format(DATE_TIME_FORMAT) : null,
       tags: goal.tags,
-      themeId: goal.themeId
+      themeId: goal.theme != null ? goal.theme.id : null
     });
   }
 
@@ -119,15 +99,11 @@ export class GoalUpdateComponent implements OnInit {
       ...new Goal(),
       id: this.editForm.get(['id'])!.value,
       summary: this.editForm.get(['summary'])!.value,
-      createdAt:
-        this.editForm.get(['createdAt'])!.value != null ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
+      order: this.editForm.get(['order'])!.value,
       completedAt:
         this.editForm.get(['completedAt'])!.value != null ? moment(this.editForm.get(['completedAt'])!.value, DATE_TIME_FORMAT) : undefined,
-      order: this.editForm.get(['order'])!.value,
-      visibility: this.editForm.get(['visibility'])!.value,
-      ownerId: this.editForm.get(['ownerId'])!.value,
       tags: this.editForm.get(['tags'])!.value,
-      themeId: this.editForm.get(['themeId'])!.value
+      theme: this.themes.find(t => t.id === this.editForm.get(['themeId'])!.value)
     };
   }
 

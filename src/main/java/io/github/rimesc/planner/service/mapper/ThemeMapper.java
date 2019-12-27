@@ -1,5 +1,6 @@
 package io.github.rimesc.planner.service.mapper;
 
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -9,19 +10,18 @@ import io.github.rimesc.planner.service.dto.ThemeDTO;
 /**
  * Mapper for the entity {@link Theme} and its DTO {@link ThemeDTO}.
  */
-@Mapper(componentModel = "spring", uses = { UserMapper.class })
+@Mapper(componentModel = "spring", uses = {})
 public interface ThemeMapper extends EntityMapper<ThemeDTO, Theme> {
-
-    @Override
-    @Mapping(source = "owner.id", target = "ownerId")
-    ThemeDTO toDto(Theme theme);
 
     @Override
     @Mapping(target = "tags", ignore = true)
     @Mapping(target = "removeTag", ignore = true)
     @Mapping(target = "goals", ignore = true)
     @Mapping(target = "removeGoal", ignore = true)
-    @Mapping(source = "ownerId", target = "owner")
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "lastModifiedBy", ignore = true)
+    @Mapping(target = "lastModifiedDate", ignore = true)
     Theme toEntity(ThemeDTO themeDTO);
 
     default Theme fromId(Long id) {
@@ -32,4 +32,11 @@ public interface ThemeMapper extends EntityMapper<ThemeDTO, Theme> {
         theme.setId(id);
         return theme;
     }
+
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "avatar", target = "avatar")
+    @Summary
+    ThemeDTO toSummaryDTO(Theme theme);
 }

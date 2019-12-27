@@ -1,6 +1,5 @@
 package io.github.rimesc.planner.domain;
 
-import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Column;
@@ -20,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @Entity
 @Table(name = "task")
-public class Task implements Serializable {
+public class Task extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,17 +32,8 @@ public class Task implements Serializable {
     @Column(name = "summary", length = 128, nullable = false)
     private String summary;
 
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
-
     @Column(name = "completed_at")
     private Instant completedAt;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("tasks")
-    private User owner;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -72,19 +62,6 @@ public class Task implements Serializable {
         this.summary = summary;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Task createdAt(Instant createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public Instant getCompletedAt() {
         return completedAt;
     }
@@ -96,19 +73,6 @@ public class Task implements Serializable {
 
     public void setCompletedAt(Instant completedAt) {
         this.completedAt = completedAt;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public Task owner(User user) {
-        this.owner = user;
-        return this;
-    }
-
-    public void setOwner(User user) {
-        this.owner = user;
     }
 
     public Goal getGoal() {
@@ -146,7 +110,6 @@ public class Task implements Serializable {
         return "Task{" +
             "id=" + getId() +
             ", summary='" + getSummary() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
             ", completedAt='" + getCompletedAt() + "'" +
             "}";
     }

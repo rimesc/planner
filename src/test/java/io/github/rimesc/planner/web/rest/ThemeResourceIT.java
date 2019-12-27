@@ -11,8 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -35,8 +33,6 @@ import io.github.rimesc.planner.PlannerApp;
 import io.github.rimesc.planner.domain.Goal;
 import io.github.rimesc.planner.domain.Tag;
 import io.github.rimesc.planner.domain.Theme;
-import io.github.rimesc.planner.domain.User;
-import io.github.rimesc.planner.domain.enumeration.Visibility;
 import io.github.rimesc.planner.repository.ThemeRepository;
 import io.github.rimesc.planner.service.ThemeQueryService;
 import io.github.rimesc.planner.service.ThemeService;
@@ -60,12 +56,6 @@ public class ThemeResourceIT {
     private static final byte[] UPDATED_AVATAR = TestUtil.createByteArray(1, "1");
     private static final String DEFAULT_AVATAR_CONTENT_TYPE = "image/jpg";
     private static final String UPDATED_AVATAR_CONTENT_TYPE = "image/png";
-
-    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
-    private static final Visibility DEFAULT_VISIBILITY = Visibility.PUBLIC;
-    private static final Visibility UPDATED_VISIBILITY = Visibility.PRIVATE;
 
     @Autowired
     private ThemeRepository themeRepository;
@@ -121,14 +111,7 @@ public class ThemeResourceIT {
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .avatar(DEFAULT_AVATAR)
-            .avatarContentType(DEFAULT_AVATAR_CONTENT_TYPE)
-            .createdAt(DEFAULT_CREATED_AT)
-            .visibility(DEFAULT_VISIBILITY);
-        // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        theme.setOwner(user);
+            .avatarContentType(DEFAULT_AVATAR_CONTENT_TYPE);
         return theme;
     }
 
@@ -143,9 +126,7 @@ public class ThemeResourceIT {
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .avatar(UPDATED_AVATAR)
-            .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE)
-            .createdAt(UPDATED_CREATED_AT)
-            .visibility(UPDATED_VISIBILITY);
+            .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
         return theme;
     }
 
@@ -174,8 +155,6 @@ public class ThemeResourceIT {
         assertThat(testTheme.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testTheme.getAvatar()).isEqualTo(DEFAULT_AVATAR);
         assertThat(testTheme.getAvatarContentType()).isEqualTo(DEFAULT_AVATAR_CONTENT_TYPE);
-        assertThat(testTheme.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
-        assertThat(testTheme.getVisibility()).isEqualTo(DEFAULT_VISIBILITY);
     }
 
     @Test
@@ -238,44 +217,6 @@ public class ThemeResourceIT {
 
     @Test
     @Transactional
-    public void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = themeRepository.findAll().size();
-        // set the field null
-        theme.setCreatedAt(null);
-
-        // Create the Theme, which fails.
-        ThemeDTO themeDTO = themeMapper.toDto(theme);
-
-        restThemeMockMvc.perform(post("/api/themes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(themeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Theme> themeList = themeRepository.findAll();
-        assertThat(themeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkVisibilityIsRequired() throws Exception {
-        int databaseSizeBeforeTest = themeRepository.findAll().size();
-        // set the field null
-        theme.setVisibility(null);
-
-        // Create the Theme, which fails.
-        ThemeDTO themeDTO = themeMapper.toDto(theme);
-
-        restThemeMockMvc.perform(post("/api/themes")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(themeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Theme> themeList = themeRepository.findAll();
-        assertThat(themeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllThemes() throws Exception {
         // Initialize the database
         themeRepository.saveAndFlush(theme);
@@ -288,9 +229,7 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].avatarContentType").value(hasItem(DEFAULT_AVATAR_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64Utils.encodeToString(DEFAULT_AVATAR))))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
+            .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64Utils.encodeToString(DEFAULT_AVATAR))));
     }
 
     @Test
@@ -307,9 +246,7 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.avatarContentType").value(DEFAULT_AVATAR_CONTENT_TYPE))
-            .andExpect(jsonPath("$.avatar").value(Base64Utils.encodeToString(DEFAULT_AVATAR)))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
-            .andExpect(jsonPath("$.visibility").value(DEFAULT_VISIBILITY.toString()));
+            .andExpect(jsonPath("$.avatar").value(Base64Utils.encodeToString(DEFAULT_AVATAR)));
     }
 
     @Test
@@ -488,110 +425,6 @@ public class ThemeResourceIT {
 
     @Test
     @Transactional
-    public void getAllThemesByCreatedAtIsEqualToSomething() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where createdAt equals to DEFAULT_CREATED_AT
-        defaultThemeShouldBeFound("createdAt.equals=" + DEFAULT_CREATED_AT);
-
-        // Get all the themeList where createdAt equals to UPDATED_CREATED_AT
-        defaultThemeShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByCreatedIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where createdAt not equals to DEFAULT_CREATED_AT
-        defaultThemeShouldNotBeFound("createdAt.notEquals=" + DEFAULT_CREATED_AT);
-
-        // Get all the themeList where createdAt not equals to UPDATED_CREATED_AT
-        defaultThemeShouldBeFound("createdAt.notEquals=" + UPDATED_CREATED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByCreatedAtIsInShouldWork() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where createdAt in DEFAULT_CREATED_AT or UPDATED_CREATED_AT
-        defaultThemeShouldBeFound("createdAt.in=" + DEFAULT_CREATED_AT + "," + UPDATED_CREATED_AT);
-
-        // Get all the themeList where createdAt equals to UPDATED_CREATED_AT
-        defaultThemeShouldNotBeFound("createdAt.in=" + UPDATED_CREATED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByCreatedAtIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where createdAt is not null
-        defaultThemeShouldBeFound("createdAt.specified=true");
-
-        // Get all the themeList where createdAt is null
-        defaultThemeShouldNotBeFound("createdAt.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByVisibilityIsEqualToSomething() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where visibility equals to DEFAULT_VISIBILITY
-        defaultThemeShouldBeFound("visibility.equals=" + DEFAULT_VISIBILITY);
-
-        // Get all the themeList where visibility equals to UPDATED_VISIBILITY
-        defaultThemeShouldNotBeFound("visibility.equals=" + UPDATED_VISIBILITY);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByVisibilityIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where visibility not equals to DEFAULT_VISIBILITY
-        defaultThemeShouldNotBeFound("visibility.notEquals=" + DEFAULT_VISIBILITY);
-
-        // Get all the themeList where visibility not equals to UPDATED_VISIBILITY
-        defaultThemeShouldBeFound("visibility.notEquals=" + UPDATED_VISIBILITY);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByVisibilityIsInShouldWork() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where visibility in DEFAULT_VISIBILITY or UPDATED_VISIBILITY
-        defaultThemeShouldBeFound("visibility.in=" + DEFAULT_VISIBILITY + "," + UPDATED_VISIBILITY);
-
-        // Get all the themeList where visibility equals to UPDATED_VISIBILITY
-        defaultThemeShouldNotBeFound("visibility.in=" + UPDATED_VISIBILITY);
-    }
-
-    @Test
-    @Transactional
-    public void getAllThemesByVisibilityIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-
-        // Get all the themeList where visibility is not null
-        defaultThemeShouldBeFound("visibility.specified=true");
-
-        // Get all the themeList where visibility is null
-        defaultThemeShouldNotBeFound("visibility.specified=false");
-    }
-
-    @Test
-    @Transactional
     public void getAllThemesByTagIsEqualToSomething() throws Exception {
         // Initialize the database
         themeRepository.saveAndFlush(theme);
@@ -628,25 +461,6 @@ public class ThemeResourceIT {
         defaultThemeShouldNotBeFound("goalId.equals=" + (goalId + 1));
     }
 
-    @Test
-    @Transactional
-    public void getAllThemesByOwnerIsEqualToSomething() throws Exception {
-        // Initialize the database
-        themeRepository.saveAndFlush(theme);
-        User owner = UserResourceIT.createEntity(em);
-        em.persist(owner);
-        em.flush();
-        theme.setOwner(owner);
-        themeRepository.saveAndFlush(theme);
-        Long ownerId = owner.getId();
-
-        // Get all the themeList where owner equals to ownerId
-        defaultThemeShouldBeFound("ownerId.equals=" + ownerId);
-
-        // Get all the themeList where owner equals to ownerId + 1
-        defaultThemeShouldNotBeFound("ownerId.equals=" + (ownerId + 1));
-    }
-
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -658,9 +472,7 @@ public class ThemeResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].avatarContentType").value(hasItem(DEFAULT_AVATAR_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64Utils.encodeToString(DEFAULT_AVATAR))))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
+            .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64Utils.encodeToString(DEFAULT_AVATAR))));
 
         // Check, that the count call also returns 1
         restThemeMockMvc.perform(get("/api/themes/count?sort=id,desc&" + filter))
@@ -710,9 +522,7 @@ public class ThemeResourceIT {
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .avatar(UPDATED_AVATAR)
-            .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE)
-            .createdAt(UPDATED_CREATED_AT)
-            .visibility(UPDATED_VISIBILITY);
+            .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
         ThemeDTO themeDTO = themeMapper.toDto(updatedTheme);
 
         restThemeMockMvc.perform(put("/api/themes")
@@ -728,8 +538,6 @@ public class ThemeResourceIT {
         assertThat(testTheme.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testTheme.getAvatar()).isEqualTo(UPDATED_AVATAR);
         assertThat(testTheme.getAvatarContentType()).isEqualTo(UPDATED_AVATAR_CONTENT_TYPE);
-        assertThat(testTheme.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
-        assertThat(testTheme.getVisibility()).isEqualTo(UPDATED_VISIBILITY);
     }
 
     @Test

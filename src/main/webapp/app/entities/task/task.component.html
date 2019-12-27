@@ -21,9 +21,7 @@
                 <tr>
                 <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
                 <th scope="col" ><span jhiTranslate="plannerApp.task.summary">Summary</span></th>
-                <th scope="col" ><span jhiTranslate="plannerApp.task.createdAt">Created At</span></th>
                 <th scope="col" ><span jhiTranslate="plannerApp.task.completedAt">Completed At</span></th>
-                <th scope="col" ><span jhiTranslate="plannerApp.task.owner">Owner</span></th>
                 <th scope="col" ><span jhiTranslate="plannerApp.task.goal">Goal</span></th>
                 <th scope="col"></th>
                 </tr>
@@ -32,14 +30,10 @@
                 <tr *ngFor="let task of tasks ;trackBy: trackId">
                     <td><a [routerLink]="['/entities/task', task.id, 'view' ]">{{task.id}}</a></td>
                     <td>{{task.summary}}</td>
-                    <td>{{task.createdAt | date:'medium'}}</td>
                     <td>{{task.completedAt | date:'medium'}}</td>
                     <td>
-                        {{task.ownerId}}
-                    </td>
-                    <td>
-                        <div *ngIf="task.goalId">
-                            <a [routerLink]="['/goal', task.goalId , 'view' ]" >{{task.goalId}}</a>
+                        <div *ngIf="task.goal">
+                            <a [routerLink]="['/goal', task.goal.id , 'view' ]" >{{task.goal.summary}}</a>
                         </div>
                     </td>
                     <td class="text-right">

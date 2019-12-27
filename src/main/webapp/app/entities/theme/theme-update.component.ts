@@ -4,16 +4,11 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { ITheme, Theme } from 'app/shared/model/theme.model';
 import { ThemeService } from './theme.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
-import { IUser } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-theme-update',
@@ -22,24 +17,18 @@ import { UserService } from 'app/core/user/user.service';
 export class ThemeUpdateComponent implements OnInit {
   isSaving = false;
 
-  users: IUser[] = [];
-
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required, Validators.maxLength(128)]],
     description: [null, [Validators.required, Validators.maxLength(512)]],
     avatar: [null, []],
-    avatarContentType: [],
-    createdAt: [null, [Validators.required]],
-    visibility: [null, [Validators.required]],
-    ownerId: [null, Validators.required]
+    avatarContentType: []
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
     protected themeService: ThemeService,
-    protected userService: UserService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -48,15 +37,6 @@ export class ThemeUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ theme }) => {
       this.updateForm(theme);
-
-      this.userService
-        .query()
-        .pipe(
-          map((res: HttpResponse<IUser[]>) => {
-            return res.body ? res.body : [];
-          })
-        )
-        .subscribe((resBody: IUser[]) => (this.users = resBody));
     });
   }
 
@@ -66,10 +46,7 @@ export class ThemeUpdateComponent implements OnInit {
       name: theme.name,
       description: theme.description,
       avatar: theme.avatar,
-      avatarContentType: theme.avatarContentType,
-      createdAt: theme.createdAt != null ? theme.createdAt.format(DATE_TIME_FORMAT) : null,
-      visibility: theme.visibility,
-      ownerId: theme.ownerId
+      avatarContentType: theme.avatarContentType
     });
   }
 
@@ -120,11 +97,7 @@ export class ThemeUpdateComponent implements OnInit {
       name: this.editForm.get(['name'])!.value,
       description: this.editForm.get(['description'])!.value,
       avatarContentType: this.editForm.get(['avatarContentType'])!.value,
-      avatar: this.editForm.get(['avatar'])!.value,
-      createdAt:
-        this.editForm.get(['createdAt'])!.value != null ? moment(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
-      visibility: this.editForm.get(['visibility'])!.value,
-      ownerId: this.editForm.get(['ownerId'])!.value
+      avatar: this.editForm.get(['avatar'])!.value
     };
   }
 
@@ -142,9 +115,5 @@ export class ThemeUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
-  }
-
-  trackById(index: number, item: IUser): any {
-    return item.id;
   }
 }

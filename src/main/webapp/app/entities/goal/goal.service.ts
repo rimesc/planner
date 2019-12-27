@@ -52,7 +52,6 @@ export class GoalService {
 
   protected convertDateFromClient(goal: IGoal): IGoal {
     const copy: IGoal = Object.assign({}, goal, {
-      createdAt: goal.createdAt && goal.createdAt.isValid() ? goal.createdAt.toJSON() : undefined,
       completedAt: goal.completedAt && goal.completedAt.isValid() ? goal.completedAt.toJSON() : undefined
     });
     return copy;
@@ -60,7 +59,6 @@ export class GoalService {
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.createdAt = res.body.createdAt ? moment(res.body.createdAt) : undefined;
       res.body.completedAt = res.body.completedAt ? moment(res.body.completedAt) : undefined;
     }
     return res;
@@ -69,7 +67,6 @@ export class GoalService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((goal: IGoal) => {
-        goal.createdAt = goal.createdAt ? moment(goal.createdAt) : undefined;
         goal.completedAt = goal.completedAt ? moment(goal.completedAt) : undefined;
       });
     }

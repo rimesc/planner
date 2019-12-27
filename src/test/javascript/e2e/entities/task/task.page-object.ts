@@ -27,9 +27,7 @@ export class TaskUpdatePage {
   saveButton = element(by.id('save-entity'));
   cancelButton = element(by.id('cancel-save'));
   summaryInput = element(by.id('field_summary'));
-  createdAtInput = element(by.id('field_createdAt'));
   completedAtInput = element(by.id('field_completedAt'));
-  ownerSelect = element(by.id('field_owner'));
   goalSelect = element(by.id('field_goal'));
 
   async getPageTitle(): Promise<string> {
@@ -44,39 +42,12 @@ export class TaskUpdatePage {
     return await this.summaryInput.getAttribute('value');
   }
 
-  async setCreatedAtInput(createdAt: string): Promise<void> {
-    await this.createdAtInput.sendKeys(createdAt);
-  }
-
-  async getCreatedAtInput(): Promise<string> {
-    return await this.createdAtInput.getAttribute('value');
-  }
-
   async setCompletedAtInput(completedAt: string): Promise<void> {
     await this.completedAtInput.sendKeys(completedAt);
   }
 
   async getCompletedAtInput(): Promise<string> {
     return await this.completedAtInput.getAttribute('value');
-  }
-
-  async ownerSelectLastOption(): Promise<void> {
-    await this.ownerSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async ownerSelectOption(option: string): Promise<void> {
-    await this.ownerSelect.sendKeys(option);
-  }
-
-  getOwnerSelect(): ElementFinder {
-    return this.ownerSelect;
-  }
-
-  async getOwnerSelectedOption(): Promise<string> {
-    return await this.ownerSelect.element(by.css('option:checked')).getText();
   }
 
   async goalSelectLastOption(): Promise<void> {

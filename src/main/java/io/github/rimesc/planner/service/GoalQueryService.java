@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.github.jhipster.service.QueryService;
+// for static metamodels
 import io.github.rimesc.planner.domain.Goal;
 import io.github.rimesc.planner.domain.Goal_;
 import io.github.rimesc.planner.domain.Note_;
 import io.github.rimesc.planner.domain.Tag_;
 import io.github.rimesc.planner.domain.Task_;
 import io.github.rimesc.planner.domain.Theme_;
-import io.github.rimesc.planner.domain.User_;
 import io.github.rimesc.planner.repository.GoalRepository;
 import io.github.rimesc.planner.service.dto.GoalCriteria;
 import io.github.rimesc.planner.service.dto.GoalDTO;
@@ -98,17 +98,11 @@ public class GoalQueryService extends QueryService<Goal> {
             if (criteria.getSummary() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSummary(), Goal_.summary));
             }
-            if (criteria.getCreatedAt() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Goal_.createdAt));
-            }
-            if (criteria.getCompletedAt() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCompletedAt(), Goal_.completedAt));
-            }
             if (criteria.getOrder() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getOrder(), Goal_.order));
             }
-            if (criteria.getVisibility() != null) {
-                specification = specification.and(buildSpecification(criteria.getVisibility(), Goal_.visibility));
+            if (criteria.getCompletedAt() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCompletedAt(), Goal_.completedAt));
             }
             if (criteria.getTaskId() != null) {
                 specification = specification.and(buildSpecification(criteria.getTaskId(),
@@ -117,10 +111,6 @@ public class GoalQueryService extends QueryService<Goal> {
             if (criteria.getNoteId() != null) {
                 specification = specification.and(buildSpecification(criteria.getNoteId(),
                     root -> root.join(Goal_.notes, JoinType.LEFT).get(Note_.id)));
-            }
-            if (criteria.getOwnerId() != null) {
-                specification = specification.and(buildSpecification(criteria.getOwnerId(),
-                    root -> root.join(Goal_.owner, JoinType.LEFT).get(User_.id)));
             }
             if (criteria.getTagId() != null) {
                 specification = specification.and(buildSpecification(criteria.getTagId(),

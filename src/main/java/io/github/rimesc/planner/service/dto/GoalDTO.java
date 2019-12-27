@@ -2,14 +2,11 @@ package io.github.rimesc.planner.service.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import io.github.rimesc.planner.domain.enumeration.Visibility;
 
 /**
  * A DTO for the {@link io.github.rimesc.planner.domain.Goal} entity.
@@ -23,21 +20,13 @@ public class GoalDTO implements Serializable {
     private String summary;
 
     @NotNull
-    private Instant createdAt;
+    private Long order;
 
     private Instant completedAt;
 
-    @NotNull
-    private Long order;
+    private Set<TagDTO> tags;
 
-    @NotNull
-    private Visibility visibility;
-
-    private Long ownerId;
-
-    private Set<TagDTO> tags = new HashSet<>();
-
-    private Long themeId;
+    private ThemeDTO theme;
 
     public Long getId() {
         return id;
@@ -55,12 +44,12 @@ public class GoalDTO implements Serializable {
         this.summary = summary;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public Long getOrder() {
+        return order;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public void setOrder(Long order) {
+        this.order = order;
     }
 
     public Instant getCompletedAt() {
@@ -71,30 +60,6 @@ public class GoalDTO implements Serializable {
         this.completedAt = completedAt;
     }
 
-    public Long getOrder() {
-        return order;
-    }
-
-    public void setOrder(Long order) {
-        this.order = order;
-    }
-
-    public Visibility getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(Visibility visibility) {
-        this.visibility = visibility;
-    }
-
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(Long userId) {
-        this.ownerId = userId;
-    }
-
     public Set<TagDTO> getTags() {
         return tags;
     }
@@ -103,12 +68,12 @@ public class GoalDTO implements Serializable {
         this.tags = tags;
     }
 
-    public Long getThemeId() {
-        return themeId;
+    public ThemeDTO getTheme() {
+        return theme;
     }
 
-    public void setThemeId(Long themeId) {
-        this.themeId = themeId;
+    public void setTheme(ThemeDTO theme) {
+        this.theme = theme;
     }
 
     @Override
@@ -137,12 +102,9 @@ public class GoalDTO implements Serializable {
         return "GoalDTO{" +
             "id=" + getId() +
             ", summary='" + getSummary() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", completedAt='" + getCompletedAt() + "'" +
             ", order=" + getOrder() +
-            ", visibility='" + getVisibility() + "'" +
-            ", ownerId=" + getOwnerId() +
-            ", themeId=" + getThemeId() +
+            ", completedAt='" + getCompletedAt() + "'" +
+            ", theme=" + getTheme() +
             "}";
     }
 }

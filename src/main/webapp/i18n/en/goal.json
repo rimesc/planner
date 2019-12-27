@@ -17,13 +17,10 @@
         "title": "Goal"
       },
       "summary": "Summary",
-      "createdAt": "Created At",
-      "completedAt": "Completed At",
       "order": "Order",
-      "visibility": "Visibility",
+      "completedAt": "Completed At",
       "task": "Task",
       "note": "Note",
-      "owner": "Owner",
       "tag": "Tag",
       "theme": "Theme"
     }

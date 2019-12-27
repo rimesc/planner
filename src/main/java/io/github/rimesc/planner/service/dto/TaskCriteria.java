@@ -26,11 +26,7 @@ public class TaskCriteria implements Serializable, Criteria {
 
     private StringFilter summary;
 
-    private InstantFilter createdAt;
-
     private InstantFilter completedAt;
-
-    private LongFilter ownerId;
 
     private LongFilter goalId;
 
@@ -40,9 +36,7 @@ public class TaskCriteria implements Serializable, Criteria {
     public TaskCriteria(TaskCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.summary = other.summary == null ? null : other.summary.copy();
-        this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
         this.completedAt = other.completedAt == null ? null : other.completedAt.copy();
-        this.ownerId = other.ownerId == null ? null : other.ownerId.copy();
         this.goalId = other.goalId == null ? null : other.goalId.copy();
     }
 
@@ -67,28 +61,12 @@ public class TaskCriteria implements Serializable, Criteria {
         this.summary = summary;
     }
 
-    public InstantFilter getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(InstantFilter createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public InstantFilter getCompletedAt() {
         return completedAt;
     }
 
     public void setCompletedAt(InstantFilter completedAt) {
         this.completedAt = completedAt;
-    }
-
-    public LongFilter getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(LongFilter ownerId) {
-        this.ownerId = ownerId;
     }
 
     public LongFilter getGoalId() {
@@ -110,9 +88,7 @@ public class TaskCriteria implements Serializable, Criteria {
         final TaskCriteria that = (TaskCriteria) o;
         return Objects.equals(id, that.id) &&
             Objects.equals(summary, that.summary) &&
-            Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(completedAt, that.completedAt) &&
-            Objects.equals(ownerId, that.ownerId) &&
             Objects.equals(goalId, that.goalId);
     }
 
@@ -121,9 +97,7 @@ public class TaskCriteria implements Serializable, Criteria {
         return Objects.hash(
             id,
             summary,
-            createdAt,
             completedAt,
-            ownerId,
             goalId);
     }
 
@@ -132,9 +106,7 @@ public class TaskCriteria implements Serializable, Criteria {
         return "TaskCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (summary != null ? "summary=" + summary + ", " : "") +
-            (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
             (completedAt != null ? "completedAt=" + completedAt + ", " : "") +
-            (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
             (goalId != null ? "goalId=" + goalId + ", " : "") +
             "}";
     }

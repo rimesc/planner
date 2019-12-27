@@ -2,6 +2,8 @@ package io.github.rimesc.planner.service.mapper;
 
 import java.util.List;
 
+import org.mapstruct.Qualifier;
+
 /**
  * Contract for a generic dto to entity mapper.
  *
@@ -18,4 +20,9 @@ public interface EntityMapper<D, E> {
     List<E> toEntity(List<D> dtoList);
 
     List<D> toDto(List<E> entityList);
+
+    @Qualifier
+    @interface Summary {
+
+    }
 }

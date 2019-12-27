@@ -10,25 +10,13 @@
                     <dd>
                         <span>{{goal.summary}}</span>
                     </dd>
-                    <dt><span jhiTranslate="plannerApp.goal.createdAt">Created At</span></dt>
-                    <dd>
-                        <span>{{goal.createdAt}}</span>
-                    </dd>
-                    <dt><span jhiTranslate="plannerApp.goal.completedAt">Completed At</span></dt>
-                    <dd>
-                        <span>{{goal.completedAt}}</span>
-                    </dd>
                     <dt><span jhiTranslate="plannerApp.goal.order">Order</span></dt>
                     <dd>
                         <span>{{goal.order}}</span>
                     </dd>
-                    <dt><span jhiTranslate="plannerApp.goal.visibility">Visibility</span></dt>
+                    <dt><span jhiTranslate="plannerApp.goal.completedAt">Completed At</span></dt>
                     <dd>
-                        <span jhiTranslate="{{'plannerApp.Visibility.' + goal.visibility}}">{{goal.visibility}}</span>
-                    </dd>
-                    <dt><span jhiTranslate="plannerApp.goal.owner">Owner</span></dt>
-                    <dd>
-                        {{goal.ownerId}}
+                        <span>{{goal.completedAt}}</span>
                     </dd>
                     <dt><span jhiTranslate="plannerApp.goal.tag">Tag</span></dt>
                     <dd>
@@ -38,8 +26,8 @@
                     </dd>
                     <dt><span jhiTranslate="plannerApp.goal.theme">Theme</span></dt>
                     <dd>
-                        <div *ngIf="goal.themeId">
-                            <a [routerLink]="['/entities/theme', goal.themeId, 'view']">{{goal.themeId}}</a>
+                        <div *ngIf="goal.theme">
+                            <a [routerLink]="['/entities/theme', goal.theme.id, 'view']">{{goal.theme.name}}</a>
                         </div>
                     </dd>
                 </dl>
@@ -59,4 +47,3 @@
         </div>
     </div>
 </div>
-    

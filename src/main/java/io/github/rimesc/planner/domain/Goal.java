@@ -1,14 +1,11 @@
 package io.github.rimesc.planner.domain;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,14 +20,12 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import io.github.rimesc.planner.domain.enumeration.Visibility;
-
 /**
  * A Goal.
  */
 @Entity
 @Table(name = "goal")
-public class Goal implements Serializable {
+public class Goal extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,31 +39,17 @@ public class Goal implements Serializable {
     private String summary;
 
     @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
-
-    @Column(name = "completed_at")
-    private Instant completedAt;
-
-    @NotNull
     @Column(name = "jhi_order", nullable = false)
     private Long order;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "visibility", nullable = false)
-    private Visibility visibility;
+    @Column(name = "completed_at")
+    private Instant completedAt;
 
     @OneToMany(mappedBy = "goal")
     private Set<Task> tasks = new HashSet<>();
 
     @OneToMany(mappedBy = "goal")
     private Set<Note> notes = new HashSet<>();
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("goals")
-    private User owner;
 
     @ManyToMany
     @JoinTable(name = "goal_tag",
@@ -103,32 +84,6 @@ public class Goal implements Serializable {
         this.summary = summary;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Goal createdAt(Instant createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getCompletedAt() {
-        return completedAt;
-    }
-
-    public Goal completedAt(Instant completedAt) {
-        this.completedAt = completedAt;
-        return this;
-    }
-
-    public void setCompletedAt(Instant completedAt) {
-        this.completedAt = completedAt;
-    }
-
     public Long getOrder() {
         return order;
     }
@@ -142,17 +97,17 @@ public class Goal implements Serializable {
         this.order = order;
     }
 
-    public Visibility getVisibility() {
-        return visibility;
+    public Instant getCompletedAt() {
+        return completedAt;
     }
 
-    public Goal visibility(Visibility visibility) {
-        this.visibility = visibility;
+    public Goal completedAt(Instant completedAt) {
+        this.completedAt = completedAt;
         return this;
     }
 
-    public void setVisibility(Visibility visibility) {
-        this.visibility = visibility;
+    public void setCompletedAt(Instant completedAt) {
+        this.completedAt = completedAt;
     }
 
     public Set<Task> getTasks() {
@@ -203,19 +158,6 @@ public class Goal implements Serializable {
 
     public void setNotes(Set<Note> notes) {
         this.notes = notes;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public Goal owner(User user) {
-        this.owner = user;
-        return this;
-    }
-
-    public void setOwner(User user) {
-        this.owner = user;
     }
 
     public Set<Tag> getTags() {
@@ -278,10 +220,8 @@ public class Goal implements Serializable {
         return "Goal{" +
             "id=" + getId() +
             ", summary='" + getSummary() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", completedAt='" + getCompletedAt() + "'" +
             ", order=" + getOrder() +
-            ", visibility='" + getVisibility() + "'" +
+            ", completedAt='" + getCompletedAt() + "'" +
             "}";
     }
 }

@@ -5,7 +5,6 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { GoalService } from 'app/entities/goal/goal.service';
 import { IGoal, Goal } from 'app/shared/model/goal.model';
-import { Visibility } from 'app/shared/model/enumerations/visibility.model';
 
 describe('Service Tests', () => {
   describe('Goal Service', () => {
@@ -25,14 +24,13 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Goal(0, 'AAAAAAA', currentDate, currentDate, 0, Visibility.PUBLIC);
+      elemDefault = new Goal(0, 'AAAAAAA', 0, currentDate);
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
             completedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
@@ -51,14 +49,12 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
             completedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            createdAt: currentDate,
             completedAt: currentDate
           },
           returnedFromService
@@ -76,17 +72,14 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             summary: 'BBBBBB',
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
-            completedAt: currentDate.format(DATE_TIME_FORMAT),
             order: 1,
-            visibility: 'BBBBBB'
+            completedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            createdAt: currentDate,
             completedAt: currentDate
           },
           returnedFromService
@@ -104,16 +97,13 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             summary: 'BBBBBB',
-            createdAt: currentDate.format(DATE_TIME_FORMAT),
-            completedAt: currentDate.format(DATE_TIME_FORMAT),
             order: 1,
-            visibility: 'BBBBBB'
+            completedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
         const expected = Object.assign(
           {
-            createdAt: currentDate,
             completedAt: currentDate
           },
           returnedFromService

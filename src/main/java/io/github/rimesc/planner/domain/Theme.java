@@ -1,34 +1,25 @@
 package io.github.rimesc.planner.domain;
 
-import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import io.github.rimesc.planner.domain.enumeration.Visibility;
 
 /**
  * A Theme.
  */
 @Entity
 @Table(name = "theme")
-public class Theme implements Serializable {
+public class Theme extends AbstractAuditingEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,25 +44,11 @@ public class Theme implements Serializable {
     @Column(name = "avatar_content_type")
     private String avatarContentType;
 
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "visibility", nullable = false)
-    private Visibility visibility;
-
     @OneToMany(mappedBy = "theme")
     private Set<Tag> tags = new HashSet<>();
 
     @OneToMany(mappedBy = "theme")
     private Set<Goal> goals = new HashSet<>();
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("themes")
-    private User owner;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -134,32 +111,6 @@ public class Theme implements Serializable {
         this.avatarContentType = avatarContentType;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Theme createdAt(Instant createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Visibility getVisibility() {
-        return visibility;
-    }
-
-    public Theme visibility(Visibility visibility) {
-        this.visibility = visibility;
-        return this;
-    }
-
-    public void setVisibility(Visibility visibility) {
-        this.visibility = visibility;
-    }
-
     public Set<Tag> getTags() {
         return tags;
     }
@@ -209,19 +160,6 @@ public class Theme implements Serializable {
     public void setGoals(Set<Goal> goals) {
         this.goals = goals;
     }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public Theme owner(User user) {
-        this.owner = user;
-        return this;
-    }
-
-    public void setOwner(User user) {
-        this.owner = user;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -248,8 +186,6 @@ public class Theme implements Serializable {
             ", description='" + getDescription() + "'" +
             ", avatar='" + getAvatar() + "'" +
             ", avatarContentType='" + getAvatarContentType() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", visibility='" + getVisibility() + "'" +
             "}";
     }
 }

@@ -17,11 +17,6 @@
         "title": "Note"
       },
       "markdown": "Markdown",
-      "html": "Html",
-      "createdAt": "Created At",
-      "editedAt": "Edited At",
-      "visibility": "Visibility",
-      "owner": "Owner",
       "goal": "Goal"
     }
   }

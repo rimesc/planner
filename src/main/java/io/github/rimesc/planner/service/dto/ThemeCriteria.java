@@ -5,10 +5,8 @@ import java.util.Objects;
 
 import io.github.jhipster.service.Criteria;
 import io.github.jhipster.service.filter.Filter;
-import io.github.jhipster.service.filter.InstantFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
-import io.github.rimesc.planner.domain.enumeration.Visibility;
 
 /**
  * Criteria class for the {@link io.github.rimesc.planner.domain.Theme} entity. This class is used
@@ -20,24 +18,6 @@ import io.github.rimesc.planner.domain.enumeration.Visibility;
  * fix type specific filters.
  */
 public class ThemeCriteria implements Serializable, Criteria {
-    /**
-     * Class for filtering Visibility
-     */
-    public static class VisibilityFilter extends Filter<Visibility> {
-
-        public VisibilityFilter() {
-        }
-
-        public VisibilityFilter(VisibilityFilter filter) {
-            super(filter);
-        }
-
-        @Override
-        public VisibilityFilter copy() {
-            return new VisibilityFilter(this);
-        }
-
-    }
 
     private static final long serialVersionUID = 1L;
 
@@ -47,15 +27,9 @@ public class ThemeCriteria implements Serializable, Criteria {
 
     private StringFilter description;
 
-    private InstantFilter createdAt;
-
-    private VisibilityFilter visibility;
-
     private LongFilter tagId;
 
     private LongFilter goalId;
-
-    private LongFilter ownerId;
 
     public ThemeCriteria() {
     }
@@ -64,11 +38,8 @@ public class ThemeCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.description = other.description == null ? null : other.description.copy();
-        this.createdAt = other.createdAt == null ? null : other.createdAt.copy();
-        this.visibility = other.visibility == null ? null : other.visibility.copy();
         this.tagId = other.tagId == null ? null : other.tagId.copy();
         this.goalId = other.goalId == null ? null : other.goalId.copy();
-        this.ownerId = other.ownerId == null ? null : other.ownerId.copy();
     }
 
     @Override
@@ -100,22 +71,6 @@ public class ThemeCriteria implements Serializable, Criteria {
         this.description = description;
     }
 
-    public InstantFilter getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(InstantFilter createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public VisibilityFilter getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(VisibilityFilter visibility) {
-        this.visibility = visibility;
-    }
-
     public LongFilter getTagId() {
         return tagId;
     }
@@ -132,14 +87,6 @@ public class ThemeCriteria implements Serializable, Criteria {
         this.goalId = goalId;
     }
 
-    public LongFilter getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(LongFilter ownerId) {
-        this.ownerId = ownerId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -152,11 +99,8 @@ public class ThemeCriteria implements Serializable, Criteria {
         return Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(createdAt, that.createdAt) &&
-            Objects.equals(visibility, that.visibility) &&
             Objects.equals(tagId, that.tagId) &&
-            Objects.equals(goalId, that.goalId) &&
-            Objects.equals(ownerId, that.ownerId);
+            Objects.equals(goalId, that.goalId);
     }
 
     @Override
@@ -165,11 +109,8 @@ public class ThemeCriteria implements Serializable, Criteria {
             id,
             name,
             description,
-            createdAt,
-            visibility,
             tagId,
-            goalId,
-            ownerId);
+            goalId);
     }
 
     @Override
@@ -178,11 +119,8 @@ public class ThemeCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
             (description != null ? "description=" + description + ", " : "") +
-            (createdAt != null ? "createdAt=" + createdAt + ", " : "") +
-            (visibility != null ? "visibility=" + visibility + ", " : "") +
             (tagId != null ? "tagId=" + tagId + ", " : "") +
             (goalId != null ? "goalId=" + goalId + ", " : "") +
-            (ownerId != null ? "ownerId=" + ownerId + ", " : "") +
             "}";
     }
 

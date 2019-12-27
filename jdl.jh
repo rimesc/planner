@@ -1,0 +1,51 @@
+entity Theme {
+	name String required maxlength(128)
+    description String required maxlength(512)
+    avatar ImageBlob maxbytes(262144)  // 256 kB
+}
+
+entity Goal {
+    summary String required maxlength(128)
+    order Long required
+    completedAt Instant required
+}
+
+entity Task {
+    summary String required maxlength(128)
+    completedAt Instant required
+}
+
+entity Note {
+    markdown TextBlob required
+}
+
+entity Tag {
+    name String required maxlength(32)
+    icon String maxlength(16)  // symbolic name of a character symbol
+}
+
+relationship OneToMany {
+    Theme to Tag{theme required}
+    Theme to Goal{theme required}
+    Goal to Task{goal required}
+    Goal to Note{goal required}
+}
+
+relationship ManyToMany {
+    Goal{tag} to Tag{goal}
+}
+
+// Set pagination options
+paginate Theme with infinite-scroll
+paginate Goal with infinite-scroll
+
+// Create DTOs
+dto * with mapstruct
+
+// Enable filtering
+filter *
+
+// Set service options to all
+service all with serviceClass
+
+

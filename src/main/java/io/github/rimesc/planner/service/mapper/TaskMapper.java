@@ -9,17 +9,18 @@ import io.github.rimesc.planner.service.dto.TaskDTO;
 /**
  * Mapper for the entity {@link Task} and its DTO {@link TaskDTO}.
  */
-@Mapper(componentModel = "spring", uses = { UserMapper.class, GoalMapper.class })
+@Mapper(componentModel = "spring", uses = { GoalMapper.class })
 public interface TaskMapper extends EntityMapper<TaskDTO, Task> {
 
     @Override
-    @Mapping(source = "owner.id", target = "ownerId")
-    @Mapping(source = "goal.id", target = "goalId")
+    @Mapping(source = "goal", target = "goal", qualifiedBy = Summary.class)
     TaskDTO toDto(Task task);
 
     @Override
-    @Mapping(source = "ownerId", target = "owner")
-    @Mapping(source = "goalId", target = "goal")
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "lastModifiedBy", ignore = true)
+    @Mapping(target = "lastModifiedDate", ignore = true)
     Task toEntity(TaskDTO taskDTO);
 
     default Task fromId(Long id) {

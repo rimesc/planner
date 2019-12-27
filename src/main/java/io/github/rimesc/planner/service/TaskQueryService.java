@@ -17,7 +17,6 @@ import io.github.jhipster.service.QueryService;
 import io.github.rimesc.planner.domain.Goal_;
 import io.github.rimesc.planner.domain.Task;
 import io.github.rimesc.planner.domain.Task_;
-import io.github.rimesc.planner.domain.User_;
 import io.github.rimesc.planner.repository.TaskRepository;
 import io.github.rimesc.planner.service.dto.TaskCriteria;
 import io.github.rimesc.planner.service.dto.TaskDTO;
@@ -96,15 +95,8 @@ public class TaskQueryService extends QueryService<Task> {
             if (criteria.getSummary() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSummary(), Task_.summary));
             }
-            if (criteria.getCreatedAt() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Task_.createdAt));
-            }
             if (criteria.getCompletedAt() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getCompletedAt(), Task_.completedAt));
-            }
-            if (criteria.getOwnerId() != null) {
-                specification = specification.and(buildSpecification(criteria.getOwnerId(),
-                    root -> root.join(Task_.owner, JoinType.LEFT).get(User_.id)));
             }
             if (criteria.getGoalId() != null) {
                 specification = specification.and(buildSpecification(criteria.getGoalId(),

@@ -23,9 +23,6 @@
                 <th scope="col"  jhiSortBy="name"><span jhiTranslate="plannerApp.theme.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"  jhiSortBy="description"><span jhiTranslate="plannerApp.theme.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"  jhiSortBy="avatar"><span jhiTranslate="plannerApp.theme.avatar">Avatar</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="createdAt"><span jhiTranslate="plannerApp.theme.createdAt">Created At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="visibility"><span jhiTranslate="plannerApp.theme.visibility">Visibility</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="ownerId"><span jhiTranslate="plannerApp.theme.owner">Owner</span> <fa-icon [icon]="'sort'"></fa-icon></th>
                 <th scope="col"></th>
                 </tr>
                 </thead>
@@ -39,11 +36,6 @@
                             <img [src]="'data:' + theme.avatarContentType + ';base64,' + theme.avatar" style="max-height: 30px;" alt="theme image"/>
                         </a>
                         <span *ngIf="theme.avatar">{{theme.avatarContentType}}, {{byteSize(theme.avatar)}}</span>
-                    </td>
-                    <td>{{theme.createdAt | date:'medium'}}</td>
-                    <td jhiTranslate="{{'plannerApp.Visibility.' + theme.visibility}}">{{theme.visibility}}</td>
-                    <td>
-                        {{theme.ownerId}}
                     </td>
                     <td class="text-right">
                         <div class="btn-group">

@@ -8,44 +8,9 @@
             "fieldValidateRules": [
                 "required"
             ]
-        },
-        {
-            "fieldName": "html",
-            "fieldType": "byte[]",
-            "fieldTypeBlobContent": "text",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "createdAt",
-            "fieldType": "Instant",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "editedAt",
-            "fieldType": "Instant"
-        },
-        {
-            "fieldName": "visibility",
-            "fieldType": "Visibility",
-            "fieldValues": "PUBLIC,PRIVATE",
-            "fieldValidateRules": [
-                "required"
-            ]
         }
     ],
     "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "otherEntityName": "user",
-            "otherEntityRelationshipName": "note",
-            "relationshipValidateRules": "required",
-            "relationshipName": "owner",
-            "otherEntityField": "id"
-        },
         {
             "relationshipType": "many-to-one",
             "otherEntityName": "goal",
@@ -63,5 +28,6 @@
     "jpaMetamodelFiltering": true,
     "fluentMethods": true,
     "clientRootFolder": "",
-    "applications": "*"
+    "applications": "*",
+    "readOnly": false
 }

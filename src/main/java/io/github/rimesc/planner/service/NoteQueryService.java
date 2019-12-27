@@ -17,7 +17,6 @@ import io.github.jhipster.service.QueryService;
 import io.github.rimesc.planner.domain.Goal_;
 import io.github.rimesc.planner.domain.Note;
 import io.github.rimesc.planner.domain.Note_;
-import io.github.rimesc.planner.domain.User_;
 import io.github.rimesc.planner.repository.NoteRepository;
 import io.github.rimesc.planner.service.dto.NoteCriteria;
 import io.github.rimesc.planner.service.dto.NoteDTO;
@@ -92,19 +91,6 @@ public class NoteQueryService extends QueryService<Note> {
         if (criteria != null) {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), Note_.id));
-            }
-            if (criteria.getCreatedAt() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCreatedAt(), Note_.createdAt));
-            }
-            if (criteria.getEditedAt() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getEditedAt(), Note_.editedAt));
-            }
-            if (criteria.getVisibility() != null) {
-                specification = specification.and(buildSpecification(criteria.getVisibility(), Note_.visibility));
-            }
-            if (criteria.getOwnerId() != null) {
-                specification = specification.and(buildSpecification(criteria.getOwnerId(),
-                    root -> root.join(Note_.owner, JoinType.LEFT).get(User_.id)));
             }
             if (criteria.getGoalId() != null) {
                 specification = specification.and(buildSpecification(criteria.getGoalId(),

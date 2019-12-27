@@ -10,22 +10,14 @@
                     <dd>
                         <span>{{task.summary}}</span>
                     </dd>
-                    <dt><span jhiTranslate="plannerApp.task.createdAt">Created At</span></dt>
-                    <dd>
-                        <span>{{task.createdAt}}</span>
-                    </dd>
                     <dt><span jhiTranslate="plannerApp.task.completedAt">Completed At</span></dt>
                     <dd>
                         <span>{{task.completedAt}}</span>
                     </dd>
-                    <dt><span jhiTranslate="plannerApp.task.owner">Owner</span></dt>
-                    <dd>
-                        {{task.ownerId}}
-                    </dd>
                     <dt><span jhiTranslate="plannerApp.task.goal">Goal</span></dt>
                     <dd>
-                        <div *ngIf="task.goalId">
-                            <a [routerLink]="['/entities/goal', task.goalId, 'view']">{{task.goalId}}</a>
+                        <div *ngIf="task.goal">
+                            <a [routerLink]="['/entities/goal', task.goal.id, 'view']">{{task.goal.summary}}</a>
                         </div>
                     </dd>
                 </dl>

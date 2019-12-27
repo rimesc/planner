@@ -29,9 +29,6 @@ export class ThemeUpdatePage {
   nameInput = element(by.id('field_name'));
   descriptionInput = element(by.id('field_description'));
   avatarInput = element(by.id('file_avatar'));
-  createdAtInput = element(by.id('field_createdAt'));
-  visibilitySelect = element(by.id('field_visibility'));
-  ownerSelect = element(by.id('field_owner'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -59,48 +56,6 @@ export class ThemeUpdatePage {
 
   async getAvatarInput(): Promise<string> {
     return await this.avatarInput.getAttribute('value');
-  }
-
-  async setCreatedAtInput(createdAt: string): Promise<void> {
-    await this.createdAtInput.sendKeys(createdAt);
-  }
-
-  async getCreatedAtInput(): Promise<string> {
-    return await this.createdAtInput.getAttribute('value');
-  }
-
-  async setVisibilitySelect(visibility: string): Promise<void> {
-    await this.visibilitySelect.sendKeys(visibility);
-  }
-
-  async getVisibilitySelect(): Promise<string> {
-    return await this.visibilitySelect.element(by.css('option:checked')).getText();
-  }
-
-  async visibilitySelectLastOption(): Promise<void> {
-    await this.visibilitySelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async ownerSelectLastOption(): Promise<void> {
-    await this.ownerSelect
-      .all(by.tagName('option'))
-      .last()
-      .click();
-  }
-
-  async ownerSelectOption(option: string): Promise<void> {
-    await this.ownerSelect.sendKeys(option);
-  }
-
-  getOwnerSelect(): ElementFinder {
-    return this.ownerSelect;
-  }
-
-  async getOwnerSelectedOption(): Promise<string> {
-    return await this.ownerSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

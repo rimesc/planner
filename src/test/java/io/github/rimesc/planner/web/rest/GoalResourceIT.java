@@ -43,8 +43,6 @@ import io.github.rimesc.planner.domain.Note;
 import io.github.rimesc.planner.domain.Tag;
 import io.github.rimesc.planner.domain.Task;
 import io.github.rimesc.planner.domain.Theme;
-import io.github.rimesc.planner.domain.User;
-import io.github.rimesc.planner.domain.enumeration.Visibility;
 import io.github.rimesc.planner.repository.GoalRepository;
 import io.github.rimesc.planner.service.GoalQueryService;
 import io.github.rimesc.planner.service.GoalService;
@@ -61,18 +59,12 @@ public class GoalResourceIT {
     private static final String DEFAULT_SUMMARY = "AAAAAAAAAA";
     private static final String UPDATED_SUMMARY = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
-    private static final Instant DEFAULT_COMPLETED_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_COMPLETED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
     private static final Long DEFAULT_ORDER = 1L;
     private static final Long UPDATED_ORDER = 2L;
     private static final Long SMALLER_ORDER = 1L - 1L;
 
-    private static final Visibility DEFAULT_VISIBILITY = Visibility.PUBLIC;
-    private static final Visibility UPDATED_VISIBILITY = Visibility.PRIVATE;
+    private static final Instant DEFAULT_COMPLETED_AT = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_COMPLETED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private GoalRepository goalRepository;
@@ -132,15 +124,8 @@ public class GoalResourceIT {
     public static Goal createEntity(EntityManager em) {
         Goal goal = new Goal()
             .summary(DEFAULT_SUMMARY)
-            .createdAt(DEFAULT_CREATED_AT)
-            .completedAt(DEFAULT_COMPLETED_AT)
             .order(DEFAULT_ORDER)
-            .visibility(DEFAULT_VISIBILITY);
-        // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        goal.setOwner(user);
+            .completedAt(DEFAULT_COMPLETED_AT);
         // Add required entity
         Theme theme;
         if (TestUtil.findAll(em, Theme.class).isEmpty()) {
@@ -163,15 +148,8 @@ public class GoalResourceIT {
     public static Goal createUpdatedEntity(EntityManager em) {
         Goal goal = new Goal()
             .summary(UPDATED_SUMMARY)
-            .createdAt(UPDATED_CREATED_AT)
-            .completedAt(UPDATED_COMPLETED_AT)
             .order(UPDATED_ORDER)
-            .visibility(UPDATED_VISIBILITY);
-        // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        goal.setOwner(user);
+            .completedAt(UPDATED_COMPLETED_AT);
         // Add required entity
         Theme theme;
         if (TestUtil.findAll(em, Theme.class).isEmpty()) {
@@ -207,10 +185,8 @@ public class GoalResourceIT {
         assertThat(goalList).hasSize(databaseSizeBeforeCreate + 1);
         Goal testGoal = goalList.get(goalList.size() - 1);
         assertThat(testGoal.getSummary()).isEqualTo(DEFAULT_SUMMARY);
-        assertThat(testGoal.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
-        assertThat(testGoal.getCompletedAt()).isEqualTo(DEFAULT_COMPLETED_AT);
         assertThat(testGoal.getOrder()).isEqualTo(DEFAULT_ORDER);
-        assertThat(testGoal.getVisibility()).isEqualTo(DEFAULT_VISIBILITY);
+        assertThat(testGoal.getCompletedAt()).isEqualTo(DEFAULT_COMPLETED_AT);
     }
 
     @Test
@@ -254,48 +230,10 @@ public class GoalResourceIT {
 
     @Test
     @Transactional
-    public void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = goalRepository.findAll().size();
-        // set the field null
-        goal.setCreatedAt(null);
-
-        // Create the Goal, which fails.
-        GoalDTO goalDTO = goalMapper.toDto(goal);
-
-        restGoalMockMvc.perform(post("/api/goals")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(goalDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Goal> goalList = goalRepository.findAll();
-        assertThat(goalList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkOrderIsRequired() throws Exception {
         int databaseSizeBeforeTest = goalRepository.findAll().size();
         // set the field null
         goal.setOrder(null);
-
-        // Create the Goal, which fails.
-        GoalDTO goalDTO = goalMapper.toDto(goal);
-
-        restGoalMockMvc.perform(post("/api/goals")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(goalDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Goal> goalList = goalRepository.findAll();
-        assertThat(goalList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkVisibilityIsRequired() throws Exception {
-        int databaseSizeBeforeTest = goalRepository.findAll().size();
-        // set the field null
-        goal.setVisibility(null);
 
         // Create the Goal, which fails.
         GoalDTO goalDTO = goalMapper.toDto(goal);
@@ -321,10 +259,8 @@ public class GoalResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(goal.getId().intValue())))
             .andExpect(jsonPath("$.[*].summary").value(hasItem(DEFAULT_SUMMARY)))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())))
             .andExpect(jsonPath("$.[*].order").value(hasItem(DEFAULT_ORDER.intValue())))
-            .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
+            .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -372,10 +308,8 @@ public class GoalResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(goal.getId().intValue()))
             .andExpect(jsonPath("$.summary").value(DEFAULT_SUMMARY))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()))
-            .andExpect(jsonPath("$.completedAt").value(DEFAULT_COMPLETED_AT.toString()))
             .andExpect(jsonPath("$.order").value(DEFAULT_ORDER.intValue()))
-            .andExpect(jsonPath("$.visibility").value(DEFAULT_VISIBILITY.toString()));
+            .andExpect(jsonPath("$.completedAt").value(DEFAULT_COMPLETED_AT.toString()));
     }
 
     @Test
@@ -472,110 +406,6 @@ public class GoalResourceIT {
 
         // Get all the goalList where summary does not contain UPDATED_SUMMARY
         defaultGoalShouldBeFound("summary.doesNotContain=" + UPDATED_SUMMARY);
-    }
-
-    @Test
-    @Transactional
-    public void getAllGoalsByCreatedAtIsEqualToSomething() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-
-        // Get all the goalList where createdAt equals to DEFAULT_CREATED_AT
-        defaultGoalShouldBeFound("createdAt.equals=" + DEFAULT_CREATED_AT);
-
-        // Get all the goalList where createdAt equals to UPDATED_CREATED_AT
-        defaultGoalShouldNotBeFound("createdAt.equals=" + UPDATED_CREATED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllGoalsByCreatedAtIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-
-        // Get all the goalList where createdAt not equals to DEFAULT_CREATED_AT
-        defaultGoalShouldNotBeFound("createdAt.notEquals=" + DEFAULT_CREATED_AT);
-
-        // Get all the goalList where createdAt not equals to UPDATED_CREATED_AT
-        defaultGoalShouldBeFound("createdAt.notEquals=" + UPDATED_CREATED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllGoalsByCreatedAtIsInShouldWork() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-
-        // Get all the goalList where createdAt in DEFAULT_CREATED_AT or UPDATED_CREATED_AT
-        defaultGoalShouldBeFound("createdAt.in=" + DEFAULT_CREATED_AT + "," + UPDATED_CREATED_AT);
-
-        // Get all the goalList where createdAt equals to UPDATED_CREATED_AT
-        defaultGoalShouldNotBeFound("createdAt.in=" + UPDATED_CREATED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllGoalsByCreatedAtIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-
-        // Get all the goalList where createdAt is not null
-        defaultGoalShouldBeFound("createdAt.specified=true");
-
-        // Get all the goalList where createdAt is null
-        defaultGoalShouldNotBeFound("createdAt.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllGoalsByCompletedAtIsEqualToSomething() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-
-        // Get all the goalList where completedAt equals to DEFAULT_COMPLETED_AT
-        defaultGoalShouldBeFound("completedAt.equals=" + DEFAULT_COMPLETED_AT);
-
-        // Get all the goalList where completedAt equals to UPDATED_COMPLETED_AT
-        defaultGoalShouldNotBeFound("completedAt.equals=" + UPDATED_COMPLETED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllGoalsByCompletedAtIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-
-        // Get all the goalList where completedAt not equals to DEFAULT_COMPLETED_AT
-        defaultGoalShouldNotBeFound("completedAt.notEquals=" + DEFAULT_COMPLETED_AT);
-
-        // Get all the goalList where completedAt not equals to UPDATED_COMPLETED_AT
-        defaultGoalShouldBeFound("completedAt.notEquals=" + UPDATED_COMPLETED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllGoalsByCompletedAtIsInShouldWork() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-
-        // Get all the goalList where completedAt in DEFAULT_COMPLETED_AT or UPDATED_COMPLETED_AT
-        defaultGoalShouldBeFound("completedAt.in=" + DEFAULT_COMPLETED_AT + "," + UPDATED_COMPLETED_AT);
-
-        // Get all the goalList where completedAt equals to UPDATED_COMPLETED_AT
-        defaultGoalShouldNotBeFound("completedAt.in=" + UPDATED_COMPLETED_AT);
-    }
-
-    @Test
-    @Transactional
-    public void getAllGoalsByCompletedAtIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        goalRepository.saveAndFlush(goal);
-
-        // Get all the goalList where completedAt is not null
-        defaultGoalShouldBeFound("completedAt.specified=true");
-
-        // Get all the goalList where completedAt is null
-        defaultGoalShouldNotBeFound("completedAt.specified=false");
     }
 
     @Test
@@ -684,54 +514,54 @@ public class GoalResourceIT {
 
     @Test
     @Transactional
-    public void getAllGoalsByVisibilityIsEqualToSomething() throws Exception {
+    public void getAllGoalsByCompletedAtIsEqualToSomething() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where visibility equals to DEFAULT_VISIBILITY
-        defaultGoalShouldBeFound("visibility.equals=" + DEFAULT_VISIBILITY);
+        // Get all the goalList where completedAt equals to DEFAULT_COMPLETED_AT
+        defaultGoalShouldBeFound("completedAt.equals=" + DEFAULT_COMPLETED_AT);
 
-        // Get all the goalList where visibility equals to UPDATED_VISIBILITY
-        defaultGoalShouldNotBeFound("visibility.equals=" + UPDATED_VISIBILITY);
+        // Get all the goalList where completedAt equals to UPDATED_COMPLETED_AT
+        defaultGoalShouldNotBeFound("completedAt.equals=" + UPDATED_COMPLETED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllGoalsByVisibilityIsNotEqualToSomething() throws Exception {
+    public void getAllGoalsByCompletedAtIsNotEqualToSomething() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where visibility not equals to DEFAULT_VISIBILITY
-        defaultGoalShouldNotBeFound("visibility.notEquals=" + DEFAULT_VISIBILITY);
+        // Get all the goalList where completedAt not equals to DEFAULT_COMPLETED_AT
+        defaultGoalShouldNotBeFound("completedAt.notEquals=" + DEFAULT_COMPLETED_AT);
 
-        // Get all the goalList where visibility not equals to UPDATED_VISIBILITY
-        defaultGoalShouldBeFound("visibility.notEquals=" + UPDATED_VISIBILITY);
+        // Get all the goalList where completedAt not equals to UPDATED_COMPLETED_AT
+        defaultGoalShouldBeFound("completedAt.notEquals=" + UPDATED_COMPLETED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllGoalsByVisibilityIsInShouldWork() throws Exception {
+    public void getAllGoalsByCompletedAtIsInShouldWork() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where visibility in DEFAULT_VISIBILITY or UPDATED_VISIBILITY
-        defaultGoalShouldBeFound("visibility.in=" + DEFAULT_VISIBILITY + "," + UPDATED_VISIBILITY);
+        // Get all the goalList where completedAt in DEFAULT_COMPLETED_AT or UPDATED_COMPLETED_AT
+        defaultGoalShouldBeFound("completedAt.in=" + DEFAULT_COMPLETED_AT + "," + UPDATED_COMPLETED_AT);
 
-        // Get all the goalList where visibility equals to UPDATED_VISIBILITY
-        defaultGoalShouldNotBeFound("visibility.in=" + UPDATED_VISIBILITY);
+        // Get all the goalList where completedAt equals to UPDATED_COMPLETED_AT
+        defaultGoalShouldNotBeFound("completedAt.in=" + UPDATED_COMPLETED_AT);
     }
 
     @Test
     @Transactional
-    public void getAllGoalsByVisibilityIsNullOrNotNull() throws Exception {
+    public void getAllGoalsByCompletedAtIsNullOrNotNull() throws Exception {
         // Initialize the database
         goalRepository.saveAndFlush(goal);
 
-        // Get all the goalList where visibility is not null
-        defaultGoalShouldBeFound("visibility.specified=true");
+        // Get all the goalList where completedAt is not null
+        defaultGoalShouldBeFound("completedAt.specified=true");
 
-        // Get all the goalList where visibility is null
-        defaultGoalShouldNotBeFound("visibility.specified=false");
+        // Get all the goalList where completedAt is null
+        defaultGoalShouldNotBeFound("completedAt.specified=false");
     }
 
     @Test
@@ -770,21 +600,6 @@ public class GoalResourceIT {
 
         // Get all the goalList where note equals to noteId + 1
         defaultGoalShouldNotBeFound("noteId.equals=" + (noteId + 1));
-    }
-
-    @Test
-    @Transactional
-    public void getAllGoalsByOwnerIsEqualToSomething() throws Exception {
-        // Get already existing entity
-        User owner = goal.getOwner();
-        goalRepository.saveAndFlush(goal);
-        Long ownerId = owner.getId();
-
-        // Get all the goalList where owner equals to ownerId
-        defaultGoalShouldBeFound("ownerId.equals=" + ownerId);
-
-        // Get all the goalList where owner equals to ownerId + 1
-        defaultGoalShouldNotBeFound("ownerId.equals=" + (ownerId + 1));
     }
 
     @Test
@@ -830,10 +645,8 @@ public class GoalResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(goal.getId().intValue())))
             .andExpect(jsonPath("$.[*].summary").value(hasItem(DEFAULT_SUMMARY)))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())))
-            .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())))
             .andExpect(jsonPath("$.[*].order").value(hasItem(DEFAULT_ORDER.intValue())))
-            .andExpect(jsonPath("$.[*].visibility").value(hasItem(DEFAULT_VISIBILITY.toString())));
+            .andExpect(jsonPath("$.[*].completedAt").value(hasItem(DEFAULT_COMPLETED_AT.toString())));
 
         // Check, that the count call also returns 1
         restGoalMockMvc.perform(get("/api/goals/count?sort=id,desc&" + filter))
@@ -881,10 +694,8 @@ public class GoalResourceIT {
         em.detach(updatedGoal);
         updatedGoal
             .summary(UPDATED_SUMMARY)
-            .createdAt(UPDATED_CREATED_AT)
-            .completedAt(UPDATED_COMPLETED_AT)
             .order(UPDATED_ORDER)
-            .visibility(UPDATED_VISIBILITY);
+            .completedAt(UPDATED_COMPLETED_AT);
         GoalDTO goalDTO = goalMapper.toDto(updatedGoal);
 
         restGoalMockMvc.perform(put("/api/goals")
@@ -897,10 +708,8 @@ public class GoalResourceIT {
         assertThat(goalList).hasSize(databaseSizeBeforeUpdate);
         Goal testGoal = goalList.get(goalList.size() - 1);
         assertThat(testGoal.getSummary()).isEqualTo(UPDATED_SUMMARY);
-        assertThat(testGoal.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
-        assertThat(testGoal.getCompletedAt()).isEqualTo(UPDATED_COMPLETED_AT);
         assertThat(testGoal.getOrder()).isEqualTo(UPDATED_ORDER);
-        assertThat(testGoal.getVisibility()).isEqualTo(UPDATED_VISIBILITY);
+        assertThat(testGoal.getCompletedAt()).isEqualTo(UPDATED_COMPLETED_AT);
     }
 
     @Test
