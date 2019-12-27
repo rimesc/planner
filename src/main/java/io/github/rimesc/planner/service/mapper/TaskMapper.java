@@ -18,6 +18,10 @@ public interface TaskMapper extends EntityMapper<TaskDTO, Task> {
 
     @Override
     @Mapping(source = "goalId", target = "goal")
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "lastModifiedBy", ignore = true)
+    @Mapping(target = "lastModifiedDate", ignore = true)
     Task toEntity(TaskDTO taskDTO);
 
     default Task fromId(Long id) {

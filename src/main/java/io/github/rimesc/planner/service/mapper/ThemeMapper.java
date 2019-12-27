@@ -17,6 +17,10 @@ public interface ThemeMapper extends EntityMapper<ThemeDTO, Theme> {
     @Mapping(target = "removeTag", ignore = true)
     @Mapping(target = "goals", ignore = true)
     @Mapping(target = "removeGoal", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "lastModifiedBy", ignore = true)
+    @Mapping(target = "lastModifiedDate", ignore = true)
     Theme toEntity(ThemeDTO themeDTO);
 
     default Theme fromId(Long id) {

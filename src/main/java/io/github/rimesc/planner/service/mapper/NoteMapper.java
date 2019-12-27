@@ -18,6 +18,10 @@ public interface NoteMapper extends EntityMapper<NoteDTO, Note> {
 
     @Override
     @Mapping(source = "goalId", target = "goal")
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "lastModifiedBy", ignore = true)
+    @Mapping(target = "lastModifiedDate", ignore = true)
     Note toEntity(NoteDTO noteDTO);
 
     default Note fromId(Long id) {

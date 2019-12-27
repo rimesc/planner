@@ -23,6 +23,10 @@ public interface GoalMapper extends EntityMapper<GoalDTO, Goal> {
     @Mapping(target = "removeNote", ignore = true)
     @Mapping(target = "removeTag", ignore = true)
     @Mapping(source = "themeId", target = "theme")
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "createdDate", ignore = true)
+    @Mapping(target = "lastModifiedBy", ignore = true)
+    @Mapping(target = "lastModifiedDate", ignore = true)
     Goal toEntity(GoalDTO goalDTO);
 
     default Goal fromId(Long id) {
